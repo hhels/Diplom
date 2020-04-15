@@ -20,7 +20,7 @@ namespace WebApplication1.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("/login")]
+        [HttpGet("login")]
         public async Task<IActionResult> Token(string username, string password)
         {
             //входим по логину и паролю БЕЗ блокировки пользователя при вводе неправильных данных
@@ -49,7 +49,7 @@ namespace WebApplication1.Controllers
             return BadRequest("Incorrect login/password");
         }
 
-        [HttpPost("/register")]
+        [HttpGet("register")]
         public async Task<IActionResult> Register(string login, string password, string email, string firstName, string lastName, int year)
         {
             var user = new SiteUser
