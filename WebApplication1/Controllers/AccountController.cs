@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [EnableCors("AllowOrigin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -12,16 +14,19 @@ namespace WebApplication1.Controllers
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<SiteUser> _signInManager; // манагер для авторизации
         private readonly UserManager<SiteUser> _userManager; // манагер для управления пользователями
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(ApplicationDbContext context, SignInManager<SiteUser> signInManager, UserManager<SiteUser> userManager)
+
+        public AccountController(ApplicationDbContext context, SignInManager<SiteUser> signInManager, UserManager<SiteUser> userManager, RoleManager<IdentityRole> manager)
         {
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = manager;
         }
-
-        [HttpGet("login")]
-        public async Task<IActionResult> Token(string username, string password)
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> Token(string username,  string password)
         {
             //входим по логину и паролю БЕЗ блокировки пользователя при вводе неправильных данных
             var auth = await _signInManager.PasswordSignInAsync(username, password,
@@ -49,7 +54,13 @@ namespace WebApplication1.Controllers
             return BadRequest("Incorrect login/password");
         }
 
-        [HttpGet("register")]
+
+        public class RoleName {
+            public const string directorRoleName = "director";
+            public const string workerRoleName = "worker";
+            public const string userRoleName = "user";
+        };
+        [HttpPost("register")]
         public async Task<IActionResult> Register(string login, string password, string email, string firstName, string lastName, int year)
         {
             var user = new SiteUser
@@ -63,9 +74,11 @@ namespace WebApplication1.Controllers
 
             // создаём юзера
             var result = await _userManager.CreateAsync(user, password);
+            //добавление роль по дефолту
+            await _userManager.AddToRoleAsync(user, RoleName.userRoleName);
 
             // если всё ок, то токен создаем и возвращаем
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 var token = AuthService.GenerateToken(user);
 

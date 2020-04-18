@@ -24,6 +24,7 @@ namespace WebApplication1
         {
             // получаем строку подключения из файла конфигурации
             var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddCors();
 
             // добавляем контекст ApplicationContext в качестве сервиса в приложение
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -70,7 +71,11 @@ namespace WebApplication1
                             ValidateIssuerSigningKey = true
                         };
                     });
-
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+            //services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -92,12 +97,16 @@ namespace WebApplication1
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            app.UseCors(builder => builder
-                                   .AllowAnyOrigin()
-                                   .AllowAnyMethod()
-                                   .AllowAnyHeader()
-                                   .AllowCredentials());
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                                    .AllowAnyMethod());
+            //app.UseCors(options => options.AllowAnyOrigin());
+            //app.UseCors(builder => builder
+            //                       .AllowAnyOrigin()
+            //                       .AllowAnyMethod()
+            //                       .AllowAnyHeader());
+            //.AllowCredentials());
             app.UseAuthentication();
+            //app.UseAuthorization();
         }
     }
 }
