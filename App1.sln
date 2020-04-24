@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1082
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App1.Android", "App1\App1.Android\App1.Android.csproj", "{0B6A4F16-D5F3-4B89-9886-185803B303B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplom.Mobile.Android", "App1\Diplom.Mobile.Android\Diplom.Mobile.Android.csproj", "{0B6A4F16-D5F3-4B89-9886-185803B303B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App1", "App1\App1\App1.csproj", "{0B3490C4-A82B-4048-8271-90AB81B07308}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Mobile", "App1\Diplom.Mobile\Diplom.Mobile.csproj", "{0B3490C4-A82B-4048-8271-90AB81B07308}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Server", "Diplom.Server\Diplom.Server.csproj", "{8C4F7497-5D02-487E-9CBA-4355AF3911C3}"
 EndProject
