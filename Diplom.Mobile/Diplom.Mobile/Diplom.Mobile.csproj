@@ -49,4 +49,8 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Diplom.Common\Diplom.Common.csproj" />
+  </ItemGroup>
 </Project>

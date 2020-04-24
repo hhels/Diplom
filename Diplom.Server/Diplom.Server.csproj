@@ -17,4 +17,9 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Diplom.Common\Diplom.Common.csproj" />
+  </ItemGroup>
+
 </Project>

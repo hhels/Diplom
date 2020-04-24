@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Diplom.Server.Models
+namespace Diplom.Common.Entities
 {
     public class Content
     {

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Diplom.Common.Models;
 using Diplom.Server.Models;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
@@ -39,12 +41,13 @@ namespace Diplom.Server.Controllers
                 var role = await _userManager.GetRolesAsync(user); // узнаем роль пользователя
 
                 // возвращаем инфу
-                var response = new
+                var response = new AuthResponse
                 {
-                    access_token = token,
-                    user_name = username,
-                    email = user.Email,
-                    role
+                    AccessToken = token,
+                    UserName = username,
+                    Email = user.Email,
+                    UserId = user.Id,
+                    Role = role.First()
                 };
 
                 return Ok(response);
@@ -76,12 +79,14 @@ namespace Diplom.Server.Controllers
             if(result.Succeeded)
             {
                 var token = AuthService.GenerateToken(user);
-
-                var response = new
+                
+                var response = new AuthResponse
                 {
-                    access_token = token,
-                    user_name = login,
-                    email = user.Email
+                    AccessToken = token,
+                    UserName = login,
+                    Email = user.Email,
+                    UserId = user.Id,
+                    Role = RoleNames.User
                 };
 
                 return Ok(response);
