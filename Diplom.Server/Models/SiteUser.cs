@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace WebApplication1.Models
+namespace Diplom.Server.Models
 {
     public class SiteUser : IdentityUser
     {

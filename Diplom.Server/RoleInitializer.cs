@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Diplom.Server.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Serilog;
-using WebApplication1.Models;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace WebApplication1
+namespace Diplom.Server
 {
     public class RoleInitializer
     {
-        public static async Task InitializeAsync(UserManager<SiteUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeAsync(RoleManager<IdentityRole> roleManager)
         {
             const string directorRoleName = "director";
             const string workerRoleName = "worker";
@@ -38,24 +31,6 @@ namespace WebApplication1
                 var userRole = new IdentityRole(userRoleName);
                 await roleManager.CreateAsync(userRole);
             }
-
-            //if (await roleManager.FindByNameAsync("director") == null)
-            //{
-            //    User admin = new User { Email = adminEmail, UserName = adminEmail };
-            //    IdentityResult result = await userManager.CreateAsync(admin, password);
-            //    if (result.Succeeded)
-            //    {
-            //        await userManager.AddToRoleAsync(admin, "admin");
-            //    }
-            //}
-
         }
-
-
-        //    // GET: /<controller>/
-        //    public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }

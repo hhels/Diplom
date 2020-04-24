@@ -1,29 +1,19 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using System.Threading.Tasks;
+using Diplom.Server.Models;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
-using System;
-using System.Threading.Tasks;
-using WebApplication1.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-
-namespace WebApplication1
+namespace Diplom.Server
 {
     public class Program
     {
-        //public static void Main(string[] args)
-        //{
-        //    CreateWebHostBuilder(args).Build().Run();
-        //}
-
-            //создание при запуске ролей пользователей из RoleInitializer
         public static async Task Main(string[] args)
         {
-            //CreateHostBuilder(args).Build();
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -31,18 +21,16 @@ namespace WebApplication1
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<SiteUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    await RoleInitializer.InitializeAsync(rolesManager);
                 }
                 catch (Exception ex)
                 {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while seeding the database.");
+                    Log.ForContext<Program>().Error(ex, "An error occurred while seeding the database.");
                 }
             }
 
-            host.Run();
+            await host.RunAsync();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args)

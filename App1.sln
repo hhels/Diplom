@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App1.Android", "App1\App1.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "App1", "App1\App1\App1.csproj", "{0B3490C4-A82B-4048-8271-90AB81B07308}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{8C4F7497-5D02-487E-9CBA-4355AF3911C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Server", "Diplom.Server\Diplom.Server.csproj", "{8C4F7497-5D02-487E-9CBA-4355AF3911C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

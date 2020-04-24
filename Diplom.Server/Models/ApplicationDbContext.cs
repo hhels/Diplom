@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApplication1.Models
+namespace Diplom.Server.Models
 {
     public class ApplicationDbContext : IdentityDbContext<SiteUser, IdentityRole, string>
     {

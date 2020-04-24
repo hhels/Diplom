@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Diplom.Server.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
 
-namespace WebApplication1.Controllers
+namespace Diplom.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

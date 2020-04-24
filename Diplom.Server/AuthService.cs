@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Diplom.Server.Models;
 using Microsoft.IdentityModel.Tokens;
-using WebApplication1.Models;
 
-namespace WebApplication1
+namespace Diplom.Server
 {
     public static class AuthService
     {
