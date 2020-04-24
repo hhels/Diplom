@@ -38,13 +38,15 @@ namespace WebApplication1.Controllers
                 // ищем сущность этого пользователя
                 var user = await _userManager.FindByNameAsync(username);
                 var token = AuthService.GenerateToken(user); // создаём токен
+                var role = await _userManager.GetRolesAsync(user); // узнаем роль пользователя
 
                 // возвращаем инфу
                 var response = new
                 {
                     access_token = token,
                     user_name = username,
-                    email = user.Email
+                    email = user.Email,
+                    role
                 };
 
                 return Ok(response);

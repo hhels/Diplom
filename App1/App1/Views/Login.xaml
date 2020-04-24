@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="App1.Views.Login"
+             Title="Авторизация">
+    <!--<ContentPage.Resources>
+        <Style TargetType="StackLayout" x:Name="stackLayout">
+
+        </Style>
+    </ContentPage.Resources>-->
+    <!--<ContentPage.Content>
+        <StackLayout>
+            <Label Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand"
+                   TextColor="Blue"
+                   BackgroundColor="Green"/>
+        </StackLayout>
+    </ContentPage.Content>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="7*" />
+        </Grid.RowDefinitions>
+        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
+        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />-->
+        
+        <StackLayout x:Name="menu"  Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
+
+            <Button Text="Вход" />
+            <Button Text="Регистрация" />
+
+        </StackLayout>
+        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+            <Entry x:Name="loginEntry" Placeholder = "Login"  />
+            <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True" />
+            <Label x:Name="textLabel" Text="qwerty"  />
+            <!--FontSize="Large"-->
+            <Button Text="Войти" Clicked="Button_Clicked" Margin="40, 10"/>
+            <Label Text="Нет аккаунта? Зарегистрируйтесь"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
