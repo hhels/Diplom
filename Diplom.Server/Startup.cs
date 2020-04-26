@@ -91,7 +91,7 @@ namespace Diplom.Server
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
 
             app.UseDefaultFiles();

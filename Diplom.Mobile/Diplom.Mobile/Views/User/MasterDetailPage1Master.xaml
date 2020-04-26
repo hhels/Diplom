@@ -40,6 +40,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Выход" HorizontalOptions="End"/>
+        <Button Text="Выход" HorizontalOptions="End" Clicked="Button_Clicked"/>
     </StackLayout>
 </ContentPage>

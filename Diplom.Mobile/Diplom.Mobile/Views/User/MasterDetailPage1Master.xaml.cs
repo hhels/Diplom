@@ -16,5 +16,12 @@ namespace Diplom.Mobile.Views.User
             BindingContext = new MasterDetailPage1MasterViewModel();
             ListView = MenuItemsListView;
         }
+
+        private void Button_Clicked(object sender, System.EventArgs e)
+        {
+            MySettings.Clear();
+            Navigation.PushAsync(new Login());
+
+        }
     }
 }

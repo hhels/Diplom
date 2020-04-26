@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
+//using Android.Gms.Security;
 using Android.OS;
+using System.Net;
 
 namespace Diplom.Mobile.Android
 {
@@ -9,6 +11,14 @@ namespace Diplom.Mobile.Android
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            ServicePointManager.ServerCertificateValidationCallback =
+                (message, certificate, chain, sslPolicyErrors) => true;
+
+            //if (Android.bi)
+            //{
+            //    ProviderInstaller.InstallIfNeeded(ApplicationContext);
+            //}
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

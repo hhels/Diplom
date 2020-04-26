@@ -27,16 +27,19 @@
             <Button Text="Вход" />
             <Button Text="Регистрация" />
         </StackLayout>
-        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
-            <Entry x:Name="firstNameEntry" Placeholder = "Имя"  />
-            <Entry x:Name="lastNameEntry" Placeholder = "Фамилия"  />
-            <Entry x:Name="emailEntry" Placeholder = "Email"  />
-            <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
-            <Entry x:Name="loginEntry" Placeholder = "Login"  />
-            <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True" />
-            <Label x:Name="textLabel" Text="qwert"  />
-            <!--FontSize="Large"-->
-            <Button Text="Зарегестрироваться" />
-        </StackLayout>
+        <ScrollView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
+            <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+                <Entry x:Name="firstNameEntry" Placeholder = "Имя"  />
+                <Entry x:Name="lastNameEntry" Placeholder = "Фамилия"  />
+                <Entry x:Name="emailEntry" Placeholder = "Email"  />
+                <Entry x:Name="telefonEntry" Placeholder = "Телефон"  />
+                <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
+                <Entry x:Name="loginEntry" Placeholder = "Login"  />
+                <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True"  />
+                <Label x:Name="textLabel" Text="qwert"  />
+                <!--FontSize="Large"-->
+                <Button Text="Зарегестрироваться" Clicked="Button_Clicked" />
+            </StackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>

@@ -2,6 +2,6 @@
 {
     public class Constants
     {
-        public const string Endpoint = "https://localhost:5001/api";
+        public const string Endpoint = "http://192.168.1.12:5002";
     }
 }
