@@ -22,4 +22,9 @@
     <ProjectReference Include="..\Diplom.Common\Diplom.Common.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="MyStaticFiles\images\" />
+  </ItemGroup>
+
 </Project>

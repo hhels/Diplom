@@ -15,20 +15,58 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
         <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />-->
 <!--Orientation="Horizontal"-->
-        <StackLayout x:Name="menu"  Spacing="8"  Grid.Column="0" Grid.Row="0" >
-            <Label Font="26" Text="Введите свой отзыв" />
-            <Editor BackgroundColor="#a5d6a7" HeightRequest="100"     />
+        <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
+            
+            <Label Font="24" Text="Введите свой отзыв" />
+            <Editor x:Name="reviewEntry" BackgroundColor="#a5d6a7" HeightRequest="50"/>
             <!--HeightRequest="200"-->
-            <Button Text="Отправить" Clicked="Button_Clicked" Margin="150,5,5,5" />
-
+            <Label Text="Поставте оценку заведению от 1 до 5" HorizontalOptions="Center"/>
+            <!--<Slider x:Name="slider" Minimum="0" Maximum="10" Value="5" ValueChanged="Slider_ValueChanged"/>
+            <Label x:Name="sliderZnach" Text="" FontSize="Large" HorizontalOptions="Center"/>-->
+            <Picker x:Name="picker" Margin="100,0,100,0" >
+                <Picker.Items>
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                    <x:String>5</x:String>
+                </Picker.Items>
+            </Picker>
+            <Button Text="Отправить" Clicked="Button_Clicked" Margin="150,0,5,5" />
         </StackLayout>
+        
         <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
-            <Button Text="Отправить" Clicked="Button_Clicked_1" Margin="150,5,5,5" />
+            <!--<Button Text="Отправить" Clicked="Button_Clicked_1" Margin="150,5,5,5" />-->
+
+            <StackLayout>
+                <!--<Label Text="{Binding Source={x:Reference Name=phonesList}, Path=SelectedItem.Title}"
+            FontSize="Large" />-->
+                <ListView x:Name="reviewList"
+              HasUnevenRows="True"
+              ItemsSource="{Binding Reviewss}"
+              ItemTapped="OnItemTapped">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout>
+                                        <Label Text="{Binding Text}" FontSize="18" />
+                                        <Label Text="{Binding Rating}" />
+                                        <Label Text="{Binding Date}" />
+                                        <Label Text="{Binding UserId}" />
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
         </StackLayout>
     </Grid>
 </ContentPage>

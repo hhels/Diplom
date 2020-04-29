@@ -70,6 +70,7 @@ namespace Diplom.Mobile.Views
             
             if (response.IsSuccessStatusCode)
             {
+                //сохранение данных пользователя
                 var data = JsonConvert.DeserializeObject<AuthResponse>(await response.Content.ReadAsStringAsync());
                 MySettings.Token = data.AccessToken;
                 MySettings.UserName = data.UserName;

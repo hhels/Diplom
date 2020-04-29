@@ -15,7 +15,9 @@ namespace Diplom.Mobile.ViewModels
             MenuItems = new ObservableCollection<DetailPageMenuItem>(new[]
             {
                 new DetailPageMenuItem { Id = 0, Title = "Новости", TargetType = typeof(News) },
-
+                new DetailPageMenuItem { Id = 0, Title = "Отзывы", TargetType = typeof(Reviews) },
+                new DetailPageMenuItem { Id = 0, Title = "Отзывы", TargetType = typeof(Account) },
+                
                 // new DetailPageMenuItem { Id = 1, Title = "Page 2" },
                 // new DetailPageMenuItem { Id = 2, Title = "Page 3" },
                 // new DetailPageMenuItem { Id = 3, Title = "Page 4" },

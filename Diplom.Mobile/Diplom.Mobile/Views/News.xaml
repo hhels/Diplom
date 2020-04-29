@@ -4,11 +4,10 @@
              x:Class="Diplom.Mobile.Views.News">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms! Это новости"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ContentView/>
         </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>
 <!--<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
