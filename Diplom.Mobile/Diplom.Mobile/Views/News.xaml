@@ -2,12 +2,54 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.News">
-    <ContentPage.Content>
-        <StackLayout>
-            <ContentView/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
+        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />
+        Orientation="Horizontal"-->
+        <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
+            <!--<Image x:Name="image1" WidthRequest="300" HeightRequest="200" HorizontalOptions="Center"/>-->
+            <Label Text="это новости тут можно посмотреть новинки" HorizontalOptions="Center"/>
+            <Button Clicked="Button_Clicked"/>
         </StackLayout>
-    </ContentPage.Content>
-    
+
+        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" >
+            <StackLayout>
+                <!--<Label Text="{Binding Source={x:Reference Name=phonesList}, Path=SelectedItem.Title}"
+            FontSize="Large" />-->
+                <ListView x:Name="newsList"
+              HasUnevenRows="True"
+                  
+              ItemsSource="{Binding Contented}"
+                          Margin="10,0,10,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Vertical">
+                                        <Image Source="{Binding Img}"  Aspect="AspectFit" />
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" FontSize="30" />
+                                            <Label Text="{Binding Text}" FontSize="18" />
+                                            <Label Text="{Binding Date}" FontSize="9"  HorizontalOptions="End"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+        </StackLayout>
+    </Grid>
+
 </ContentPage>
 <!--<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"

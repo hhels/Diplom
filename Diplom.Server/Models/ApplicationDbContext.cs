@@ -9,6 +9,9 @@ namespace Diplom.Server.Models
     {
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Content> Contents { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<AdditionMenu> AdditionMenus { get; set; }
+        
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

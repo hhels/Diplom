@@ -35,7 +35,7 @@
                 <Entry x:Name="telefonEntry" Placeholder = "Телефон"  />
                 <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
                 <Entry x:Name="loginEntry" Placeholder = "Login"  />
-                <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True"  />
+                <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True"  MaxLength="25" />
                 <Label x:Name="textLabel" Text="qwert"  />
                 <!--FontSize="Large"-->
                 <Button Text="Зарегестрироваться" Clicked="Button_Clicked" />

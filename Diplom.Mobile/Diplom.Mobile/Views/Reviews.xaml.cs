@@ -33,12 +33,13 @@ namespace Diplom.Mobile.Views
 
         }
 
-        
+
         //private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         //{
-        //    sliderZnach.Text = slider.Value.ToString();
-        //    //if (slider != null)
-        //    //    slider.Text = String.Format("Выбрано: {0:F1}", e.NewValue);
+        //    sliderZnachh.Text = slider.Value.ToString();
+
+        //    if (slider != null)
+        //        sliderZnach.Text = String.Format("Выбрано: {0:F0}", e.NewValue);
         //}
         //private void Picker_SelectedIndexChanged(object sender, EventArgs e)
         //{
@@ -52,7 +53,7 @@ namespace Diplom.Mobile.Views
             {
 
                 Text = reviewEntry.Text,
-                Rating = picker.SelectedIndex + 1,
+                Rating = picker.SelectedIndex + 1, //Convert To int 32 если делать со слайдером
                 Date = DateTime.Now,
                 //UserId = MySettings.UserId,
                 
