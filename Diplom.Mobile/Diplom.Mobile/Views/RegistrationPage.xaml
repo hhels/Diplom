@@ -4,14 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Diplom.Mobile.Views.Registration">
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>-->
+             x:Class="Diplom.Mobile.Views.RegistrationPage">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -20,10 +13,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
-        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
-        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />-->
 
-        <StackLayout x:Name="menu"  Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
+        <StackLayout Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
             <Button Text="Вход" />
             <Button Text="Регистрация" />
         </StackLayout>

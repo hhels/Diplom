@@ -2,13 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.Products">
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -18,10 +11,8 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
+        <StackLayout Spacing="8"  Grid.Column="0" Grid.Row="0" >
             <Label Font="24" Text="Выберите тип блюда" HorizontalOptions="Center" />
-            <!--<Slider x:Name="slider" Minimum="0" Maximum="10" Value="5" ValueChanged="Slider_ValueChanged"/>
-            <Label x:Name="sliderZnach" Text="" FontSize="Large" HorizontalOptions="Center"/>-->
             <Picker x:Name="picker" SelectedIndex="0" SelectedIndexChanged="Picker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Напитки</x:String>
@@ -31,16 +22,13 @@
         </StackLayout>
 
 
-        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
             <StackLayout>
-                <!--<Label Text="{Binding Source={x:Reference Name=phonesList}, Path=SelectedItem.Title}"
-            FontSize="Large" />-->
                 <ListView x:Name="menuList"
-              HasUnevenRows="False"
-              ItemsSource="{Binding Menus}" 
-              RowHeight="180"
-              ItemTapped="MenuList_ItemTapped">
-                    <!--ItemTapped="OnItemTapped"-->
+                          HasUnevenRows="False"
+                          ItemsSource="{Binding Menus}" 
+                          RowHeight="180"
+                          ItemTapped="MenuList_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -50,8 +38,6 @@
                                         <StackLayout>
                                             <Label Text="{Binding Name}" FontSize="21" />
                                             <Label Text="{Binding ShortDescription}" FontSize="17" />
-                                            <!--<Label Text="{Binding Name}" />
-                                            <Label Text="{Binding UserId}" />-->
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
@@ -60,7 +46,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-
         </StackLayout>
     </Grid>
 </ContentPage>

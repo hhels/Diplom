@@ -1,8 +1,5 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Diplom.Mobile
 {
@@ -44,6 +41,5 @@ namespace Diplom.Mobile
             get => AppSettings.GetValueOrDefault(nameof(Role), string.Empty);
             set => AppSettings.AddOrUpdateValue(nameof(Role), value);
         }
-
     }
 }

@@ -16,25 +16,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\Account.xaml">
+    <EmbeddedResource Update="Views\AccountInfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AccountEdit.xaml">
+    <EmbeddedResource Update="Views\EditAccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\AccountPassword.xaml">
+    <EmbeddedResource Update="Views\ChangePasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Login.xaml">
+    <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginChangePassword.xaml">
+    <EmbeddedResource Update="Views\ChangePasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MasterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\News.xaml">
+    <EmbeddedResource Update="Views\NewsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Products.xaml">
@@ -43,26 +40,50 @@
     <EmbeddedResource Update="Views\ProductsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Registration.xaml">
+    <EmbeddedResource Update="Views\RegistrationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Reviews.xaml">
+    <EmbeddedResource Update="Views\ReviewsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\User\MasterDetailPage1.xaml">
+    <EmbeddedResource Update="Views\DetailMenu\MasterDetailPage1.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\User\MasterDetailPage1Detail.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\User\MasterDetailPage1Master.xaml">
+    <EmbeddedResource Update="Views\DetailMenu\MasterDetailPage1Master.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Models\DetailPageMenuItem.cs">
+    <Compile Update="Models\PageMenuItem.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AccountInfoPage.xaml.cs">
+      <DependentUpon>AccountInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EditAccountPage.xaml.cs">
+      <DependentUpon>EditAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangePasswordPage.xaml.cs">
+      <DependentUpon>ChangePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RestorePasswordPage.xaml.cs">
+      <DependentUpon>RestorePasswordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NewsPage.xaml.cs">
+      <DependentUpon>NewsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RegistrationPage.xaml.cs">
+      <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ReviewsPage.xaml.cs">
+      <DependentUpon>ReviewsPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

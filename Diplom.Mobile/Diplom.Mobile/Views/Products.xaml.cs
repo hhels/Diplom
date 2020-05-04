@@ -12,18 +12,18 @@ using Xamarin.Forms.Xaml;
 
 namespace Diplom.Mobile.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Products : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Products : ContentPage
+    {
         public Common.Entities.Menu[] Menus { get; set; }
         public string ProductPage = "1";
 
-        public Products ()
-		{
-			InitializeComponent ();
+        public Products()
+        {
+            InitializeComponent();
             //var picker = Picker.SelectedIndexProperty;
             this.BindingContext = this;
-		}
+        }
 
         protected async override void OnAppearing()
         {
@@ -36,19 +36,18 @@ namespace Diplom.Mobile.Views
             menuList.ItemsSource = Menus;
 
         }
-        
+
         //if (picker = 0)
-        public async  void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        public async void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            picker = (Picker)sender;
-            int selectedIndex = picker.SelectedIndex;
+            var selectedIndex = picker.SelectedIndex;
             var x = "menuDrinkGet";
 
-            if (selectedIndex == 0)
+            if(selectedIndex == 0)
             {
                 x = "menuFoodGet";
             }
-            else if (selectedIndex == 1)
+            else if(selectedIndex == 1)
             {
                 x = "menuDrinkGet";
             }
@@ -63,11 +62,11 @@ namespace Diplom.Mobile.Views
         private async void MenuList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             Common.Entities.Menu selectedProduct = e.Item as Common.Entities.Menu;
-            if (selectedProduct != null)
+            if(selectedProduct != null)
+            {
                 ProductPage = "2";
+            }
             await Navigation.PushAsync(new ProductsPage(selectedProduct));
-            //await DisplayAlert("Выбранная модель", $"{selectedProduct.MenuId} --- {ProductsPage}", "OK");
-
         }
     }
 }

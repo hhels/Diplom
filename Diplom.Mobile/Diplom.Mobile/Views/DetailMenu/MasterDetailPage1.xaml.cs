@@ -3,7 +3,7 @@ using Diplom.Mobile.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Diplom.Mobile.Views.User
+namespace Diplom.Mobile.Views.DetailMenu
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterDetailPage1 : MasterDetailPage
@@ -16,7 +16,7 @@ namespace Diplom.Mobile.Views.User
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as DetailPageMenuItem;
+            var item = e.SelectedItem as PageMenuItem;
             if(item == null)
             {
                 return;

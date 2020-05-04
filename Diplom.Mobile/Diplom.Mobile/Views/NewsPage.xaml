@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.News">
+             x:Class="Diplom.Mobile.Views.NewsPage">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -10,23 +10,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
-        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />
-        Orientation="Horizontal"-->
         <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
-            <!--<Image x:Name="image1" WidthRequest="300" HeightRequest="200" HorizontalOptions="Center"/>-->
             <Label Text="это новости тут можно посмотреть новинки" HorizontalOptions="Center"/>
             <Button Clicked="Button_Clicked"/>
         </StackLayout>
 
         <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" >
             <StackLayout>
-                <!--<Label Text="{Binding Source={x:Reference Name=phonesList}, Path=SelectedItem.Title}"
-            FontSize="Large" />-->
                 <ListView x:Name="newsList"
-              HasUnevenRows="True"
-                  
-              ItemsSource="{Binding Contented}"
+                          HasUnevenRows="True"
+                          ItemsSource="{Binding Contented}"
                           Margin="10,0,10,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -51,24 +44,3 @@
     </Grid>
 
 </ContentPage>
-<!--<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                  xmlns:local="clr-namespace:MasterDetailPageNavigation;assembly=MasterDetailPageNavigation"
-                  x:Class="MasterDetailPageNavigation.MainPage">
-    <MasterDetailPage.Master>
-        --><!--<local:MasterPage x:Name="masterPage" />--><!--
-        <ContentPage Title="Master" BackgroundColor="LightGray">
-            <ContentPage.Content>
-                <StackLayout>
-                    <Button Text="asddf"/>
-                </StackLayout>
-            </ContentPage.Content>
-
-        </ContentPage>
-    </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
-        <NavigationPage>
-
-        </NavigationPage>
-    </MasterDetailPage.Detail>
-</MasterDetailPage>-->

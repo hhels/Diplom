@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Diplom.Mobile.Views.User
+namespace Diplom.Mobile.Views.DetailMenu
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterDetailPage1Master : ContentPage
@@ -13,15 +13,14 @@ namespace Diplom.Mobile.Views.User
         {
             InitializeComponent();
 
-            BindingContext = new MasterDetailPage1MasterViewModel();
+            BindingContext = new DetailMenuViewModel();
             ListView = MenuItemsListView;
         }
 
         private void Button_Clicked(object sender, System.EventArgs e)
         {
             MySettings.Clear();
-            Navigation.PushAsync(new Login());
-
+            Navigation.PushAsync(new LoginPage());
         }
     }
 }

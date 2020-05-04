@@ -2,13 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.ProductsPage">
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -18,30 +11,23 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
-        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />
-        Orientation="Horizontal"-->
         <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
             <Image x:Name="image1" WidthRequest="300" HeightRequest="200" HorizontalOptions="Center"/>
         </StackLayout>
 
         <ScrollView Grid.Column="0" Grid.Row="1">
             <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="1" >
-            <Label x:Name="nameProd" FontSize="34" />
-            <Label x:Name="LongDescription" FontSize="16" />
+                <Label x:Name="nameProd" FontSize="34" />
+                <Label x:Name="LongDescription" FontSize="16" />
             </StackLayout>
         </ScrollView>
 
         <StackLayout x:Name="data" Grid.Column="0" Grid.Row="2" >
-            <!--<Button Text="Отправить" Clicked="Button_Clicked_1" Margin="150,5,5,5" />-->
-
             <StackLayout>
-                <!--<Label Text="{Binding Source={x:Reference Name=phonesList}, Path=SelectedItem.Title}"
-            FontSize="Large" />-->
                 <ListView x:Name="additionList"
-              HasUnevenRows="False"
-              RowHeight="90"      
-              ItemsSource="{Binding Producted}"
+                          HasUnevenRows="False"
+                          RowHeight="90"      
+                          ItemsSource="{Binding Producted}"
                           Margin="10,0,10,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -58,7 +44,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-
         </StackLayout>
     </Grid>
 </ContentPage>

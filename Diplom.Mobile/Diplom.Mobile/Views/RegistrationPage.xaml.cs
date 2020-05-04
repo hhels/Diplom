@@ -1,28 +1,25 @@
 ﻿using Diplom.Common.Bodies;
 using Diplom.Common.Models;
-using Diplom.Mobile.Views.User;
+using Diplom.Mobile.Views.DetailMenu;
 using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using System.Linq;
-
 namespace Diplom.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Registration : ContentPage
+    public partial class RegistrationPage : ContentPage
     {
-        public Registration()
+        public RegistrationPage()
         {
             InitializeComponent();
-
         }
 
         private async void Button_Clicked(object sender, System.EventArgs e)
         {
-            if (loginEntry.Text == null || passwordEntry.Text == null || emailEntry.Text == null || firstNameEntry.Text == null || lastNameEntry.Text == null || yearsEntry.Text == null)
+            if(loginEntry.Text == null || passwordEntry.Text == null || emailEntry.Text == null || firstNameEntry.Text == null || lastNameEntry.Text == null || yearsEntry.Text == null)
             {
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
                 return;
@@ -30,45 +27,37 @@ namespace Diplom.Mobile.Views
 
             var body = new RegisterBody()
             {
-                
                 Login = loginEntry.Text,
                 Password = passwordEntry.Text,
                 Email = emailEntry.Text,
                 FirstName = firstNameEntry.Text,
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
-
             };
 
-
-
-
-           // int count = body.Email.Split("@").First().Length;
-            if (!body.Email.Contains("@"))
+            if(!body.Email.Contains("@")) //TODO:
             {
-                await DisplayAlert("Ошибка", "Не коректный Email", "cancel");
+                await DisplayAlert("Ошибка", "Некоректный email", "cancel");
                 return;
             }
-            var a = body.Year;
-            if (a < 1 || a > 150)
+
+            if(body.Year < 16 || body.Year > 150)
             {
-                await DisplayAlert("Ошибка", "Не коректный возраст", "cancel");
+                await DisplayAlert("Ошибка", "Некоректный возраст", "cancel");
                 return;
             }
-            if (body.Password.Length <= 6)
+            if(body.Password.Length <= 6)
             {
                 await DisplayAlert("Ошибка", "Длина пароля должна быть больше 6", "cancel");
                 return;
             }
-
 
             var response = await Constants.Endpoint
                 .AppendPathSegments("api", "account", "register") // добавляет к ендпоинт
                 .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                 .PostJsonAsync(body);  //  https://localhost:5001/api/account/login?login=1&password=1234567
 
-            
-            if (response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode)
             {
                 //сохранение данных пользователя
                 var data = JsonConvert.DeserializeObject<AuthResponse>(await response.Content.ReadAsStringAsync());
@@ -78,7 +67,7 @@ namespace Diplom.Mobile.Views
                 MySettings.UserId = data.UserId;
                 MySettings.Role = data.Role;
 
-                if (MySettings.Role == "user")
+                if(MySettings.Role == "user")
                 {
                     await Navigation.PushAsync(new MasterDetailPage1());
                 }
@@ -91,13 +80,11 @@ namespace Diplom.Mobile.Views
                 //    await DisplayAlert("a", MySettings.Role, "cancel");
                 //}
             }
-            
             else
             {
                 var error = await response.Content.ReadAsStringAsync();
                 await DisplayAlert("a", error, "cancel");
             }
-
         }
     }
 }

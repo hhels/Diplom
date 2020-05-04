@@ -3,38 +3,33 @@ using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Diplom.Mobile.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AccountEdit : ContentPage
-	{
-		public AccountEdit ()
-		{
-			InitializeComponent ();
-		}
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class AccountInfoPage : ContentPage
+    {
+        public AccountInfoPage()
+        {
+            InitializeComponent();
+        }
 
         protected async override void OnAppearing()
         {
             //var token = MySettings.Token;
-            var UserResponses = await Constants.Endpoint
+            var userResponses = await Constants.Endpoint
                             .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
                             .WithOAuthBearerToken(MySettings.Token) //передача токена
                             .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                             .GetJsonAsync<UserResponse>();  //  https://192.168.1.12:5002/api/account/userGet
 
-            loginEntry.Placeholder = UserResponses.Login;
-            firstNameEntry.Placeholder = UserResponses.FirstName;
-            lastNameEntry.Placeholder = UserResponses.LastName;
-            yearsEntry.Text = UserResponses.Year.ToString();
-            emailEntry.Text = UserResponses.Email;
+            loginEntry.Text = userResponses.Login;
+            firstNameEntry.Text = userResponses.FirstName;
+            lastNameEntry.Text = userResponses.LastName;
+            yearsEntry.Text = userResponses.Year.ToString();
+            emailEntry.Text = userResponses.Email;
         }
 
         private async void Button_Clicked(object sender, System.EventArgs e)
@@ -50,17 +45,31 @@ namespace Diplom.Mobile.Views
 
             var response = await Constants.Endpoint
                .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
+               .WithOAuthBearerToken(MySettings.Token) //передача токена
                .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                .PostJsonAsync(body);  //  https://192.168.1.12:5002/api/account/userEdit
 
-            if (response.IsSuccessStatusCode)
+            if(response.IsSuccessStatusCode)
             {
+                //заносим данные в модель
                 var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
+                //обновляем данные на странице
+                loginEntry.Text = data.Login;
+                firstNameEntry.Text = data.FirstName;
+                lastNameEntry.Text = data.LastName;
+                yearsEntry.Text = data.Year.ToString();
+                emailEntry.Text = data.Email;
+                await DisplayAlert("ОК", "Данные успешно обновлены", "cancel");
             }
             else
             {
                 await DisplayAlert("ошибка", "Что то пошло не так при обновлении", "cancel");
             }
+        }
+
+        private async void Button_Clicked_1(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ChangePasswordPage());
         }
     }
 }

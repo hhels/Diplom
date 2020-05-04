@@ -1,6 +1,5 @@
 ﻿using Diplom.Mobile.Views;
-using Diplom.Mobile.Views.User;
-using Flurl.Http;
+using Diplom.Mobile.Views.DetailMenu;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,18 +12,14 @@ namespace Diplom.Mobile
         {
             InitializeComponent();
 
-             if (string.IsNullOrWhiteSpace(MySettings.Token))
+            if(string.IsNullOrWhiteSpace(MySettings.Token))
             {
-                MainPage = new NavigationPage(new Login());
+                MainPage = new NavigationPage(new LoginPage());
             }
             else
             {
-                MainPage =  new NavigationPage(new MasterDetailPage1());
+                MainPage = new NavigationPage(new MasterDetailPage1());
             }
-            new NavigationPage(new Login());
-            //MainPage = new NavigationPage(new Account());
-            //FlurlHttp.ConfigureClient("https://192.168.1.12:5002", cli =>
-            //cli.Settings.HttpClientFactory = new UntrustedCertClientFactory());
         }
 
         protected override void OnStart()
