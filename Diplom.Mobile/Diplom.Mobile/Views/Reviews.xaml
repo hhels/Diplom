@@ -27,9 +27,9 @@
             <!--HeightRequest="200"-->
             <Label Text="Поставте оценку заведению от 1 до 5" HorizontalOptions="Center"/>
             
-            <Slider x:Name="slider" Minimum="0" Maximum="10" Value="5" ValueChanged="Slider_ValueChanged"/>
+            <!--<Slider x:Name="slider" Minimum="0" Maximum="10" Value="5" ValueChanged="Slider_ValueChanged"/>
             <Label x:Name="sliderZnach" Text="" FontSize="Large" HorizontalOptions="Center"/>
-            <Label x:Name="sliderZnachh" Text="" FontSize="Large" HorizontalOptions="Center"/>
+            <Label x:Name="sliderZnachh" Text="" FontSize="Large" HorizontalOptions="Center"/>-->
             
             <Picker x:Name="picker" Margin="100,0,100,0" >
                 <Picker.Items>

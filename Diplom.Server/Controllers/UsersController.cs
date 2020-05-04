@@ -23,5 +23,15 @@ namespace Diplom.Server.Controllers
         {
             return await _context.Users.ToArrayAsync();
         }
+        //Востановить пароль
+        //[HttpPost("PasswordEdit")]
+        //public async Task<ActionResult> EditPassword(string password, string newPassword)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//найти id пользователя по токену
+        //    SiteUser existedUser = await _userManager.FindByIdAsync(userId); //найти строчку с пользователем
+        //    if (existedUser != null)
+        //    {
+        //    }
+        //}
     }
 }

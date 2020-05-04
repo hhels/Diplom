@@ -1,8 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Diplom.Common.Bodies;
+using Diplom.Common.Entities;
 using Diplom.Common.Models;
 using Diplom.Server.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +38,7 @@ namespace Diplom.Server.Controllers
                                                                 true, false);
 
             // если всё ок
-            if(auth.Succeeded)
+            if (auth.Succeeded)
             {
                 // ищем сущность этого пользователя
                 var user = await _userManager.FindByNameAsync(data.Login);
@@ -60,7 +64,7 @@ namespace Diplom.Server.Controllers
 
         [HttpPost("register")]
         //public async Task<IActionResult> Register(string login, string password, string email, string firstName, string lastName, int year)
-        
+
         public async Task<IActionResult> Register([FromBody] RegisterBody data)
         {
 
@@ -105,6 +109,96 @@ namespace Diplom.Server.Controllers
 
             // а если нет, то выдаёт ошибки
             return BadRequest("Произошла ошибка во время создания пользователя"); //TODO:
+        }
+
+
+        //получение данных пользователя для изменения
+        [HttpGet("userGet")]
+        [Authorize]
+        public async Task<ActionResult> SiteUser()
+        {
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);//найти id пользователя по токену
+            var existedUser = await _userManager.FindByIdAsync(user);
+            var data = new UserResponse
+            {
+                Email = existedUser.Email,
+                Login = existedUser.UserName,
+                FirstName = existedUser.FirstName,
+                LastName = existedUser.LastName,
+                Year = existedUser.Year,
+                PhoneNumber = existedUser.PhoneNumber
+            };
+            return Ok(data);
+        }
+        //изменение данных пользователя
+        [HttpPost("userEdit")]
+        [Authorize]
+        public async Task<ActionResult> EditUser([FromBody] UserResponse body)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//найти id пользователя по токену
+            SiteUser existedUser = await _userManager.FindByIdAsync(userId); //найти строчку с пользователем
+
+            existedUser.UserName = body.Login;
+            existedUser.FirstName = body.FirstName;
+            existedUser.LastName = body.LastName;
+            existedUser.Year = body.Year;
+            existedUser.Email = body.Email;
+            //existedUser.PhoneNumber = body.PhoneNumber;
+
+            var result = await _userManager.UpdateAsync(existedUser);
+            if (result.Succeeded)
+            {
+                var newBody = new UserResponse
+                {
+                    Email = existedUser.Email,
+                    Login = existedUser.UserName,
+                    FirstName = existedUser.FirstName,
+                    LastName = existedUser.LastName,
+                    Year = existedUser.Year,
+                    //PhoneNumber = existedUser.PhoneNumber
+
+                };
+                return Ok(newBody);
+            }
+            else
+            {
+
+                return BadRequest("Произошла ошибка во время изменения данных");
+            }
+        }
+
+        // Изменение пароля
+        [HttpPost("PasswordEdit")]
+        [Authorize]
+        public async Task<ActionResult> EditPassword(string password, string newPassword)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);//найти id пользователя по токену
+            SiteUser existedUser = await _userManager.FindByIdAsync(userId); //найти строчку с пользователем
+            if (existedUser != null)
+            {
+                IdentityResult result =
+                await _userManager.ChangePasswordAsync(existedUser, password, newPassword);
+                if (result.Succeeded)
+                {
+                    var token = AuthService.GenerateToken(existedUser); // создаём токен
+                    // возвращаем инфу
+                    var response = new AuthResponse
+                    {
+                        AccessToken = token,
+                    };
+
+                    return Ok(response);
+                   // return Ok("Пользователь успешно обновлен");
+                }
+                else
+                {
+                    return BadRequest("Что то пошло не так при обновлении");
+                }
+            }
+            else
+            {
+                return BadRequest("Пользователь не найден");
+            }
         }
     }
 }

@@ -1,15 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.Account"
-             Title="Аккаунт">
-    <!--<ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>-->
+             x:Class="Diplom.Mobile.Views.AccountEdit">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -18,15 +10,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--<BoxView Color="Red" Grid.Column="0" Grid.Row="0" />
-        <BoxView Color="Black" Grid.Column="0" Grid.Row="1" />-->
-
-        <!--<StackLayout x:Name="menu"  Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
-            --><!--<Button Text="Вход" />
-            <Button Text="Регистрация" />--><!--
-            <Label Text="На данной странице вы можете изменить ваши данные в системе" Margin="20"/>
-            
-        </StackLayout>-->
 
         <StackLayout x:Name="menu"  Grid.Column="0" Grid.Row="0"  Margin="10">
             <!--<Button Text="Вход" />
@@ -36,25 +19,25 @@
         </StackLayout>
 
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="0,10,0,0">
-        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+            <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
 
                 <Label Text="Ваше логин" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="loginEntry"   />
+                <Entry x:Name="loginEntry" Placeholder = "Login"  />
 
                 <Label Text="Ваше имя" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="firstNameEntry"   />
-            
+                <Entry x:Name="firstNameEntry" Placeholder = "Имя"  />
+
                 <Label Text="Ваша фамилия" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="lastNameEntry"    />
-            
+                <Entry x:Name="lastNameEntry" Placeholder = "Фамилия"   />
+
                 <Label Text="Ваш возраст" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="yearsEntry"   />
+                <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
 
                 <Label Text="Ваш Email" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="emailEntry"   />
+                <Entry x:Name="emailEntry" Placeholder = "Email"  />
 
-            
-            
+
+
                 <Label Text="Ваш телефон" Margin="0, 5, 0, 0"/>
                 <Entry x:Name="telefonEntry" Placeholder = "Телефон"  />
 
@@ -63,13 +46,11 @@
 
                 <Label Text="Повторите пароль" Margin="0, 5, 0, 0"/>
                 <Entry x:Name="passworAgaindEntry"  Placeholder = "Confirm password" IsPassword ="True" />
-            
-            <Label x:Name="textLabel" Text="qwert"  />
-            <!--FontSize="Large"-->
-            <Button Text="Изменить данные" Clicked="Button_Clicked"/>
-            <Button Text="Изменить пароль" Clicked="Button_Clicked_1"/>
-            
-        </StackLayout>
+
+                <Label x:Name="textLabel" Text="qwert"  />
+                <!--FontSize="Large"-->
+                <Button Text="Изменить данные" Clicked="Button_Clicked"/>
+            </StackLayout>
         </ScrollView>
     </Grid>
 </ContentPage>
