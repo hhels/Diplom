@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Diplom.Common.Entities;
+using Diplom.Common.Models;
 using Diplom.Server.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,34 +14,28 @@ namespace Diplom.Server.Controllers
     public class MenuController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
+
         public MenuController(ApplicationDbContext context)
         {
             _db = context;
         }
-        [HttpGet("menuFoodGet")]
-        public async Task<ActionResult<IEnumerable<Menu>>> Get()
+
+        [HttpGet("menuGet")]
+        public async Task<ActionResult<IEnumerable<Menu>>> Get(MenuType type)
         {
-       
-            var menus = await _db.Menus.Where(x => x.Type == 1).ToListAsync();
-            menus.ForEach(x => x.Img = string.Format("http://192.168.1.12:5002/images/{0}", x.Img));
+            var menus = await _db.Menus.Where(x => x.Type == type).ToArrayAsync();
+            foreach(var menu in menus)
+            {
+                menu.Img = string.Format("http://192.168.1.12:5002/images/{0}", menu.Img);
+            }
             return menus;
         }
 
-        [HttpGet("menuDrinkGet")]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetDrink()
-        {
-
-            var menus = await _db.Menus.Where(x => x.Type == 0).ToListAsync();
-            menus.ForEach(x => x.Img = string.Format("http://192.168.1.12:5002/images/{0}", x.Img));
-            return menus;
-        }
         [HttpGet("menuAdditionGet")]
-        //public async Task<ActionResult <IEnumerable<Menu>>> GetAddition()
-        public async Task<ActionResult<IEnumerable<AdditionMenu>>> Addition(int menuId)
+        public async Task<ActionResult> Addition(int menuId)
         {
-            var Addition = await _db.AdditionMenus.Where(x => x.MenuId == menuId).ToListAsync();
-            return Ok(Addition);
+            var additions = await _db.AdditionMenus.Where(x => x.MenuId == menuId).ToArrayAsync();
+            return Ok(additions);
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diplom.Common.Models
+﻿namespace Diplom.Common.Models
 {
     public class UserResponse
     {
@@ -12,6 +8,5 @@ namespace Diplom.Common.Models
         public int Year { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        
     }
 }

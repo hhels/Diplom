@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diplom.Common.Bodies
+﻿namespace Diplom.Common.Bodies
 {
     public class AuthBody
     {

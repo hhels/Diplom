@@ -16,8 +16,7 @@ namespace Diplom.Server.Controllers
         {
             _context = context;
         }
-
-        // GET: api/<controller>
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SiteUser>>> Get()
         {

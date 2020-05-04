@@ -8,27 +8,23 @@ namespace Diplom.Server
     {
         public static async Task InitializeAsync(RoleManager<IdentityRole> roleManager)
         {
-            const string directorRoleName = "director";
-            const string workerRoleName = "worker";
-            const string userRoleName = "user";
-
-            var isDirectorExists = await roleManager.RoleExistsAsync(directorRoleName);
-            var isWorkerExists = await roleManager.RoleExistsAsync(workerRoleName);
-            var isUserExists = await roleManager.RoleExistsAsync(userRoleName);
+            var isDirectorExists = await roleManager.RoleExistsAsync(RoleNames.Director);
+            var isWorkerExists = await roleManager.RoleExistsAsync(RoleNames.Worker);
+            var isUserExists = await roleManager.RoleExistsAsync(RoleNames.User);
 
             if (!isDirectorExists)
             {
-                var directorRole = new IdentityRole(directorRoleName);
+                var directorRole = new IdentityRole(RoleNames.Director);
                 await roleManager.CreateAsync(directorRole);
             }
             if (!isWorkerExists)
             {
-                var workerRole = new IdentityRole(workerRoleName);
+                var workerRole = new IdentityRole(RoleNames.Worker);
                 await roleManager.CreateAsync(workerRole);
             }
             if (!isUserExists)
             {
-                var userRole = new IdentityRole(userRoleName);
+                var userRole = new IdentityRole(RoleNames.User);
                 await roleManager.CreateAsync(userRole);
             }
         }

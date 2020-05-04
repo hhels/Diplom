@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Diplom.Common.Models;
 
 namespace Diplom.Common.Entities
 {
@@ -11,7 +9,6 @@ namespace Diplom.Common.Entities
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public string Img { get; set; }
-        public int Type { get; set; }
-
+        public MenuType Type { get; set; }
     }
 }

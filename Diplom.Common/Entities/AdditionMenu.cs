@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diplom.Common.Entities
+﻿namespace Diplom.Common.Entities
 {
     public class AdditionMenu
     {
