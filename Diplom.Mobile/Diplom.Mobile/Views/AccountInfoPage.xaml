@@ -12,43 +12,33 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackLayout x:Name="menu"  Grid.Column="0" Grid.Row="0"  Margin="10">
+        <StackLayout Grid.Column="0" Grid.Row="0"  Margin="10">
             <Label Text="На данной странице вы можете изменить ваши данные в системе" Margin="10"/>
         </StackLayout>
 
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="0,10,0,0">
-            <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+            <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
 
                 <Label Text="Ваше логин" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="loginEntry"   />
+                <Entry x:Name="loginEntry" />
 
                 <Label Text="Ваше имя" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="firstNameEntry"   />
+                <Entry x:Name="firstNameEntry" />
 
                 <Label Text="Ваша фамилия" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="lastNameEntry"    />
+                <Entry x:Name="lastNameEntry" />
 
                 <Label Text="Ваш возраст" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="yearsEntry"   />
+                <Entry x:Name="yearsEntry" />
 
                 <Label Text="Ваш Email" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="emailEntry"   />
-
+                <Entry x:Name="emailEntry" />
 
                 <Label Text="Ваш телефон" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="telefonEntry" Placeholder = "Телефон"  />
+                <Entry x:Name="telefonEntry" Placeholder="Телефон" />
 
-                <Label Text="Ваш пароль" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True" />
-
-                <Label Text="Повторите пароль" Margin="0, 5, 0, 0"/>
-                <Entry x:Name="passworAgaindEntry"  Placeholder = "Confirm password" IsPassword ="True" />
-
-                <Label x:Name="textLabel" Text="qwert"  />
-                <!--FontSize="Large"-->
                 <Button Text="Изменить данные" Clicked="Button_Clicked"/>
                 <Button Text="Изменить пароль" Clicked="Button_Clicked_1"/>
-
             </StackLayout>
         </ScrollView>
     </Grid>

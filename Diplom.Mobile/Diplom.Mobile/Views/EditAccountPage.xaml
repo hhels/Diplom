@@ -33,8 +33,6 @@
                 <Label Text="Ваш Email" Margin="0, 5, 0, 0"/>
                 <Entry x:Name="emailEntry" Placeholder = "Email"  />
 
-
-
                 <Label Text="Ваш телефон" Margin="0, 5, 0, 0"/>
                 <Entry x:Name="telefonEntry" Placeholder = "Телефон"  />
 
@@ -43,8 +41,6 @@
 
                 <Label Text="Повторите пароль" Margin="0, 5, 0, 0"/>
                 <Entry x:Name="passworAgaindEntry"  Placeholder = "Confirm password" IsPassword ="True" />
-
-                <Label x:Name="textLabel" Text="qwert"  />
 
                 <Button Text="Изменить данные" Clicked="Button_Clicked"/>
             </StackLayout>

@@ -1,37 +1,40 @@
-﻿using Diplom.Common.Entities;
+﻿using System;
+using System.Linq;
+using Diplom.Common.Entities;
 using Diplom.Mobile.Views;
 using Diplom.Mobile.Views.DetailMenu;
-using System;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace Diplom.Mobile
 {
     public partial class App : Application
     {
-        public const string DBFILENAME = "clientapp.db";
         public App()
         {
             InitializeComponent();
 
-            string dbPath = DependencyService.Get<IPath>().GetDatabasePath(DBFILENAME);
-            using (var db = new ApplicationContext(dbPath))
+            using(var db = new ApplicationContext())
             {
                 // Создаем бд, если она отсутствует
                 db.Database.EnsureCreated();
-                if (db.Review.Count() == 0)
+                if(!db.Review.Any())
                 {
-                   // string dateInput = "Jan 1, 2001";
-                    //string dateInputt = "Jan 5, 2005";
-                    db.Review.Add(new Review { Text = "пывапьыждвьапждфвьапдфвпждапь", Rating = 4,  Date = DateTime.Parse("11.11.2001"), UserId = "sssss" });
-                    db.Review.Add(new Review { Text = "qweqweqweqweqweqweqweqweqweqwe", Rating = 5, Date = DateTime.Parse("09.09.2009"), UserId = "rrrrr" });
+                    db.Review.Add(new Review
+                    {
+                        Text = "пывапьыждвьапждфвьапдфвпждапь", Rating = 4, Date = DateTime.Parse("11.11.2001"), UserId = "sssss"
+                    });
+                    db.Review.Add(new Review
+                    {
+                        Text = "qweqweqweqweqweqweqweqweqweqwe", Rating = 5, Date = DateTime.Parse("09.09.2009"), UserId = "rrrrr"
+                    });
                     db.SaveChanges();
                 }
             }
 
-            if (string.IsNullOrWhiteSpace(MySettings.Token))
+            if(string.IsNullOrWhiteSpace(MySettings.Token))
             {
                 MainPage = new NavigationPage(new LoginPage());
             }

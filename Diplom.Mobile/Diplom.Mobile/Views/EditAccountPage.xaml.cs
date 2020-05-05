@@ -1,13 +1,7 @@
-﻿using Diplom.Common.Models;
-using Flurl;
+﻿using System;
+using Diplom.Common.Models;
 using Flurl.Http;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,22 +15,22 @@ namespace Diplom.Mobile.Views
             InitializeComponent();
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            var UserResponses = await RequestBuilder.Create()
-                            .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
-                            .GetJsonAsync<UserResponse>();  //  https://192.168.1.12:5002/api/account/userGet
+            var userResponse = await RequestBuilder.Create()
+                                                    .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
+                                                    .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
 
-            loginEntry.Placeholder = UserResponses.Login;
-            firstNameEntry.Placeholder = UserResponses.FirstName;
-            lastNameEntry.Placeholder = UserResponses.LastName;
-            yearsEntry.Text = UserResponses.Year.ToString();
-            emailEntry.Text = UserResponses.Email;
+            loginEntry.Placeholder = userResponse.Login;
+            firstNameEntry.Placeholder = userResponse.FirstName;
+            lastNameEntry.Placeholder = userResponse.LastName;
+            yearsEntry.Text = userResponse.Year.ToString();
+            emailEntry.Text = userResponse.Email;
         }
 
-        private async void Button_Clicked(object sender, System.EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            var body = new UserResponse()
+            var body = new UserResponse
             {
                 Login = loginEntry.Text,
                 Email = emailEntry.Text,
@@ -46,18 +40,17 @@ namespace Diplom.Mobile.Views
             };
 
             var response = await RequestBuilder.Create()
-               .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
-               .PostJsonAsync(body);  //  https://192.168.1.12:5002/api/account/userEdit
+                                               .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
+                                               .PostJsonAsync(body); //  https://192.168.1.12:5002/api/account/userEdit
 
-            if(response.IsSuccessStatusCode)
-            {
-                //TODO: шо это такое?
-                var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
-            }
-            else
+            if(!response.IsSuccessStatusCode)
             {
                 await DisplayAlert("ошибка", "Что то пошло не так при обновлении", "cancel");
+                return;
             }
+
+            //TODO: шо это такое?
+            var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
         }
     }
 }

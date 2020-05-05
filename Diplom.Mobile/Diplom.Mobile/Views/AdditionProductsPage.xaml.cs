@@ -1,7 +1,6 @@
-﻿using Flurl;
-using Flurl.Http;
-using System;
+﻿using System;
 using Diplom.Common.Entities;
+using Flurl.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,14 +10,15 @@ namespace Diplom.Mobile.Views
     public partial class AdditionProductsPage : ContentPage
     {
         public AdditionMenu[] AdditionMenus { get; set; }
-        public Common.Entities.Product Product { get; set; }
-        public AdditionProductsPage(Common.Entities.Product product)
+        public Product Product { get; set; }
+
+        public AdditionProductsPage(Product product)
         {
             InitializeComponent();
             Product = product;
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             await DisplayAlert("Выбранная модель", $"{Product.ProductId} --- eeee", "OK");
 
@@ -27,9 +27,9 @@ namespace Diplom.Mobile.Views
             LongDescription.Text = Product.LongDescription;
 
             AdditionMenus = await RequestBuilder.Create()
-                            .AppendPathSegments("api", "product", "productAdditionGet")
-                            .SetQueryParam("menuId", Product.ProductId)
-                            .GetJsonAsync<AdditionMenu[]>();  //  http://192.168.1.12:5002/api/menu/menuGet
+                                                .AppendPathSegments("api", "product", "productAdditionGet")
+                                                .SetQueryParam("menuId", Product.ProductId)
+                                                .GetJsonAsync<AdditionMenu[]>(); //  http://192.168.1.12:5002/api/menu/menuGet
             additionList.ItemsSource = AdditionMenus;
         }
     }

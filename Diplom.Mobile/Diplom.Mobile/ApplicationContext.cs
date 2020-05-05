@@ -1,22 +1,22 @@
 ﻿using Diplom.Common.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Xamarin.Forms;
 
 namespace Diplom.Mobile
 {
-    class ApplicationContext : DbContext
+    internal class ApplicationContext : DbContext
     {
-        //Через конструктор объект этого класса получает в переменную _databasePath путь к базе данных
-        private string _databasePath;
-
         public DbSet<Product> Menu { get; set; }
+
         public DbSet<Review> Review { get; set; }
 
-        public ApplicationContext(string databasePath)
+        //Через конструктор объект этого класса получает в переменную _databasePath путь к базе данных
+        private readonly string _databasePath;
+
+        public ApplicationContext()
         {
-            _databasePath = databasePath;
+            const string dbFileName = "clientapp.db";
+            _databasePath = DependencyService.Get<IPath>().GetDatabasePath(dbFileName);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

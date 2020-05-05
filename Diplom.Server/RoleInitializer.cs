@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Diplom.Common;
 using Diplom.Server.Models;
 using Microsoft.AspNetCore.Identity;
 

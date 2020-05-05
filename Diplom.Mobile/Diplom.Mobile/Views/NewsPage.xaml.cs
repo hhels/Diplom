@@ -1,7 +1,7 @@
-﻿using Diplom.Common.Entities;
-using Flurl;
-using Flurl.Http;
+﻿using System;
 using System.Linq;
+using Diplom.Common.Entities;
+using Flurl.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,24 +10,26 @@ namespace Diplom.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class NewsPage : ContentPage
     {
-        public Content[] Contented { get; set; }
+        public Content[] News { get; set; }
+
         public NewsPage()
         {
             InitializeComponent();
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            Contented = await RequestBuilder.Create()
-                           .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
-                           .GetJsonAsync<Content[]>();  //  http://192.168.1.12:5002/api/content/contentGet
+            News = await RequestBuilder.Create()
+                                            .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
+                                            .GetJsonAsync<Content[]>(); //  http://192.168.1.12:5002/api/content/contentGet
 
-            var sortList = Contented.OrderByDescending(x => x.ContentId).ToList();
+            var sortList = News.OrderByDescending(x => x.ContentId).ToList();
             newsList.ItemsSource = sortList;
         }
-        private void Button_Clicked(object sender, System.EventArgs e)
+
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            var sortList = Contented.OrderByDescending(x => x.ContentId);
+            var sortList = News.OrderByDescending(x => x.ContentId);
             newsList.ItemsSource = sortList;
         }
     }

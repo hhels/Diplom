@@ -1,7 +1,4 @@
 ﻿using Flurl.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Diplom.Mobile
 {
@@ -13,7 +10,7 @@ namespace Diplom.Mobile
         {
             if(_client is null)
             {
-                _client = new FlurlClient()
+                _client = new FlurlClient
                 {
                     BaseUrl = Constants.Endpoint
                 };

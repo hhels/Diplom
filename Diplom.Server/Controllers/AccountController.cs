@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Diplom.Common;
 using Diplom.Common.Bodies;
 using Diplom.Common.Models;
 using Diplom.Server.Models;

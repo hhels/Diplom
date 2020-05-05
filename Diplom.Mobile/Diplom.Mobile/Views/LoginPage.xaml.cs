@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Net.Http;
 using Diplom.Common;
 using Diplom.Common.Bodies;
 using Diplom.Common.Models;
 using Diplom.Mobile.Views.DetailMenu;
-using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json;
 using Xamarin.Forms;
@@ -22,14 +20,14 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            var body = new AuthBody()
+            var body = new AuthBody
             {
                 Login = loginEntry.Text,
                 Password = passwordEntry.Text
             };
             var response = await RequestBuilder.Create()
-                .AppendPathSegments("api", "account", "login") // добавляет к ендпоинт
-                .PostJsonAsync(body);  //  https://localhost:5001/api/account/login?login=1&password=1234567
+                                               .AppendPathSegments("api", "account", "login") // добавляет к ендпоинт
+                                               .PostJsonAsync(body); //  https://localhost:5001/api/account/login?login=1&password=1234567
 
             var result = await response.Content.ReadAsStringAsync();
 
@@ -63,7 +61,6 @@ namespace Diplom.Mobile.Views
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RegistrationPage());
-
         }
 
         private async void Button_Clicked_2(object sender, EventArgs e)

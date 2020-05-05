@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Diplom.Server.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +15,7 @@ namespace Diplom.Server
         {
             var host = CreateWebHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope())
+            using(var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
@@ -24,7 +23,7 @@ namespace Diplom.Server
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await RoleInitializer.InitializeAsync(rolesManager);
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     Log.ForContext<Program>().Error(ex, "An error occurred while seeding the database.");
                 }

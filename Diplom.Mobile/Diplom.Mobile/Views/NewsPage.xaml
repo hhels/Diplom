@@ -15,7 +15,7 @@
             <Button Clicked="Button_Clicked"/>
         </StackLayout>
 
-        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" >
+        <StackLayout Grid.Column="0" Grid.Row="1" >
             <StackLayout>
                 <ListView x:Name="newsList"
                           HasUnevenRows="True"
@@ -30,7 +30,7 @@
                                         <StackLayout>
                                             <Label Text="{Binding Name}" FontSize="30" />
                                             <Label Text="{Binding Text}" FontSize="18" />
-                                            <Label Text="{Binding Date}" FontSize="9"  HorizontalOptions="End"/>
+                                            <Label Text="{Binding Date}" FontSize="9" HorizontalOptions="End"/>
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
@@ -39,8 +39,6 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-
         </StackLayout>
     </Grid>
-
 </ContentPage>

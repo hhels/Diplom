@@ -1,8 +1,7 @@
-﻿using Diplom.Common.Models;
-using Flurl;
+﻿using System;
+using Diplom.Common.Models;
 using Flurl.Http;
 using Newtonsoft.Json;
-using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,12 +15,11 @@ namespace Diplom.Mobile.Views
             InitializeComponent();
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
-            //var token = MySettings.Token;
             var userResponses = await RequestBuilder.Create()
-                            .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
-                            .GetJsonAsync<UserResponse>();  //  https://192.168.1.12:5002/api/account/userGet
+                                                    .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
+                                                    .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
 
             loginEntry.Text = userResponses.Login;
             firstNameEntry.Text = userResponses.FirstName;
@@ -30,9 +28,9 @@ namespace Diplom.Mobile.Views
             emailEntry.Text = userResponses.Email;
         }
 
-        private async void Button_Clicked(object sender, System.EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            var body = new UserResponse()
+            var body = new UserResponse
             {
                 Login = loginEntry.Text,
                 Email = emailEntry.Text,
@@ -42,25 +40,25 @@ namespace Diplom.Mobile.Views
             };
 
             var response = await RequestBuilder.Create()
-               .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
-               .PostJsonAsync(body);  //  https://192.168.1.12:5002/api/account/userEdit
+                                               .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
+                                               .PostJsonAsync(body); //  https://192.168.1.12:5002/api/account/userEdit
 
-            if(response.IsSuccessStatusCode)
+            if(!response.IsSuccessStatusCode)
             {
-                //заносим данные в модель
-                var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
-                //обновляем данные на странице
-                loginEntry.Text = data.Login;
-                firstNameEntry.Text = data.FirstName;
-                lastNameEntry.Text = data.LastName;
-                yearsEntry.Text = data.Year.ToString();
-                emailEntry.Text = data.Email;
-                await DisplayAlert("ОК", "Данные успешно обновлены", "cancel");
+                await DisplayAlert("ошибка", "Что-то пошло не так при обновлении", "cancel");
+                return;
             }
-            else
-            {
-                await DisplayAlert("ошибка", "Что то пошло не так при обновлении", "cancel");
-            }
+
+            //заносим данные в модель
+            var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
+
+            //обновляем данные на странице
+            loginEntry.Text = data.Login;
+            firstNameEntry.Text = data.FirstName;
+            lastNameEntry.Text = data.LastName;
+            yearsEntry.Text = data.Year.ToString();
+            emailEntry.Text = data.Email;
+            await DisplayAlert("ОК", "Данные успешно обновлены", "cancel");
         }
 
         private async void Button_Clicked_1(object sender, EventArgs e)

@@ -14,12 +14,12 @@
             <RowDefinition Height="7*" />
         </Grid.RowDefinitions>
 
-        <StackLayout Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand"  VerticalOptions="CenterAndExpand">
+        <StackLayout Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
             <Button Text="Вход" />
             <Button Text="Регистрация" />
         </StackLayout>
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
-            <StackLayout x:Name="data" Grid.Column="0" Grid.Row="1" Margin="20" >
+            <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
                 <Entry x:Name="firstNameEntry" Placeholder = "Имя"  />
                 <Entry x:Name="lastNameEntry" Placeholder = "Фамилия"  />
                 <Entry x:Name="emailEntry" Placeholder = "Email"  />
@@ -27,9 +27,9 @@
                 <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
                 <Entry x:Name="loginEntry" Placeholder = "Login"  />
                 <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True"  MaxLength="25" />
-                <Label x:Name="textLabel" Text="qwert"  />
+                
                 <!--FontSize="Large"-->
-                <Button Text="Зарегестрироваться" Clicked="Button_Clicked" />
+                <Button Text="Зарегистрироваться" Clicked="Button_Clicked" />
             </StackLayout>
         </ScrollView>
     </Grid>

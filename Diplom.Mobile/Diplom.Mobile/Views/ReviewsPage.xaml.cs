@@ -1,83 +1,70 @@
-﻿using Diplom.Common.Entities;
-using Flurl;
+﻿using System;
+using System.Linq;
+using Diplom.Common.Entities;
 using Flurl.Http;
 using Newtonsoft.Json;
 using Plugin.Connectivity;
-using System;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 
 namespace Diplom.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ReviewsPage : ContentPage
     {
-        public Review[] Reviews { get; set; }
-        string dbPath;
-
         public ReviewsPage()
         {
             InitializeComponent();
-            //dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-            //var friend = (Review)BindingContext;
-            
-            // BindingContext = this;
         }
 
-        protected async override void OnAppearing()
+        protected override async void OnAppearing()
         {
             // если есть подключение к интернету
-            if (CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
-                var Reviews = await RequestBuilder.Create()
-                              .AppendPathSegments("api", "review", "reviewGet") // добавляет к ендпоинт
-                              .GetAsync();  //  https://192.168.1.12:5002/api/review/reviewGet
-                //var x = await Reviews.Content.ReadAsStringAsync();
+                InsertDataFromLocalDb();
 
-                var data = JsonConvert.DeserializeObject<Review[]>(await Reviews.Content.ReadAsStringAsync());
-
-                //если ошбка или пришла пустота берем данные из локальной БД
-                if (!Reviews.IsSuccessStatusCode || !data.Any())
-                {
-                    string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-                    using (ApplicationContext db = new ApplicationContext(dbPath))
-                    {
-                        reviewList.ItemsSource = db.Review.ToList();
-                    }
-                    base.OnAppearing();
-                }
-
-                //берем данные с сервера
-                else
-                {
-                    reviewList.ItemsSource = data;
-
-                    //занесение в локальную БД новых данных
-                    using (ApplicationContext db = new ApplicationContext(dbPath))
-                    {
-                        db.Review.AddRange(data);
-                    }
-                }
+                base.OnAppearing();
+                return;
             }
-            // если нет подключения к интернету то локальная БД
-            else
+
+            var reviews = await RequestBuilder.Create()
+                                              .AppendPathSegments("api", "review", "reviewGet") // добавляет к ендпоинт
+                                              .GetAsync(); //  https://192.168.1.12:5002/api/review/reviewGet
+
+            var data = JsonConvert.DeserializeObject<Review[]>(await reviews.Content.ReadAsStringAsync());
+
+            //если ошбка или пришла пустота берем данные из локальной БД
+            if(!reviews.IsSuccessStatusCode || !data.Any())
             {
-                string dbPath = DependencyService.Get<IPath>().GetDatabasePath(App.DBFILENAME);
-                using (ApplicationContext db = new ApplicationContext(dbPath))
+                InsertDataFromLocalDb();
+
+                base.OnAppearing();
+                return;
+            }
+
+            //TODO: проверять на копии
+            //занесение в локальную БД новых данных
+            using(var db = new ApplicationContext())
+            {
+                await db.Review.AddRangeAsync(data);
+            }
+
+            reviewList.ItemsSource = data;
+
+            void InsertDataFromLocalDb()
+            {
+                using(var db = new ApplicationContext())
                 {
                     reviewList.ItemsSource = db.Review.ToList();
                 }
-                base.OnAppearing();
             }
-            
         }
 
         // отправление отзыва
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            var body = new Review()
+            var body = new Review
             {
                 Text = reviewEntry.Text,
                 Rating = picker.SelectedIndex + 1, //Convert To int 32 если делать со слайдером
@@ -85,8 +72,8 @@ namespace Diplom.Mobile.Views
             };
 
             var response = await RequestBuilder.Create()
-                                          .AppendPathSegments("api", "review", "reviewAdd") // добавляет к ендпоинт
-                                          .PostJsonAsync(body);
+                                               .AppendPathSegments("api", "review", "reviewAdd") // добавляет к ендпоинт
+                                               .PostJsonAsync(body);
 
             if(response.IsSuccessStatusCode)
             {
