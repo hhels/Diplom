@@ -13,7 +13,7 @@
 
         <StackLayout Spacing="8"  Grid.Column="0" Grid.Row="0" >
             <Label Font="24" Text="Выберите тип блюда" HorizontalOptions="Center" />
-            <Picker x:Name="picker" SelectedIndex="0" SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker x:Name="picker" SelectedIndex="0"  SelectedItem="Напитки" SelectedIndexChanged="Picker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Напитки</x:String>
                     <x:String>Угощения</x:String>

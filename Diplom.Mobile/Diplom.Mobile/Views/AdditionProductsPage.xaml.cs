@@ -11,8 +11,8 @@ namespace Diplom.Mobile.Views
     public partial class AdditionProductsPage : ContentPage
     {
         public AdditionMenu[] AdditionMenus { get; set; }
-        public Common.Entities.Menu Product { get; set; }
-        public AdditionProductsPage(Common.Entities.Menu product)
+        public Common.Entities.Product Product { get; set; }
+        public AdditionProductsPage(Common.Entities.Product product)
         {
             InitializeComponent();
             Product = product;
@@ -20,15 +20,15 @@ namespace Diplom.Mobile.Views
 
         protected async override void OnAppearing()
         {
-            await DisplayAlert("Выбранная модель", $"{Product.MenuId} --- eeee", "OK");
+            await DisplayAlert("Выбранная модель", $"{Product.ProductId} --- eeee", "OK");
 
             image1.Source = ImageSource.FromUri(new Uri(Product.Img));
             nameProd.Text = Product.Name;
             LongDescription.Text = Product.LongDescription;
 
             AdditionMenus = await RequestBuilder.Create()
-                            .AppendPathSegments("api", "menu", "menuAdditionGet")
-                            .SetQueryParam("menuId", Product.MenuId)
+                            .AppendPathSegments("api", "product", "productAdditionGet")
+                            .SetQueryParam("menuId", Product.ProductId)
                             .GetJsonAsync<AdditionMenu[]>();  //  http://192.168.1.12:5002/api/menu/menuGet
             additionList.ItemsSource = AdditionMenus;
         }

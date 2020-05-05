@@ -19,7 +19,7 @@ namespace Diplom.Server.Controllers
         {
             _db = context;
         }
-
+        //добавить отзыв пользователя
         [HttpPost("reviewAdd")]
         [Authorize]
         public async Task<IActionResult> ReviewAdd([FromBody] Review data)
@@ -29,7 +29,7 @@ namespace Diplom.Server.Controllers
             await _db.SaveChangesAsync(); // сохранить запись
             return Ok();
         }
-
+        //получить отзывы пользователей
         [HttpGet("reviewGet")]
         public async Task<ActionResult<IEnumerable<Review>>> Get()
         {

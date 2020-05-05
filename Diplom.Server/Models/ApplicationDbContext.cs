@@ -9,7 +9,7 @@ namespace Diplom.Server.Models
     {
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Content> Contents { get; set; }
-        public DbSet<Menu> Menus { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<AdditionMenu> AdditionMenus { get; set; }
         
 

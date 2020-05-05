@@ -2,9 +2,9 @@
 
 namespace Diplom.Common.Entities
 {
-    public class Menu
+    public class Product
     {
-        public int MenuId { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
