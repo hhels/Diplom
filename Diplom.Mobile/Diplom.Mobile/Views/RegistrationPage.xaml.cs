@@ -1,4 +1,5 @@
-﻿using Diplom.Common.Bodies;
+﻿using Diplom.Common;
+using Diplom.Common.Bodies;
 using Diplom.Common.Models;
 using Diplom.Mobile.Views.DetailMenu;
 using Flurl;
@@ -19,6 +20,7 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked(object sender, System.EventArgs e)
         {
+            //TODO: string.IsNullOrEmpty
             if(loginEntry.Text == null || passwordEntry.Text == null || emailEntry.Text == null || firstNameEntry.Text == null || lastNameEntry.Text == null || yearsEntry.Text == null)
             {
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
@@ -35,7 +37,7 @@ namespace Diplom.Mobile.Views
                 Year = Convert.ToInt32(yearsEntry.Text),
             };
 
-            if(!body.Email.Contains("@")) //TODO:
+            if(!body.Email.Contains("@")) //TODO: плохая проверка
             {
                 await DisplayAlert("Ошибка", "Некоректный email", "cancel");
                 return;
@@ -52,9 +54,8 @@ namespace Diplom.Mobile.Views
                 return;
             }
 
-            var response = await Constants.Endpoint
+            var response = await RequestBuilder.Create()
                 .AppendPathSegments("api", "account", "register") // добавляет к ендпоинт
-                .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                 .PostJsonAsync(body);  //  https://localhost:5001/api/account/login?login=1&password=1234567
 
             if(response.IsSuccessStatusCode)
@@ -67,7 +68,7 @@ namespace Diplom.Mobile.Views
                 MySettings.UserId = data.UserId;
                 MySettings.Role = data.Role;
 
-                if(MySettings.Role == "user")
+                if(MySettings.Role == RoleNames.User)
                 {
                     await Navigation.PushAsync(new MasterDetailPage1());
                 }

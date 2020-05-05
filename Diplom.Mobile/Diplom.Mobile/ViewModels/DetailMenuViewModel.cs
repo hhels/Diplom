@@ -17,7 +17,7 @@ namespace Diplom.Mobile.ViewModels
                 new PageMenuItem { Id = 0, Title = "Новости", TargetType = typeof(NewsPage) },
                 new PageMenuItem { Id = 0, Title = "Отзывы", TargetType = typeof(ReviewsPage) },
                 new PageMenuItem { Id = 0, Title = "Аккаунт", TargetType = typeof(AccountInfoPage) },
-                new PageMenuItem { Id = 0, Title = "Меню", TargetType = typeof(Products)},
+                new PageMenuItem { Id = 0, Title = "Меню", TargetType = typeof(ProductsPage)},
             });
         }
 

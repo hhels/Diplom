@@ -20,9 +20,8 @@ namespace Diplom.Mobile.Views
 
         protected async override void OnAppearing()
         {
-            Reviews = await Constants.Endpoint
+            Reviews = await RequestBuilder.Create()
                             .AppendPathSegments("api", "review", "reviewGet") // добавляет к ендпоинт
-                            .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                             .GetJsonAsync<Review[]>();  //  https://192.168.1.12:5002/api/review/reviewGet
             reviewList.ItemsSource = Reviews;
         }
@@ -37,10 +36,8 @@ namespace Diplom.Mobile.Views
                 Date = DateTime.Now,
             };
 
-            var response = await Constants.Endpoint
+            var response = await RequestBuilder.Create()
                                           .AppendPathSegments("api", "review", "reviewAdd") // добавляет к ендпоинт
-                                          .WithOAuthBearerToken(MySettings.Token) // передача токена
-                                          .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                                           .PostJsonAsync(body);
 
             if(response.IsSuccessStatusCode)

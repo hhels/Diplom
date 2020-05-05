@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Diplom.Common;
 using Diplom.Common.Bodies;
 using Diplom.Common.Models;
 using Diplom.Mobile.Views.DetailMenu;
@@ -26,38 +27,36 @@ namespace Diplom.Mobile.Views
                 Login = loginEntry.Text,
                 Password = passwordEntry.Text
             };
-            var response = await Constants.Endpoint
+            var response = await RequestBuilder.Create()
                 .AppendPathSegments("api", "account", "login") // добавляет к ендпоинт
-                .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                 .PostJsonAsync(body);  //  https://localhost:5001/api/account/login?login=1&password=1234567
 
             var result = await response.Content.ReadAsStringAsync();
 
-            if(response.IsSuccessStatusCode)
-            {
-                var data = JsonConvert.DeserializeObject<AuthResponse>(result);
-                MySettings.Token = data.AccessToken;
-                MySettings.UserName = data.UserName;
-                MySettings.Email = data.Email;
-                MySettings.UserId = data.UserId;
-                MySettings.Role = data.Role;
-
-                if(MySettings.Role == "user")
-                {
-                    await Navigation.PushAsync(new MasterDetailPage1());
-                }
-                else if(MySettings.Role == "worker")
-                {
-                    await DisplayAlert("a", MySettings.Role, "cancel");
-                }
-                else if(MySettings.Role == "director")
-                {
-                    await DisplayAlert("a", MySettings.Role, "cancel");
-                }
-            }
-            else
+            if(!response.IsSuccessStatusCode)
             {
                 await DisplayAlert("ошибка", result, "cancel");
+                return;
+            }
+
+            var data = JsonConvert.DeserializeObject<AuthResponse>(result);
+            MySettings.Token = data.AccessToken;
+            MySettings.UserName = data.UserName;
+            MySettings.Email = data.Email;
+            MySettings.UserId = data.UserId;
+            MySettings.Role = data.Role;
+
+            if(MySettings.Role == RoleNames.User)
+            {
+                await Navigation.PushAsync(new MasterDetailPage1());
+            }
+            else if(MySettings.Role == RoleNames.Worker)
+            {
+                await DisplayAlert("a", MySettings.Role, "cancel");
+            }
+            else if(MySettings.Role == RoleNames.Director)
+            {
+                await DisplayAlert("a", MySettings.Role, "cancel");
             }
         }
 

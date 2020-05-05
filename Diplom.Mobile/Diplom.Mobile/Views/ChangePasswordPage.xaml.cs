@@ -30,31 +30,26 @@ namespace Diplom.Mobile.Views
                 await DisplayAlert("ошибка", "Новый пароль не должен быть равен старому", "cancel");
                 return;
             }
-            else if(newPassword.Length <= 6)
+            if(newPassword.Length <= 6)
             {
                 await DisplayAlert("ошибка", "Пароль должен быть не меньше 6 символов", "cancel");
                 return;
             }
+            var response = await RequestBuilder.Create()
+                                            .AppendPathSegments("api", "account", "PasswordEdit") // добавляет к ендпоинт
+                                            .SetQueryParam("password", passwordEntry.Text) // вводим логин
+                                            .SetQueryParam("newPassword", passworAgaindEntry.Text) // вводим пароль
+                                            .PostAsync(null);  //  https://192.168.1.12:5002/api/account/PasswordEdit
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+            {
+                var json = JsonConvert.DeserializeObject<AuthResponse>(data);
+                await DisplayAlert("ОК", "Пароль успешно обновлен", "cancel");
+                await DisplayAlert("ОК", json.AccessToken, "cancel");
+            }
             else
             {
-                var response = await Constants.Endpoint
-                                              .AppendPathSegments("api", "account", "PasswordEdit") // добавляет к ендпоинт
-                                              .SetQueryParam("password", passwordEntry.Text) // вводим логин
-                                              .SetQueryParam("newPassword", passworAgaindEntry.Text) // вводим пароль
-                                              .WithOAuthBearerToken(MySettings.Token) //передача токена
-                                              .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
-                                              .PostAsync(null);  //  https://192.168.1.12:5002/api/account/PasswordEdit
-                if(response.IsSuccessStatusCode)
-                {
-                    var data = JsonConvert.DeserializeObject<AuthResponse>(await response.Content.ReadAsStringAsync());
-                    await DisplayAlert("ОК", "Пароль успешно обновлен", "cancel");
-                    await DisplayAlert("ОК", data.AccessToken, "cancel");
-                }
-                else
-                {
-                    var datta = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("ОК", datta, "cancel");
-                }
+                await DisplayAlert("ОК", data, "cancel");
             }
         }
     }

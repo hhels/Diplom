@@ -7,36 +7,38 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height=" Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
-            <Image x:Name="image1" WidthRequest="300" HeightRequest="200" HorizontalOptions="Center"/>
+
+        <StackLayout Spacing="8"  Grid.Column="0" Grid.Row="0" >
+            <Label Font="24" Text="Выберите тип блюда" HorizontalOptions="Center" />
+            <Picker x:Name="picker" SelectedIndex="0" SelectedIndexChanged="Picker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>Напитки</x:String>
+                    <x:String>Угощения</x:String>
+                </Picker.Items>
+            </Picker>
         </StackLayout>
 
-        <ScrollView Grid.Column="0" Grid.Row="1">
-            <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="1" >
-                <Label x:Name="nameProd" FontSize="34" />
-                <Label x:Name="LongDescription" FontSize="16" />
-            </StackLayout>
-        </ScrollView>
 
-        <StackLayout x:Name="data" Grid.Column="0" Grid.Row="2" >
+        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
             <StackLayout>
-                <ListView x:Name="additionList"
+                <ListView x:Name="menuList"
                           HasUnevenRows="False"
-                          RowHeight="90"      
-                          ItemsSource="{Binding Producted}"
-                          Margin="10,0,10,0">
+                          ItemsSource="{Binding Menus}" 
+                          RowHeight="180"
+                          ItemTapped="MenuList_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                        <Label Text="{Binding Price, StringFormat=' {0} Рублей'}" FontSize="30"/>
-                                        <Label Text="{Binding Grams, StringFormat=' {0} Грамм'}" FontSize="24"/>
-                                        <Label Text="{Binding Calories, StringFormat=' {0} Ккал.'}" FontSize="24"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding Img}" WidthRequest="90" HeightRequest="110" />
+                                        <StackLayout>
+                                            <Label Text="{Binding Name}" FontSize="21" />
+                                            <Label Text="{Binding ShortDescription}" FontSize="17" />
+                                        </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

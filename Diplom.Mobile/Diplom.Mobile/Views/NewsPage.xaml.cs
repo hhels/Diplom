@@ -18,9 +18,8 @@ namespace Diplom.Mobile.Views
 
         protected async override void OnAppearing()
         {
-            Contented = await Constants.Endpoint
+            Contented = await RequestBuilder.Create()
                            .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
-                           .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                            .GetJsonAsync<Content[]>();  //  http://192.168.1.12:5002/api/content/contentGet
 
             var sortList = Contented.OrderByDescending(x => x.ContentId).ToList();

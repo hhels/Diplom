@@ -19,10 +19,8 @@ namespace Diplom.Mobile.Views
         protected async override void OnAppearing()
         {
             //var token = MySettings.Token;
-            var userResponses = await Constants.Endpoint
+            var userResponses = await RequestBuilder.Create()
                             .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
-                            .WithOAuthBearerToken(MySettings.Token) //передача токена
-                            .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                             .GetJsonAsync<UserResponse>();  //  https://192.168.1.12:5002/api/account/userGet
 
             loginEntry.Text = userResponses.Login;
@@ -43,10 +41,8 @@ namespace Diplom.Mobile.Views
                 Year = Convert.ToInt32(yearsEntry.Text),
             };
 
-            var response = await Constants.Endpoint
+            var response = await RequestBuilder.Create()
                .AppendPathSegments("api", "account", "userEdit") // добавляет к ендпоинт
-               .WithOAuthBearerToken(MySettings.Token) //передача токена
-               .AllowAnyHttpStatus() // если сервер вернет не положительный ответ, то исключение не выпадет
                .PostJsonAsync(body);  //  https://192.168.1.12:5002/api/account/userEdit
 
             if(response.IsSuccessStatusCode)
