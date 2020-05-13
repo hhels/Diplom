@@ -19,16 +19,17 @@ namespace Diplom.Mobile.Views
 
         protected override async void OnAppearing()
         {
-            News = await RequestBuilder.Create()
-                                            .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
-                                            .GetJsonAsync<Content[]>(); //  http://192.168.1.12:5002/api/content/contentGet
+            //News = await RequestBuilder.Create()
+            //                                .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
+            //                                .GetJsonAsync<Content[]>(); //  http://192.168.1.12:5002/api/content/contentGet
 
-            var sortList = News.OrderByDescending(x => x.ContentId).ToList();
-            newsList.ItemsSource = sortList;
+            //var sortList = News.OrderByDescending(x => x.ContentId).ToList();
+            //newsList.ItemsSource = sortList;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
+            //отсортировать по новизне добавления
             var sortList = News.OrderByDescending(x => x.ContentId);
             newsList.ItemsSource = sortList;
         }

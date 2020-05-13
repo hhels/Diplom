@@ -19,11 +19,10 @@ namespace Diplom.Mobile.Views
 
         protected override async void OnAppearing()
         {
-            // если есть подключение к интернету
+            // если нет подключение к интернету
             if(!CrossConnectivity.Current.IsConnected)
             {
                 InsertDataFromLocalDb();
-
                 base.OnAppearing();
                 return;
             }
@@ -50,7 +49,11 @@ namespace Diplom.Mobile.Views
                 await db.Review.AddRangeAsync(data);
             }
 
-            reviewList.ItemsSource = data;
+            //reviewList.ItemsSource = data;
+            using (var db = new ApplicationContext())
+            {
+                reviewList.ItemsSource = db.Review.ToList();
+            }
 
             void InsertDataFromLocalDb()
             {

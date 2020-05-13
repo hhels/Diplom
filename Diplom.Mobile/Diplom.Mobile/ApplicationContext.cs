@@ -1,4 +1,5 @@
 ﻿using Diplom.Common.Entities;
+using Diplom.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using Xamarin.Forms;
 
@@ -6,9 +7,15 @@ namespace Diplom.Mobile
 {
     internal class ApplicationContext : DbContext
     {
-        public DbSet<Product> Menu { get; set; }
+        public DbSet<Product> Product { get; set; }
 
-        public DbSet<Review> Review { get; set; }
+        public DbSet<Review> Review { get; set; } 
+
+        public DbSet<Basket> Basket { get; set; }
+
+        public DbSet<BasketList> BasketList { get; set; }
+
+        public DbSet<Order> Order { get; set; }
 
         //Через конструктор объект этого класса получает в переменную _databasePath путь к базе данных
         private readonly string _databasePath;

@@ -28,7 +28,8 @@
                           HasUnevenRows="False"
                           RowHeight="90"      
                           ItemsSource="{Binding Producted}"
-                          Margin="10,0,10,0">
+                          Margin="10,0,10,0"
+                          ItemTapped="AdditionList_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

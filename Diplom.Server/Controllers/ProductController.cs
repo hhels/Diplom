@@ -30,6 +30,19 @@ namespace Diplom.Server.Controllers
             }
             return menus;
         }
+
+        //получение всех записей меню
+        [HttpGet("productAllGet")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+        {
+            var products = await _db.Products.ToArrayAsync();
+            foreach (var product in products)
+            {
+                product.Img = string.Format("http://192.168.1.12:5002/images/{0}", product.Img);
+            }
+            return products;
+        }
+
         //получение расширенных данных выбраной записи
         [HttpGet("productAdditionGet")]
         public async Task<ActionResult> Addition(int menuId)
