@@ -12,12 +12,12 @@
         public StatusType Status { get; set; } // статус заказа-->
 
     
-            <StackLayout x:Name="asd"  Margin="10">
-                <Label Text="Выберите дату приготовления"/>
-                <DatePicker x:Name="datePicker" DateSelected="DatePicker_DateSelected" Format="D"/>
+    <StackLayout x:Name="asd"  Margin="10">
+        <Label Text="Выберите дату приготовления"/>
+        <DatePicker x:Name="datePicker" DateSelected="DatePicker_DateSelected" Format="D"/>
 
-                <Label Text="Выберите время приготовления с 8:00 до 18:00"/>
-                <TimePicker x:Name="timePicker" Format = "HH:mm" PropertyChanged="TimePicker_PropertyChanged"/>
+        <Label Text="Выберите время приготовления с 8:00 до 18:00"/>
+        <TimePicker x:Name="timePicker" Format = "HH:mm" PropertyChanged="TimePicker_PropertyChanged"/>
 
         <StackLayout Margin="10">
             <Label Text="Введите коментарий к заказу" />
@@ -25,7 +25,8 @@
 
             <StackLayout Margin="10">
                 <Label Text="Выберите тип оплаты" />
-                <Picker x:Name="picker"  MinimumWidthRequest="50" WidthRequest="51" >
+                <Label x:Name="qwe"/>
+                    <Picker x:Name="picker"  MinimumWidthRequest="50" WidthRequest="51" >
                     <Picker.Items>
                         <x:String>Наличными</x:String>
                         <x:String>Карта</x:String>

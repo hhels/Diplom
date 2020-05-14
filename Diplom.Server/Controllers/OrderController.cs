@@ -22,25 +22,24 @@ namespace Diplom.Server.Controllers
             _db = context;
         }
 
-        //class Basket
-        //{
-        //    public int BasketId { get; set; }
-        //    public string UserId { get; set; } // ид клиента
-        //    public int AdditionMenuId { get; set; } // ид выбронного блюда
-        //    public int Quantity { get; set; } // колличество
-        //    public int OrderId { get; set; } // ид заказа
-
-        //}
-
-
-        [HttpPost("basketAdd")]
+        [HttpPost("orderAdd")]
         [Authorize]
-        public async Task<IActionResult> ReviewAdd([FromBody] Basket  data)
+        public async Task<IActionResult> OrderAdd([FromBody] Order data)
         {
             data.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
+            var order = new Order
+            {
+                UserId = data.UserId,
+                OrderTime = data.OrderTime,
+                LeadTime = data.LeadTime,
+                TotalPrice = data.TotalPrice,
+                Comment = data.Comment,
+                TypePayment = data.TypePayment,
+                Status = data.Status,
+            };
 
-            //await _db.Reviews.AddAsync(data); // добавить запись
-            //await _db.SaveChangesAsync(); // сохранить запись
+            await _db.Orders.AddAsync(order); // добавить запись
+            await _db.SaveChangesAsync(); // сохранить запись
             return Ok();
         }
 

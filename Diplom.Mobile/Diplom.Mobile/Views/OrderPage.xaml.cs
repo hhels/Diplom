@@ -1,5 +1,6 @@
 ﻿using Diplom.Common.Entities;
 using Diplom.Common.Models;
+using Flurl.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +94,7 @@ namespace Diplom.Mobile.Views
 
            // DisplayAlert("время", $"{timePicker.Time} выбрано", "OK");
             var vibrVrem = timePicker.Time;// выбранное время
-            TimeSpan date1 = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0); //текущее время
+            TimeSpan date1 = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0) ; //текущее время
             //DisplayAlert("время", $"{date1} текушее время", "OK");
             TimeSpan maxVrem = new TimeSpan(18, 00, 00);
             TimeSpan minVrem = new TimeSpan(08, 00, 00);
@@ -106,7 +107,7 @@ namespace Diplom.Mobile.Views
             else
             {
                 await DisplayAlert("Внимание", $"Не верное время", "OK");
-                timePicker.Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0);
+                timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
                 return;
             }
 
@@ -121,6 +122,7 @@ namespace Diplom.Mobile.Views
 
             //DisplayAlert("время", $"{datePicker.Date + timePicker.Time}", "OK");
             picker.SelectedIndex = 0;
+            
             var selectedIndex = picker.SelectedIndex;
             var type = PaymentType.Cash;
             if (selectedIndex == 0)
@@ -143,9 +145,16 @@ namespace Diplom.Mobile.Views
                 Status = StatusType.Processing,
             };
              using  (var db = new ApplicationContext())
-            {
+             {
                 await db.Order.AddRangeAsync(data);
                 await db.SaveChangesAsync();
+             }
+            var response = await RequestBuilder.Create()
+                                           .AppendPathSegments("api", "order", "orderAdd") // добавляет к ендпоинт
+                                           .PostJsonAsync(data);
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("время", $"Заказ успешно оформлен", "OK");
             }
         }
     }

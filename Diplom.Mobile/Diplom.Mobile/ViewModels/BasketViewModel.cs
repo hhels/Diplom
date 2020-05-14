@@ -9,13 +9,18 @@ using System.Text;
 using Xamarin.Forms;
 using PropertyChanged;
 using Diplom.Mobile.Views;
+using Flurl.Http;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Diplom.Mobile.ViewModels
 {
     // подключенная  PropertyChanged.Fody и файлик FodyWeavers.xml
     [AddINotifyPropertyChangedInterface]
-    public class BasketViewModel
+    public  class  BasketViewModel
     {
+        
+
         public ObservableCollection<BasketList> BasketList { get; set; }
         public BasketList SelectedBasket { get; set; }
         public string AllPrice { get; set; }
@@ -24,93 +29,133 @@ namespace Diplom.Mobile.ViewModels
         public ICommand QuantityMinusCommand { get; set; }
         //public ICommand DeketeCommand { get; set; }
 
-        public void deleteBasket(BasketList del)
+        //Удаление целой записи
+        public async Task deleteBasket(BasketList del)
         {
-            using (var db = new ApplicationContext())
-            {
-                //удалить из локальной БД 
-                db.BasketList.Remove(del);
-                var basket = db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId);
-                //удалить из передаваемой таблицы
-                db.Basket.Remove(basket);
-                //удалиь из лист вьюш
-                BasketList.Remove(del);
-                NumberPrice();
+            var response = await RequestBuilder.Create()
+                                              .AppendPathSegments("api", "basket", "basketDell") // добавляет к ендпоинт
+                                              .PostJsonAsync(del);
+             var basket = await RequestBuilder.Create()
+                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketGet
+            
+            BasketList = new ObservableCollection<BasketList>(basket);
+            NumberPrice();
 
-                db.SaveChangesAsync();
-            }
+
+            //using (var db = new ApplicationContext())
+            //{
+            //    //удалить из локальной БД 
+            //    db.BasketList.Remove(del);
+            //    var basket = db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId);
+            //    //удалить из передаваемой таблицы
+            //    db.Basket.Remove(basket);
+            //    //удалиь из лист вьюш
+            //    BasketList.Remove(del);
+            //    NumberPrice();
+
+            //    db.SaveChangesAsync();
+            //}
         }
-        public void AddQuantity(BasketList del)
+        //добавление одного кол-ва
+        public async Task AddQuantity(BasketList del)
         {
-            using (var db = new ApplicationContext())
-            {
-                var quantity = BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
-                if (quantity >= 10 )
-                {
-                    return;
-                }
-                else
-                {
-                    db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity++; //изменить в БД
-                    db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId).Quantity++; //изменить в передаваемой таблице
-                    BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity++; //изменить в лист вьюш
-                    db.SaveChangesAsync();
-
-                    //посчет цены с учетом изменения количества
-                    var Price = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Price);//цена товара
-                    var Quantity = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity);//количество товара
-                    BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity; //изменение цены с учетом кол-ва товара
-                    db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity; //изменение цены с учетом кол-ва товара в БД
-
-                    //подсчет общей цены и передача на страницу
-                    NumberPrice();
+            var response = await RequestBuilder.Create()
+                                              .AppendPathSegments("api", "basket", "basketOneAdd") // добавляет к ендпоинт
+                                              .PostJsonAsync(del);
+            var basket = await RequestBuilder.Create()
+                                             .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                             .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneAdd
+            
+            BasketList = new ObservableCollection<BasketList>(basket);
+            NumberPrice();
 
 
-                    BasketList = new ObservableCollection<BasketList>(db.BasketList);
-                }
-            }
+            //using (var db = new ApplicationContext())
+            //{
+            //    var quantity = BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
+            //    if (quantity >= 10 )
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity++; //изменить в БД
+            //        db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId).Quantity++; //изменить в передаваемой таблице
+            //        BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity++; //изменить в лист вьюш
+            //        db.SaveChangesAsync();
+
+            //        //посчет цены с учетом изменения количества
+            //        var Price = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Price);//цена товара
+            //        var Quantity = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity);//количество товара
+            //        BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity; //изменение цены с учетом кол-ва товара
+            //        db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity; //изменение цены с учетом кол-ва товара в БД
+
+            //        //подсчет общей цены и передача на страницу
+            //        NumberPrice();
+
+
+            //        BasketList = new ObservableCollection<BasketList>(db.BasketList);
+            //    }
+            //}
         }
-        public void LowerQuantity(BasketList del)
+        //удаление одного кол-ва
+        public async Task LowerQuantity(BasketList del)
         {
-            using (var db = new ApplicationContext())
-            {
-                var quantity = BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
-                if (quantity <= 1)
-                {
-                    return;
-                }
-                else
-                {
-                    db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity--; //изменить в БД
-                    db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId).Quantity--; //изменить в передаваемой таблице
-                    BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity--; //изменить в лист вьюш
-                    db.SaveChangesAsync();
+            var response = await RequestBuilder.Create()
+                                              .AppendPathSegments("api", "basket", "basketOneDell") // добавляет к ендпоинт
+                                              .PostJsonAsync(del);
 
-                    //посчет цены с учетом изменения количества
-                    var Price = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Price);
-                    var Quantity = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity);
-                    BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity;
-                    db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity;
+            var basket = await RequestBuilder.Create()
+                                             .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                             .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneDell
+            
+            BasketList = new ObservableCollection<BasketList>(basket);
+            NumberPrice();
 
-                    //подсчет общей цены и передача на страницу
-                    NumberPrice();
+            //using (var db = new ApplicationContext())
+            //{
+            //    var quantity = BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
+            //    if (quantity <= 1)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity--; //изменить в БД
+            //        db.Basket.FirstOrDefault(x => x.BasketId == del.BasketId).Quantity--; //изменить в передаваемой таблице
+            //        BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity--; //изменить в лист вьюш
+            //        db.SaveChangesAsync();
+
+            //        //посчет цены с учетом изменения количества
+            //        var Price = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Price);
+            //        var Quantity = Convert.ToInt32(BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity);
+            //        BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity;
+            //        db.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).OverallPrice = Price * Quantity;
+
+            //        //подсчет общей цены и передача на страницу
+            //        NumberPrice();
 
 
-                    BasketList = new ObservableCollection<BasketList>(db.BasketList);
-                }
+            //        BasketList = new ObservableCollection<BasketList>(db.BasketList);
+            //    }
 
-            }
+            //}
         }
         public void NumberPrice()
         {
             AllPrice = BasketList.Sum(x => x.OverallPrice).ToString();
         }
         
-        public BasketViewModel()
+        public  BasketViewModel()
         {
-            using (var db = new ApplicationContext())
+             using  (var db = new ApplicationContext())
             {
-                BasketList = new ObservableCollection<BasketList>(db.BasketList);
+                var basket =  RequestBuilder.Create()
+                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                              .GetJsonAsync<BasketList[]>().GetAwaiter().GetResult(); //  https://192.168.1.12:5002/api/basket/basketGet
+                
+                BasketList = new ObservableCollection<BasketList>(basket);
                 NumberPrice();
             }
             //_basketPage = new BasketPage();

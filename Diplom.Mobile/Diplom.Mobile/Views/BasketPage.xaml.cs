@@ -30,16 +30,16 @@ namespace Diplom.Mobile.Views
         //    DisplayAlert("More Context Action", mi.CommandParameter.ToString() + " more context action", "OK");
         //}
 
-        public void OnDelete(object sender, EventArgs e)
+        public async void OnDelete(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
             var del = mi.CommandParameter as BasketList;
-            DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+            await DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
             if (del != null)
             {
-                _basketViewModel.deleteBasket(del);
+                await _basketViewModel.deleteBasket(del);
             }
-            else { DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
+            else { await DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
             
         }
 
@@ -67,7 +67,7 @@ namespace Diplom.Mobile.Views
             }
         }
         //прибавление количества порций
-        private void Button_Clicked_1(object sender, EventArgs e)
+        private async void Button_Clicked_1(object sender, EventArgs e)
         {
             //var stringInThisCell = (string)((Button)sender).BindingContext;
             //myList.Remove(stringInThisCell);
@@ -76,32 +76,33 @@ namespace Diplom.Mobile.Views
             var del = mi as BasketList;
             if (del != null)
             {
-                _basketViewModel.AddQuantity(del);
-                DisplayAlert("del", $"{del.Quantity}", "OK");
+                 await _basketViewModel.AddQuantity(del);
+                await DisplayAlert("del", $"{del.Quantity}", "OK");
                 var asd = _basketViewModel.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
-                DisplayAlert("Ошибочка", $"{asd}", "OK");
+                await DisplayAlert("Ошибочка", $"{asd}", "OK");
                 basketList.ItemsSource = _basketViewModel.BasketList;
 
             }
-            else { DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
+            else { await DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
         }
         // уменьшение количества порций
-        private void Button_Clicked_2(object sender, EventArgs e)
+        private async void Button_Clicked_2(object sender, EventArgs e)
         {
             var mi = ((Button)sender).BindingContext;
             var del = mi as BasketList;
             if (del != null)
             {
-                _basketViewModel.LowerQuantity(del);
-                DisplayAlert("del", $"{del.Quantity}", "OK");
+                await _basketViewModel.LowerQuantity(del);
+                await DisplayAlert("del", $"{del.Quantity}", "OK");
                 var asd = _basketViewModel.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
-                DisplayAlert("Ошибочка", $"{asd}", "OK");
+                await  DisplayAlert("Ошибочка", $"{asd}", "OK");
                 basketList.ItemsSource = _basketViewModel.BasketList;
 
             }
-            else { DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
+            else { await DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
         }
 
+        //создание заказа
         private async void Button_Clicked_3(object sender, EventArgs e)
         {
             // если нет подключение к интернету
