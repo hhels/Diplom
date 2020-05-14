@@ -17,5 +17,8 @@ namespace Diplom.Common.Models
         public int Quantity { get; set; } // колличество
         public int BasketId { get; set; } // ид строчки в корзине
 
+        public int OverallPrice { get; set; } //цена с учетом количества
+        public int AllPrice { get; set; } //общая цена покупки
+
     }
 }

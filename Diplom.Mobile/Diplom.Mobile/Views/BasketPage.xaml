@@ -16,16 +16,16 @@
                 <ListView x:Name="basketList" 
                     HasUnevenRows="False" 
                     ItemsSource="{Binding BasketList}" 
-                    RowHeight="180"
+                    RowHeight="165"
                           ItemTapped="BasketList_ItemTapped"
                     ItemSelected="BasketList_ItemSelected">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.ContextActions>
-                                    <MenuItem Clicked="OnMore"
+                                    <!--<MenuItem Clicked="OnMore"
                                           CommandParameter="{Binding .}"
-                                          Text="More" />
+                                          Text="More" />-->
                                     <MenuItem Clicked="OnDelete"
                                           CommandParameter="{Binding .}"
                                           Text="Delete" IsDestructive="True" />
@@ -34,25 +34,23 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Image Source="{Binding Img}"  WidthRequest="90" HeightRequest="110" />
                                         <StackLayout Orientation="Vertical">
-                                            <Label Text="{Binding Name}" FontSize="25" />
+                                            <Label Text="{Binding Name}" FontSize="30" />
+                                            <Label Text="{Binding Price, StringFormat='Цена за порцию: {0} Руб.'}" FontSize="23"/>
+                                            
                                             <!--<Label Text="{Binding ShortDescription}" FontSize="17" />-->
-
-                                            <StackLayout Orientation="Horizontal">
-                                                <!--<Button Text="Удалить" />-->
-                                                <Label Text="{Binding Price}" FontSize="23"/>
+                                            <!--<Button Text="Удалить" />-->
+                                            
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                                <Button Text="-" Command="{Binding QuantityMinusCommand}" CommandParameter="{Binding BasketList}" Clicked="Button_Clicked_2"/>
+                                                <Label Text="{Binding Quantity}" FontSize="30" VerticalOptions="End" HorizontalOptions="Center" />
+                                                <Button Text="+" Command="{Binding QuantityPlusCommand}" CommandParameter="{Binding BasketList}" Clicked="Button_Clicked_1" />
+                                               
+                                                <!--<Stepper Minimum="0" Maximum="10" Increment="1" Value="{Binding Quantity}" ValueChanged="Stepper_ValueChanged" VerticalOptions="End" HorizontalOptions="Center"/>-->
+                                                <!--<Button Text="отчистить" Clicked="Button_Clicked"/>-->
                                                 
-
-                                                <StackLayout Orientation="Vertical">
-                                                    <Label Text="{Binding Quantity}" FontSize="Large" VerticalOptions="End" HorizontalOptions="Center" />
-                                                    <!--<Stepper Minimum="0" Maximum="10" Increment="1" Value="{Binding Quantity}" ValueChanged="Stepper_ValueChanged" VerticalOptions="End" HorizontalOptions="Center"/>-->
-                                                    <Button Text="++" Command="{Binding QuantityPlusCommand}" CommandParameter="{Binding BasketList}" Clicked="Button_Clicked_1" />
-                                                    <Button Text="-" Command="{Binding QuantityMinusCommand}" CommandParameter="{Binding SelectedBasket}"/>
-                                                    <!--<Button Text="отчистить" Clicked="Button_Clicked"/>-->
-                                                </StackLayout>
-
                                             </StackLayout>
+                                            
                                         </StackLayout>
-                                       
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -63,8 +61,13 @@
         </StackLayout>
 
 
-        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1" >
-            <Button Text="Оформить заказ"/>
+        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="Общая цена заказа:" FontSize="23"/>
+                <Label x:Name="cena" Text="{Binding AllPrice}" FontSize="23"/>
+                <Label  Text="Руб." FontSize="23"/>
+            </StackLayout>
+            <Button Text="Оформить заказ" Clicked="Button_Clicked_3"/>
         </StackLayout>
 
 

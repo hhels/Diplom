@@ -76,6 +76,7 @@ namespace Diplom.Mobile.Views
                         await DisplayAlert("Выбранная модель", $"{selectedProduct.Price} - добавлена в корзину", "OK");
 
                         var basketId = db.Basket.FirstOrDefault(x => x.UserId == MySettings.UserId && x.AdditionMenuId == selectedProduct.AdditionMenuId).BasketId;
+                        var OverallPrice = Convert.ToInt32(selectedProduct.Price);
                         var list = new BasketList
                         {
                             Price = selectedProduct.Price, // цена
@@ -83,7 +84,8 @@ namespace Diplom.Mobile.Views
                             ShortDescription = Product.ShortDescription, //описание
                             Img = Product.Img, //картинка
                             Quantity = 1, //количесство
-                            BasketId = basketId //запись из корзины
+                            BasketId = basketId, //запись из корзины
+                            OverallPrice = OverallPrice //цена с учетом количества
 
                         };
                         await db.BasketList.AddRangeAsync(list);

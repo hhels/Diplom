@@ -46,7 +46,9 @@ namespace Diplom.Mobile.Views
             //занесение в локальную БД новых данных
             using(var db = new ApplicationContext())
             {
+                db.Review.RemoveRange(db.Review);
                 await db.Review.AddRangeAsync(data);
+                await db.SaveChangesAsync();
             }
 
             //reviewList.ItemsSource = data;
@@ -73,19 +75,29 @@ namespace Diplom.Mobile.Views
                 Rating = picker.SelectedIndex + 1, //Convert To int 32 если делать со слайдером
                 Date = DateTime.Now,
             };
-
-            var response = await RequestBuilder.Create()
-                                               .AppendPathSegments("api", "review", "reviewAdd") // добавляет к ендпоинт
-                                               .PostJsonAsync(body);
-
-            if(response.IsSuccessStatusCode)
+            var text = reviewEntry.ToString();
+            var reting = picker.SelectedIndex.ToString();
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(reting))
             {
-                await DisplayAlert("опа", "добавилось", "ок");
+                await DisplayAlert("Ошибка", "Заполнены не все поля", "ок");
+                return;
             }
             else
             {
-                await DisplayAlert("опа", "чет пошло не так", "ок");
+                var response = await RequestBuilder.Create()
+                                               .AppendPathSegments("api", "review", "reviewAdd") // добавляет к ендпоинт
+                                               .PostJsonAsync(body);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("опа", "добавилось", "ок");
+                }
+                else
+                {
+                    await DisplayAlert("опа", "чет пошло не так", "ок");
+                }
             }
+            
         }
 
         public async void OnItemTapped(object sender, ItemTappedEventArgs e)

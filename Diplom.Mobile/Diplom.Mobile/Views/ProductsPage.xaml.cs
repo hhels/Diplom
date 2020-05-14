@@ -65,7 +65,7 @@ namespace Diplom.Mobile.Views
             //если все ок то данные из инета
             //menuList.ItemsSource = data;
 
-            void InsertDataFromLocalDb()
+             void  InsertDataFromLocalDb()
             {
                 using (var db = new ApplicationContext())
                 {
@@ -81,7 +81,7 @@ namespace Diplom.Mobile.Views
                         type = MenuType.Drink;
                     }
                     var test = db.Product.ToList();
-                    menuList.ItemsSource = db.Product.Where(x => x.Type == type).ToList();
+                     menuList.ItemsSource = db.Product.Where(x => x.Type == type).ToList();
                 }
             }
             //var selectedIndex = picker.SelectedIndex;
@@ -102,7 +102,7 @@ namespace Diplom.Mobile.Views
             //                            .GetJsonAsync<Product[]>(); //  http://192.168.1.12:5002/api/menu/menuGet
         }
 
-        public async void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        public  void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
             using (var db = new ApplicationContext())
             {

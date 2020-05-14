@@ -1,5 +1,6 @@
 ﻿using Diplom.Common.Models;
 using Diplom.Mobile.ViewModels;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,13 @@ namespace Diplom.Mobile.Views
             //BindingContext = new BasketViewModel();
             _basketViewModel = new BasketViewModel();
             BindingContext = _basketViewModel;
+
         }
-        public void OnMore(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-            DisplayAlert("More Context Action", mi.CommandParameter.ToString() + " more context action", "OK");
-        }
+        //public void OnMore(object sender, EventArgs e)
+        //{
+        //    var mi = ((MenuItem)sender);
+        //    DisplayAlert("More Context Action", mi.CommandParameter.ToString() + " more context action", "OK");
+        //}
 
         public void OnDelete(object sender, EventArgs e)
         {
@@ -64,7 +66,7 @@ namespace Diplom.Mobile.Views
 
             }
         }
-
+        //прибавление количества порций
         private void Button_Clicked_1(object sender, EventArgs e)
         {
             //var stringInThisCell = (string)((Button)sender).BindingContext;
@@ -83,10 +85,38 @@ namespace Diplom.Mobile.Views
             }
             else { DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
         }
-        public void ApdateBasket()
+        // уменьшение количества порций
+        private void Button_Clicked_2(object sender, EventArgs e)
         {
-            
+            var mi = ((Button)sender).BindingContext;
+            var del = mi as BasketList;
+            if (del != null)
+            {
+                _basketViewModel.LowerQuantity(del);
+                DisplayAlert("del", $"{del.Quantity}", "OK");
+                var asd = _basketViewModel.BasketList.FirstOrDefault(x => x.BasketListId == del.BasketListId).Quantity;
+                DisplayAlert("Ошибочка", $"{asd}", "OK");
+                basketList.ItemsSource = _basketViewModel.BasketList;
+
+            }
+            else { DisplayAlert("Ошибочка", "объект не выбран", "OK"); }
         }
+
+        private async void Button_Clicked_3(object sender, EventArgs e)
+        {
+            // если нет подключение к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Ошибочка", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
+            await Navigation.PushAsync(new OrderPage(cena.Text));
+        }
+
+        //public void AllPrice(string AllPrice)
+        //{
+        //    cena.Text = AllPrice;
+        //}
 
         //private void BasketList_ItemTapped(object sender, ItemTappedEventArgs e)
         //{

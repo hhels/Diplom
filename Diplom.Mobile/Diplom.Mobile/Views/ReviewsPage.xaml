@@ -16,7 +16,7 @@
 
             <Label Text="Поставьте оценку заведению от 1 до 5" HorizontalOptions="Center"/>
             
-            <Picker x:Name="picker" Margin="100,0,100,0" >
+            <Picker x:Name="picker" Margin="100,0,100,0" MinimumWidthRequest="50" WidthRequest="51" >
                 <Picker.Items>
                     <x:String>1</x:String>
                     <x:String>2</x:String>
@@ -40,8 +40,8 @@
                                 <ViewCell.View>
                                     <StackLayout>
                                         <Label Text="{Binding Text}" FontSize="18" />
-                                        <Label Text="{Binding Rating}" />
-                                        <Label Text="{Binding Date}" />
+                                        <Label Text="{Binding Rating, StringFormat='Оценка заведению: {0}/10'}" />
+                                        <Label Text="{Binding Date}" FontSize="Small" HorizontalOptions="End" HorizontalTextAlignment="End" />
                                         <Label Text="{Binding UserId}" />
                                     </StackLayout>
                                 </ViewCell.View>
