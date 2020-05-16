@@ -16,12 +16,13 @@ namespace Diplom.Server.Controllers
         {
             _context = context;
         }
-        
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SiteUser>>> Get()
         {
             return await _context.Users.ToArrayAsync();
         }
+
         //Востановить пароль
         //[HttpPost("PasswordEdit")]
         //public async Task<ActionResult> EditPassword(string password, string newPassword)

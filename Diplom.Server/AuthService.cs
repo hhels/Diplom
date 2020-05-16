@@ -13,7 +13,8 @@ namespace Diplom.Server
         public const string Issuer = "MyAuthServer"; // издатель токена
         public const string Audience = "MyAuthClient"; // потребитель токена
 
-        private const string Key = "mysupersecret_secretkey!123"; // ключ для шифрации хранит ключ, который будет применяться для создания токена
+        private const string
+                Key = "mysupersecret_secretkey!123"; // ключ для шифрации хранит ключ, который будет применяться для создания токена
 
         private const int LifetimeInMinutes = 360; // время жизни токена - 360 минут (6 часов)
 
@@ -32,7 +33,7 @@ namespace Diplom.Server
             };
 
             var key = GetSymmetricSecurityKey();
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.UtcNow.AddMinutes(LifetimeInMinutes);
 
             var token = new JwtSecurityToken(
@@ -41,7 +42,7 @@ namespace Diplom.Server
                                              notBefore: DateTime.UtcNow,
                                              claims: claims,
                                              expires: expires,
-                                             signingCredentials: creds);
+                                             signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

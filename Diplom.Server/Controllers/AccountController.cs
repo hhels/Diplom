@@ -103,10 +103,15 @@ namespace Diplom.Server.Controllers
         //получение данных пользователя для изменения
         [HttpGet("userGet")]
         [Authorize]
-        public async Task<ActionResult> SiteUser()
+        public async Task<IActionResult> GetCurrentUserInfo()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
             var existedUser = await _userManager.FindByIdAsync(user);
+            if(existedUser is null)
+            {
+                return BadRequest("Пользователь не найден");
+            }
+                              
             var data = new UserResponse
             {
                 Email = existedUser.Email,
@@ -122,10 +127,14 @@ namespace Diplom.Server.Controllers
         //изменение данных пользователя
         [HttpPost("userEdit")]
         [Authorize]
-        public async Task<ActionResult> EditUser([FromBody] UserResponse body)
+        public async Task<IActionResult> EditUser([FromBody] UserResponse body)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
-            var existedUser = await _userManager.FindByIdAsync(userId); //найти строчку с пользователем
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // найти id пользователя по токену
+            var existedUser = await _userManager.FindByIdAsync(userId); // найти строчку с пользователем
+            if(existedUser is null)
+            {
+                return BadRequest("Пользователь не найден");
+            }
 
             existedUser.UserName = body.Login;
             existedUser.FirstName = body.FirstName;
@@ -139,7 +148,7 @@ namespace Diplom.Server.Controllers
             {
                 return BadRequest("Произошла ошибка во время изменения данных");
             }
-            
+
             var newBody = new UserResponse
             {
                 Email = existedUser.Email,
@@ -155,7 +164,7 @@ namespace Diplom.Server.Controllers
         // Изменение пароля
         [HttpPost("PasswordEdit")]
         [Authorize]
-        public async Task<ActionResult> EditPassword(string password, string newPassword)
+        public async Task<IActionResult> EditPassword(string password, string newPassword)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
             var existedUser = await _userManager.FindByIdAsync(userId); //найти строчку с пользователем
@@ -167,8 +176,9 @@ namespace Diplom.Server.Controllers
             var result = await _userManager.ChangePasswordAsync(existedUser, password, newPassword);
             if(!result.Succeeded)
             {
-                return BadRequest("Что то пошло не так при обновлении");  
+                return BadRequest("Что-то пошло не так при обновлении");
             }
+
             var token = AuthService.GenerateToken(existedUser); // создаём токен
 
             var response = new AuthResponse

@@ -6,6 +6,5 @@ namespace Diplom.Server.Controllers
     [ApiController]
     public class RolesController : ControllerBase
     {
-        
     }
 }

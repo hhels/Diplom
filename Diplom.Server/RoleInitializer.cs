@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Diplom.Common;
-using Diplom.Server.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Diplom.Server
@@ -13,17 +12,19 @@ namespace Diplom.Server
             var isWorkerExists = await roleManager.RoleExistsAsync(RoleNames.Worker);
             var isUserExists = await roleManager.RoleExistsAsync(RoleNames.User);
 
-            if (!isDirectorExists)
+            if(!isDirectorExists)
             {
                 var directorRole = new IdentityRole(RoleNames.Director);
                 await roleManager.CreateAsync(directorRole);
             }
-            if (!isWorkerExists)
+
+            if(!isWorkerExists)
             {
                 var workerRole = new IdentityRole(RoleNames.Worker);
                 await roleManager.CreateAsync(workerRole);
             }
-            if (!isUserExists)
+
+            if(!isUserExists)
             {
                 var userRole = new IdentityRole(RoleNames.User);
                 await roleManager.CreateAsync(userRole);

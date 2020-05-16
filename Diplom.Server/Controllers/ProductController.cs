@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Diplom.Common.Entities;
 using Diplom.Common.Models;
 using Diplom.Server.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,28 +17,31 @@ namespace Diplom.Server.Controllers
         {
             _db = context;
         }
+
         //получение записей меню
         [HttpGet("productGet")]
-        public async Task<ActionResult<IEnumerable<Product>>> Get(MenuType type)
+        public async Task<IActionResult> Get(MenuType type)
         {
             var menus = await _db.Products.Where(x => x.Type == type).ToArrayAsync();
             foreach(var menu in menus)
             {
                 menu.Img = string.Format("http://192.168.1.12:5002/images/{0}", menu.Img);
             }
-            return menus;
+
+            return Ok(menus);
         }
 
         //получение всех записей меню
         [HttpGet("productAllGet")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetAll()
+        public async Task<ActionResult> GetAll()
         {
             var products = await _db.Products.ToArrayAsync();
-            foreach (var product in products)
+            foreach(var product in products)
             {
                 product.Img = string.Format("http://192.168.1.12:5002/images/{0}", product.Img);
             }
-            return products;
+
+            return Ok(products);
         }
 
         //получение расширенных данных выбраной записи

@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Diplom.Common.Entities;
-using Diplom.Common.Models;
 using Diplom.Server.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,10 +23,11 @@ namespace Diplom.Server.Controllers
         //Оформить заказ
         [HttpPost("orderAdd")]
         [Authorize]
-        public async Task<IActionResult> OrderAdd([FromBody] Order data)
+        public async Task<IActionResult> MakeOrder([FromBody] Order data)
         {
             data.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
-            var order = new Order
+
+            var order = await _db.Orders.AddAsync(new Order
             {
                 UserId = data.UserId,
                 OrderTime = data.OrderTime,
@@ -39,21 +36,21 @@ namespace Diplom.Server.Controllers
                 Comment = data.Comment,
                 TypePayment = data.TypePayment,
                 Status = data.Status,
-            };
+            }); // добавить запись и выбрать Id это записи
 
-            var orderId = _db.Orders.Add(order); // добавить запись и выбрать Id это записи
-            
             await _db.SaveChangesAsync(); // сохранить запись
-            var Idorder = orderId.Entity.OrderId;//получить Id  сохраненой записи
+            var orderId = order.Entity.OrderId; //получить Id  сохраненой записи
 
             //Привязать продукты из корзины к текущему заказу
-            var BasketApdate = await _db.Baskets.Where(x => x.UserId == data.UserId && x.OrderId == -1).ToArrayAsync();
-            foreach (var menu in BasketApdate)
+            var basketUpdate = await _db.Baskets.Where(x => x.UserId == data.UserId && x.OrderId == -1).ToArrayAsync();
+            foreach(var menu in basketUpdate)
             {
-                menu.OrderId = Idorder;
+                menu.OrderId = orderId;
             }
+
             await _db.SaveChangesAsync(); // сохранить запись
             return Ok();
+
             //var orderId = _db.Orders.Add(new Order
             //{
             //    UserId = data.UserId,
@@ -69,10 +66,10 @@ namespace Diplom.Server.Controllers
         //Получить список заказов пользователя
         [HttpGet("orderGet")]
         [Authorize]
-        public async Task<IActionResult> OrderGet()
+        public IActionResult GetUserOrders()
         {
             //найти id пользователя по токену
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             //все заказы пользователя
             var order = _db.Orders.Where(x => x.UserId == userId);
@@ -82,7 +79,7 @@ namespace Diplom.Server.Controllers
         //Удалить выбраный заказ
         [HttpPost("orderDell")]
         [Authorize]
-        public async Task<IActionResult> OrderDell(Order del)
+        public async Task<IActionResult> DeleteOrder(Order del)
         {
             var order = _db.Orders.FirstOrDefault(x => x.OrderId == del.OrderId);
             _db.Orders.RemoveRange(order);
@@ -93,13 +90,13 @@ namespace Diplom.Server.Controllers
         [HttpGet("orderOneGet")]
         public IActionResult Get(int orderOne)
         {
-            var order =  _db.Orders.FirstOrDefault(x => x.OrderId == orderOne);
+            var order = _db.Orders.FirstOrDefault(x => x.OrderId == orderOne);
             return Ok(order);
         }
 
         [HttpPost("orderUpdate")]
         [Authorize]
-        public async Task<IActionResult> OrderUpdate([FromBody] Order data)
+        public async Task<IActionResult> UpdateOrder([FromBody] Order data)
         {
             var order = _db.Orders.FirstOrDefault(x => x.OrderId == data.OrderId);
             order.Comment = data.Comment;
@@ -111,6 +108,5 @@ namespace Diplom.Server.Controllers
 
             return Ok();
         }
-
     }
 }

@@ -20,23 +20,23 @@ namespace Diplom.Server.Controllers
         }
 
         [HttpGet("contentGet")]
-        public async Task<ActionResult<IEnumerable<Content>>> Get()
+        public async Task<IActionResult> Get()
         {
             var contents = await _db.Contents.ToArrayAsync();
             foreach(var content in contents)
             {
                 content.Img = string.Format("http://192.168.1.12:5002/images/{0}", content.Img);
             }
-            return contents;
+
+            return Ok(contents);
         }
-        
 
         [HttpPost("contentTake")]
-        public async Task<ActionResult> Take(int skip)
+        public async Task<IActionResult> Take(int skip)
         {
-            var take = 5;
+            const int take = 5;
             var contents = await _db.Contents.ToArrayAsync();
-            foreach (var content in contents)
+            foreach(var content in contents)
             {
                 content.Img = string.Format("http://192.168.1.12:5002/images/{0}", content.Img);
             }

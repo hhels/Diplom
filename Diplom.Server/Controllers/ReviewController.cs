@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Diplom.Common.Entities;
 using Diplom.Server.Models;
@@ -19,6 +18,7 @@ namespace Diplom.Server.Controllers
         {
             _db = context;
         }
+
         //добавить отзыв пользователя
         [HttpPost("reviewAdd")]
         [Authorize]
@@ -29,11 +29,13 @@ namespace Diplom.Server.Controllers
             await _db.SaveChangesAsync(); // сохранить запись
             return Ok();
         }
+
         //получить отзывы пользователей
         [HttpGet("reviewGet")]
-        public async Task<ActionResult<IEnumerable<Review>>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _db.Reviews.ToArrayAsync();
+            var reviews = await _db.Reviews.ToArrayAsync();
+            return Ok(reviews);
         }
     }
 }
