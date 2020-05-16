@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.ProductsPage">
@@ -11,9 +12,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackLayout Spacing="8"  Grid.Column="0" Grid.Row="0" >
+        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
             <Label Font="24" Text="Выберите тип блюда" HorizontalOptions="Center" />
-            <Picker x:Name="picker"  SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged">
                 <Picker.Items>
                     <x:String>Напитки</x:String>
                     <x:String>Угощения</x:String>
@@ -22,11 +23,11 @@
         </StackLayout>
 
 
-        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
+        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20">
             <StackLayout>
                 <ListView x:Name="menuList"
                           HasUnevenRows="False"
-                          ItemsSource="{Binding Menus}" 
+                          ItemsSource="{Binding Menus}"
                           RowHeight="180"
                           ItemTapped="MenuList_ItemTapped">
                     <ListView.ItemTemplate>

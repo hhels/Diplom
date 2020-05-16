@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.NewsPage">
@@ -10,12 +11,12 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout  Spacing="8"  Grid.Column="0" Grid.Row="0" >
-            <Label Text="это новости тут можно посмотреть новинки" HorizontalOptions="Center"/>
-            <Button Clicked="Button_Clicked"/>
+        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
+            <Label Text="это новости тут можно посмотреть новинки" HorizontalOptions="Center" />
+            <Button Clicked="Button_Clicked" />
         </StackLayout>
 
-        <StackLayout Grid.Column="0" Grid.Row="1" >
+        <StackLayout Grid.Column="0" Grid.Row="1">
             <StackLayout>
                 <ListView x:Name="newsList"
                           HasUnevenRows="True"
@@ -27,11 +28,11 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Vertical">
-                                        <Image Source="{Binding Img}"  Aspect="AspectFit" />
+                                        <Image Source="{Binding Img}" Aspect="AspectFit" />
                                         <StackLayout>
                                             <Label Text="{Binding Name}" FontSize="30" />
                                             <Label Text="{Binding Text}" FontSize="18" />
-                                            <Label Text="{Binding Date}" FontSize="9" HorizontalOptions="End"/>
+                                            <Label Text="{Binding Date}" FontSize="9" HorizontalOptions="End" />
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>

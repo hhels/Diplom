@@ -1,22 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Diplom.Mobile.Views.OrderDetailPage">
-    <StackLayout x:Name="asd"  Margin="10">
-        <Label Text="Выберите дату приготовления"/>
-        <DatePicker x:Name="datePicker" Format="D"/>
+    <StackLayout Margin="10">
+        <Label Text="Выберите дату приготовления" />
+        <DatePicker x:Name="datePicker" Format="D" />
 
-        <Label Text="Выберите время приготовления с 8:00 до 18:00"/>
-        <TimePicker x:Name="timePicker" Format = "HH:mm" />
+        <Label Text="Выберите время приготовления с 8:00 до 18:00" />
+        <TimePicker x:Name="timePicker" Format="HH:mm" />
 
         <StackLayout Margin="10">
             <Label Text="Введите коментарий к заказу" />
-            <Editor x:Name="reviewEntry" BackgroundColor="#E5E3DE" HeightRequest="100"/>
+            <Editor x:Name="reviewEntry" BackgroundColor="#E5E3DE" HeightRequest="100" />
 
             <StackLayout Margin="10">
                 <Label Text="Выберите тип оплаты" />
-                <Label x:Name="qwe"/>
-                <Picker x:Name="picker"  MinimumWidthRequest="50" WidthRequest="51" >
+                <Label />
+                <Picker x:Name="picker" MinimumWidthRequest="50" WidthRequest="51">
                     <Picker.Items>
                         <x:String>Наличными</x:String>
                         <x:String>Карта</x:String>
@@ -24,8 +25,8 @@
                 </Picker>
 
                 <StackLayout Margin="10">
-                    <Button Text="Сохранить изменения" Clicked="Button_Clicked"/>
-                    <Button Text="Просмотр товаров заказа" Clicked="Button_Clicked_1"/>
+                    <Button Text="Сохранить изменения" Clicked="Button_Clicked" />
+                    <Button Text="Просмотр товаров заказа" Clicked="Button_Clicked_1" />
                 </StackLayout>
             </StackLayout>
         </StackLayout>
