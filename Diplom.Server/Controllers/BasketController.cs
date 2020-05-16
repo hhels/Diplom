@@ -83,10 +83,35 @@ namespace Diplom.Server.Controllers
                             Img = string.Format("http://192.168.1.12:5002/images/{0}", product.Img),
                             Quantity = b.Quantity,
                             BasketId = b.BasketId,
-                            OverallPrice = b.Quantity *  Convert.ToInt32(aditionMenu.Price),
+                            OverallPrice = b.Quantity * Convert.ToInt32(aditionMenu.Price),
                          };
             return Ok(result);
         }
+        //получение корзины выбрраной записи
+        [HttpGet("basketOneGet")]
+        [Authorize]
+        public async Task<IActionResult> BasketOneGet(int orderOne)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
+
+            //все записи пользователя которые должны отобразаться в корзине
+            var baskets = await _db.Baskets.Where(x => x.OrderId == orderOne).ToArrayAsync(); //записи в корзине относящиеся к выбраному заказу
+            var result = from b in baskets
+                         join aditionMenu in _db.AdditionMenus on b.AdditionMenuId equals aditionMenu.AdditionMenuId //название новая таблица поле из первой таблицы поле из новой таблицы
+                         join product in _db.Products on aditionMenu.MenuId equals product.ProductId
+                         select new BasketList
+                         {
+                             Price = aditionMenu.Price,
+                             Name = product.Name,
+                             ShortDescription = product.ShortDescription,
+                             Img = string.Format("http://192.168.1.12:5002/images/{0}", product.Img),
+                             Quantity = b.Quantity,
+                             BasketId = b.BasketId,
+                             OverallPrice = b.Quantity * Convert.ToInt32(aditionMenu.Price),
+                         };
+            return Ok(result);
+        }
+
 
         [HttpPost("basketDell")]
         [Authorize]
@@ -97,7 +122,24 @@ namespace Diplom.Server.Controllers
             await _db.SaveChangesAsync(); // сохранить запись
             return Ok();
         }
-   
+        [HttpPost("basketOrderDell")]
+        [Authorize]
+        public async Task<IActionResult> BasketOrderDell(BasketList del, int orderId)
+        {
+            var basket = _db.Baskets.FirstOrDefault(x => x.BasketId == del.BasketId);
+            _db.Baskets.RemoveRange(basket);
+            await _db.SaveChangesAsync(); // сохранить запись
+            var orderExistBasket = _db.Baskets.Any(x => x.OrderId == orderId);//есть ли продукты в заказе если нет то удалить заказ
+            if (!orderExistBasket)
+            {
+                var orderDel = _db.Orders.FirstOrDefault(x => x.OrderId == orderId);
+                _db.Orders.Remove(orderDel);
+                await _db.SaveChangesAsync(); // сохранить запись
+                return Ok(del.Name);
+            }
+            return Ok();
+        }
+
         [HttpPost("basketOneAdd")]
         [Authorize]
         public async Task<IActionResult> basketOneAdd(BasketList del)

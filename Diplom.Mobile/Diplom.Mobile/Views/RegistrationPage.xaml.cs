@@ -5,6 +5,7 @@ using Diplom.Common.Models;
 using Diplom.Mobile.Views.DetailMenu;
 using Flurl.Http;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,18 +17,31 @@ namespace Diplom.Mobile.Views
         public RegistrationPage()
         {
             InitializeComponent();
+            picker.SelectedIndex = 0;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            //TODO: string.IsNullOrEmpty
-            if(loginEntry.Text == null || passwordEntry.Text == null || emailEntry.Text == null || firstNameEntry.Text == null ||
-               lastNameEntry.Text == null || yearsEntry.Text == null)
+            // если нет подключение к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(loginEntry.Text) || string.IsNullOrWhiteSpace(passwordEntry.Text) || string.IsNullOrWhiteSpace(emailEntry.Text) ||
+                string.IsNullOrWhiteSpace(firstNameEntry.Text) || string.IsNullOrWhiteSpace(lastNameEntry.Text) || string.IsNullOrWhiteSpace(yearsEntry.Text))
             {
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
                 return;
             }
-
+            var rus = RussType.male;
+            if (picker.SelectedIndex == 0)
+            {
+                rus = RussType.male;
+            }
+            else if (picker.SelectedIndex == 1)
+            {
+                rus = RussType.female;
+            }
             var body = new RegisterBody
             {
                 Login = loginEntry.Text,
@@ -36,6 +50,9 @@ namespace Diplom.Mobile.Views
                 FirstName = firstNameEntry.Text,
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
+                PhoneNumber = telefonEntry.Text,
+                Russ = rus
+
             };
 
             if(!body.Email.Contains("@")) //TODO: плохая проверка

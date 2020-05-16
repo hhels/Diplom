@@ -132,6 +132,7 @@ namespace Diplom.Server.Controllers
             existedUser.LastName = body.LastName;
             existedUser.Year = body.Year;
             existedUser.Email = body.Email;
+            existedUser.PhoneNumber = body.PhoneNumber;
 
             var result = await _userManager.UpdateAsync(existedUser);
             if(!result.Succeeded)
@@ -146,6 +147,7 @@ namespace Diplom.Server.Controllers
                 FirstName = existedUser.FirstName,
                 LastName = existedUser.LastName,
                 Year = existedUser.Year,
+                PhoneNumber = existedUser.PhoneNumber
             };
             return Ok(newBody);
         }

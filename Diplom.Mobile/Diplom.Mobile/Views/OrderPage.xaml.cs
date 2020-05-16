@@ -1,6 +1,7 @@
 ﻿using Diplom.Common.Entities;
 using Diplom.Common.Models;
 using Flurl.Http;
+using Plugin.Connectivity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,15 +20,17 @@ namespace Diplom.Mobile.Views
         public OrderPage (string AllPrice)
 		{
 			InitializeComponent ();
-            var prise = AllPrice;
+            prise = AllPrice;
 
         }
-        protected override async void OnAppearing()
+        protected override  void OnAppearing()
         {
-            
+            picker.SelectedIndex = 0;
+            //picker.SelectedItem = "Наличными";
             datePicker.MinimumDate = DateTime.UtcNow;
             datePicker.MaximumDate = DateTime.UtcNow.AddDays(7);
             timePicker.Time = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0);
+
         }
 
         private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
@@ -78,11 +81,17 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            // если нет подключение к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("ошибка", "Отсутствует подключение к интернету", "cancel");
+                return;
+            }
             //DisplayAlert("дата", $"{datePicker.Date} выбрано", "OK");
             if (datePicker.Date.DayOfWeek != DayOfWeek.Sunday)
             {
                 await DisplayAlert("дата", $" хорошая дата", "OK");
-                
+
             }
             else
             {
@@ -91,25 +100,42 @@ namespace Diplom.Mobile.Views
                 return;
             }
 
-
-           // DisplayAlert("время", $"{timePicker.Time} выбрано", "OK");
+            // DisplayAlert("время", $"{timePicker.Time} выбрано", "OK");
             var vibrVrem = timePicker.Time;// выбранное время
-            TimeSpan date1 = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0) ; //текущее время
+            TimeSpan date1 = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0); //текущее время
             //DisplayAlert("время", $"{date1} текушее время", "OK");
             TimeSpan maxVrem = new TimeSpan(18, 00, 00);
             TimeSpan minVrem = new TimeSpan(08, 00, 00);
 
-            if (vibrVrem > date1 && vibrVrem < maxVrem && vibrVrem > minVrem)
+            if (datePicker.Date == DateTime.Now) 
             {
-                await DisplayAlert("время", $"выбранное время находится в нужном диапазоне", "OK");
-                
+                if (vibrVrem > date1 && vibrVrem < maxVrem && vibrVrem > minVrem)
+                {
+                    await DisplayAlert("время", $"выбранное время находится в нужном диапазоне", "OK");
+
+                }
+                else
+                {
+                    await DisplayAlert("Внимание", $"Не верное время", "OK");
+                    timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
+                    return;
+                }
             }
             else
             {
-                await DisplayAlert("Внимание", $"Не верное время", "OK");
-                timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
-                return;
+                if (vibrVrem < maxVrem && vibrVrem > minVrem)
+                {
+                    await DisplayAlert("время", $"выбранное время находится в нужном диапазоне", "OK");
+                }
+                else
+                {
+                    await DisplayAlert("Внимание", $"Не верное время", "OK");
+                    timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
+                    return;
+                }
             }
+            
+
 
             //    < !--public int OrderId { get; set; }           заказ
             //public string UserId { get; set; } // ид клиента
@@ -121,7 +147,6 @@ namespace Diplom.Mobile.Views
             //public StatusType Status { get; set; } // статус заказа-->
 
             //DisplayAlert("время", $"{datePicker.Date + timePicker.Time}", "OK");
-            picker.SelectedIndex = 0;
             
             var selectedIndex = picker.SelectedIndex;
             var type = PaymentType.Cash;
@@ -155,7 +180,9 @@ namespace Diplom.Mobile.Views
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("время", $"Заказ успешно оформлен", "OK");
+                await Navigation.PushAsync(new OrderListPage());
             }
+            else { await DisplayAlert("время", $"Что то пошло не так при оформлении заказа", "OK"); }
         }
     }
 }

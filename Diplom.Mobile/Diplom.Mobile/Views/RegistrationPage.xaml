@@ -27,7 +27,13 @@
                 <Entry x:Name="yearsEntry" Placeholder = "Возраст"  />
                 <Entry x:Name="loginEntry" Placeholder = "Login"  />
                 <Entry x:Name="passwordEntry"  Placeholder = "Password" IsPassword ="True"  MaxLength="25" />
-                
+
+                <Picker x:Name="picker"  MinimumWidthRequest="50" WidthRequest="51" >
+                    <Picker.Items>
+                        <x:String>Мужской</x:String>
+                        <x:String>Женский</x:String>
+                    </Picker.Items>
+                </Picker>
                 <!--FontSize="Large"-->
                 <Button Text="Зарегистрироваться" Clicked="Button_Clicked" />
             </StackLayout>

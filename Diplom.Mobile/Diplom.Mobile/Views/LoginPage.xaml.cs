@@ -5,6 +5,7 @@ using Diplom.Common.Models;
 using Diplom.Mobile.Views.DetailMenu;
 using Flurl.Http;
 using Newtonsoft.Json;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,11 +21,23 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            var login = loginEntry.Text;
+            var password = passwordEntry.Text;
             var body = new AuthBody
             {
                 Login = loginEntry.Text,
                 Password = passwordEntry.Text
             };
+            // если нет подключение к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            {
+                await DisplayAlert("Внимание", "Заполнены не все поля", "ОК");
+                return;
+            }
             var response = await RequestBuilder.Create()
                                                .AppendPathSegments("api", "account", "login") // добавляет к ендпоинт
                                                .PostJsonAsync(body); //  https://localhost:5001/api/account/login?login=1&password=1234567
@@ -63,9 +76,9 @@ namespace Diplom.Mobile.Views
             await Navigation.PushAsync(new RegistrationPage());
         }
 
-        private async void Button_Clicked_2(object sender, EventArgs e)
-        {
-            await DisplayAlert("a", MySettings.Role, "cancel");
-        }
+        //private async void Button_Clicked_2(object sender, EventArgs e)
+        //{
+        //    await DisplayAlert("a", MySettings.Role, "cancel");
+        //}
     }
 }

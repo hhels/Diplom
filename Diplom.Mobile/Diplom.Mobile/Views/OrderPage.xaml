@@ -34,7 +34,7 @@
                 </Picker>
 
                 <StackLayout Margin="10">
-                    <Button Text="Заказать" Clicked="Button_Clicked"/>
+                    <Button x:Name="button1" Text="Заказать" Clicked="Button_Clicked"/>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

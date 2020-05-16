@@ -1,4 +1,6 @@
-﻿namespace Diplom.Common.Bodies
+﻿using Diplom.Common.Models;
+
+namespace Diplom.Common.Bodies
 {
     public class RegisterBody
     {
@@ -8,5 +10,7 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Year { get; set; }
+        public string PhoneNumber { get; set; }
+        public RussType Russ { get; set; }
     }
 }

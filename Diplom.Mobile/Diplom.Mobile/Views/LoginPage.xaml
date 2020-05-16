@@ -22,7 +22,7 @@
             <Button Text="Войти" Clicked="Button_Clicked" Margin="40, 10"/>
             <Label Text="Нет аккаунта? Зарегистрируйтесь!" HorizontalOptions="Center"/>
             <Button Text="Регистрация" Clicked="Button_Clicked_1" Margin="40, 10"/>
-            <Button Text="жмак" Clicked="Button_Clicked_2" Margin="40, 10"/>
+            <!--<Button Text="жмак" Clicked="Button_Clicked_2" Margin="40, 10"/>-->
         </StackLayout>
     </Grid>
 </ContentPage>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Diplom.Common.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Diplom.Server.Models
 {
@@ -9,5 +10,7 @@ namespace Diplom.Server.Models
         public string LastName { get; set; }
 
         public int Year { get; set; }
-    }
+
+        public RussType Russ { get; set; }
+}
 }

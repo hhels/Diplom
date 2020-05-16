@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.BasketPage">
+             x:Class="Diplom.Mobile.Views.OrderListDetailPage">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -16,9 +16,7 @@
                 <ListView x:Name="basketList" 
                     HasUnevenRows="False" 
                     ItemsSource="{Binding BasketList}" 
-                    RowHeight="165"
-                          ItemTapped="BasketList_ItemTapped"
-                    ItemSelected="BasketList_ItemSelected">
+                    RowHeight="165">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -36,10 +34,10 @@
                                         <StackLayout Orientation="Vertical">
                                             <Label Text="{Binding Name}" FontSize="30" />
                                             <Label Text="{Binding Price, StringFormat='Цена за порцию: {0} Руб.'}" FontSize="23"/>
-                                            
+
                                             <!--<Label Text="{Binding ShortDescription}" FontSize="17" />-->
                                             <!--<Button Text="Удалить" />-->
-                                            
+
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                                                 <Button Text="-" Command="{Binding QuantityMinusCommand}" CommandParameter="{Binding BasketList}" Clicked="Button_Clicked_2"/>
                                                 <Label Text="{Binding Quantity}" FontSize="30" VerticalOptions="End" HorizontalOptions="Center" />
@@ -47,9 +45,9 @@
                                                 <!--Command="{Binding QuantityPlusCommand}"-->
                                                 <!--<Stepper Minimum="0" Maximum="10" Increment="1" Value="{Binding Quantity}" ValueChanged="Stepper_ValueChanged" VerticalOptions="End" HorizontalOptions="Center"/>-->
                                                 <!--<Button Text="отчистить" Clicked="Button_Clicked"/>-->
-                                                
+
                                             </StackLayout>
-                                            
+
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
@@ -60,17 +58,12 @@
             </StackLayout>
         </StackLayout>
 
-
         <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Общая цена заказа:" FontSize="23"/>
                 <Label x:Name="cena" Text="{Binding AllPrice}" FontSize="23"/>
                 <Label  Text="Руб." FontSize="23"/>
             </StackLayout>
-            <Button Text="Оформить заказ" Clicked="Button_Clicked_3"/>
         </StackLayout>
-
-
-
     </Grid>
 </ContentPage>

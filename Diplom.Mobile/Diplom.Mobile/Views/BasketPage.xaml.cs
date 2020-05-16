@@ -24,6 +24,7 @@ namespace Diplom.Mobile.Views
             BindingContext = _basketViewModel;
 
         }
+
         //public void OnMore(object sender, EventArgs e)
         //{
         //    var mi = ((MenuItem)sender);
