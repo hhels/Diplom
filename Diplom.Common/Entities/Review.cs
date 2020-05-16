@@ -6,8 +6,8 @@ namespace Diplom.Common.Entities
     {
         public int ReviewId { get; set; }
         public string Text { get; set; } // текст отзыва
-        public int Rating { get; set; } //выставленный рейтинг заведению
-        public DateTime Date { get; set; } //дата оставления отзыва
-        public string UserId { get; set; } //ид пользователя
+        public int Rating { get; set; } // выставленный рейтинг заведению
+        public DateTime Date { get; set; } // дата оставления отзыва
+        public string UserId { get; set; } // ид пользователя
     }
 }

@@ -15,7 +15,7 @@ namespace Diplom.Mobile
             [StatusType.Processing] = "обробатывается",
             [StatusType.Completed] = "приготовлен",
             [StatusType.Rejected] = "отклонен",
-            [StatusType.accept] = "принят"
+            [StatusType.Accepted] = "принят"
         };
         Dictionary<object, string> Paymentt = new Dictionary<object, string>
         {

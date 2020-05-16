@@ -11,6 +11,6 @@ namespace Diplom.Server.Models
 
         public int Year { get; set; }
 
-        public RussType Russ { get; set; }
+        public SexType Sex { get; set; }
 }
 }

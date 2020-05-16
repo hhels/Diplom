@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Diplom.Common.Models
+﻿namespace Diplom.Common.Models
 {
     public class BasketList
     {
@@ -14,11 +10,10 @@ namespace Diplom.Common.Models
         public string ShortDescription { get; set; } // короткое оприсание
         public string Img { get; set; } // картинка продукта
 
-        public int Quantity { get; set; } // колличество
+        public int Quantity { get; set; } // количество
         public int BasketId { get; set; } // ид строчки в корзине
 
-        public int OverallPrice { get; set; } //цена с учетом количества
-        public int AllPrice { get; set; } //общая цена покупки
-
+        public int OverallPrice { get; set; } // цена с учетом количества
+        public int AllPrice { get; set; } // общая цена покупки
     }
 }

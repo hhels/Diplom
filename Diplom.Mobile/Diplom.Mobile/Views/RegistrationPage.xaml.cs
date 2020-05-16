@@ -33,14 +33,14 @@ namespace Diplom.Mobile.Views
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
                 return;
             }
-            var rus = RussType.male;
+            var rus = SexType.Male;
             if (picker.SelectedIndex == 0)
             {
-                rus = RussType.male;
+                rus = SexType.Male;
             }
             else if (picker.SelectedIndex == 1)
             {
-                rus = RussType.female;
+                rus = SexType.Female;
             }
             var body = new RegisterBody
             {
@@ -51,7 +51,7 @@ namespace Diplom.Mobile.Views
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
                 PhoneNumber = telefonEntry.Text,
-                Russ = rus
+                Sex = rus
 
             };
 

@@ -28,11 +28,11 @@ namespace Diplom.Mobile.Views
                                                     .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
                                                     .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
             var rus = 1;
-            if (userResponses.Russ == RussType.male)
+            if (userResponses.Sex == SexType.Male)
             {
                 rus = 0;
             }
-            else if (userResponses.Russ == RussType.female)
+            else if (userResponses.Sex == SexType.Female)
             {
                 rus = 1;
             }
@@ -53,14 +53,14 @@ namespace Diplom.Mobile.Views
                 await DisplayAlert("ошибка", "Отсутствует подключение к интернету", "cancel");
                 return;
             }
-            var rus = RussType.male;
+            var rus = SexType.Male;
             if (picker.SelectedIndex == 0)
             {
-                rus = RussType.male;
+                rus = SexType.Male;
             }
             else if (picker.SelectedIndex == 1)
             {
-                rus = RussType.female;
+                rus = SexType.Female;
             }
             var body = new UserResponse
             {
@@ -70,7 +70,7 @@ namespace Diplom.Mobile.Views
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
                 PhoneNumber = telefonEntry.Text,
-                Russ = rus
+                Sex = rus
             };
 
             var response = await RequestBuilder.Create()
@@ -87,11 +87,11 @@ namespace Diplom.Mobile.Views
             var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
 
             var russ = 1;
-            if (data.Russ == RussType.male)
+            if (data.Sex == SexType.Male)
             {
                 russ = 0;
             }
-            else if (data.Russ == RussType.female)
+            else if (data.Sex == SexType.Female)
             {
                 russ = 1;
             }
