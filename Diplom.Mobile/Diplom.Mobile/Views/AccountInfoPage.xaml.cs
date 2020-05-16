@@ -19,49 +19,34 @@ namespace Diplom.Mobile.Views
         protected override async void OnAppearing()
         {
             // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
                 await DisplayAlert("ошибка", "Отсутствует подключение к интернету", "cancel");
                 return;
             }
-            var userResponses = await RequestBuilder.Create()
+
+            var userResponse = await RequestBuilder.Create()
                                                     .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
                                                     .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
-            var rus = 1;
-            if (userResponses.Sex == SexType.Male)
-            {
-                rus = 0;
-            }
-            else if (userResponses.Sex == SexType.Female)
-            {
-                rus = 1;
-            }
-            loginEntry.Text = userResponses.Login;
-            firstNameEntry.Text = userResponses.FirstName;
-            lastNameEntry.Text = userResponses.LastName;
-            yearsEntry.Text = userResponses.Year.ToString();
-            emailEntry.Text = userResponses.Email;
-            telefonEntry.Text = userResponses.PhoneNumber;
-            picker.SelectedIndex = rus;
+            
+            loginEntry.Text = userResponse.Login;
+            firstNameEntry.Text = userResponse.FirstName;
+            lastNameEntry.Text = userResponse.LastName;
+            yearsEntry.Text = userResponse.Year.ToString();
+            emailEntry.Text = userResponse.Email;
+            telefonEntry.Text = userResponse.PhoneNumber;
+            picker.SelectedIndex = (int)userResponse.Sex;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
             // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
                 await DisplayAlert("ошибка", "Отсутствует подключение к интернету", "cancel");
                 return;
             }
-            var rus = SexType.Male;
-            if (picker.SelectedIndex == 0)
-            {
-                rus = SexType.Male;
-            }
-            else if (picker.SelectedIndex == 1)
-            {
-                rus = SexType.Female;
-            }
+
             var body = new UserResponse
             {
                 Login = loginEntry.Text,
@@ -70,7 +55,7 @@ namespace Diplom.Mobile.Views
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
                 PhoneNumber = telefonEntry.Text,
-                Sex = rus
+                Sex = (SexType)picker.SelectedIndex
             };
 
             var response = await RequestBuilder.Create()
@@ -86,15 +71,6 @@ namespace Diplom.Mobile.Views
             //заносим данные в модель
             var data = JsonConvert.DeserializeObject<UserResponse>(await response.Content.ReadAsStringAsync());
 
-            var russ = 1;
-            if (data.Sex == SexType.Male)
-            {
-                russ = 0;
-            }
-            else if (data.Sex == SexType.Female)
-            {
-                russ = 1;
-            }
             //обновляем данные на странице
             loginEntry.Text = data.Login;
             firstNameEntry.Text = data.FirstName;
@@ -102,7 +78,8 @@ namespace Diplom.Mobile.Views
             yearsEntry.Text = data.Year.ToString();
             emailEntry.Text = data.Email;
             telefonEntry.Text = data.PhoneNumber;
-            picker.SelectedIndex = russ;
+            picker.SelectedIndex = (int)data.Sex;
+            
             await DisplayAlert("ОК", "Данные успешно обновлены", "cancel");
         }
 

@@ -23,25 +23,22 @@ namespace Diplom.Mobile.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
                 return;
             }
-            if (string.IsNullOrWhiteSpace(loginEntry.Text) || string.IsNullOrWhiteSpace(passwordEntry.Text) || string.IsNullOrWhiteSpace(emailEntry.Text) ||
-                string.IsNullOrWhiteSpace(firstNameEntry.Text) || string.IsNullOrWhiteSpace(lastNameEntry.Text) || string.IsNullOrWhiteSpace(yearsEntry.Text))
+
+            if(string.IsNullOrWhiteSpace(loginEntry.Text) ||
+               string.IsNullOrWhiteSpace(passwordEntry.Text) ||
+               string.IsNullOrWhiteSpace(emailEntry.Text) ||
+               string.IsNullOrWhiteSpace(firstNameEntry.Text) ||
+               string.IsNullOrWhiteSpace(lastNameEntry.Text) ||
+               string.IsNullOrWhiteSpace(yearsEntry.Text))
             {
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
                 return;
             }
-            var rus = SexType.Male;
-            if (picker.SelectedIndex == 0)
-            {
-                rus = SexType.Male;
-            }
-            else if (picker.SelectedIndex == 1)
-            {
-                rus = SexType.Female;
-            }
+
             var body = new RegisterBody
             {
                 Login = loginEntry.Text,
@@ -51,8 +48,7 @@ namespace Diplom.Mobile.Views
                 LastName = lastNameEntry.Text,
                 Year = Convert.ToInt32(yearsEntry.Text),
                 PhoneNumber = telefonEntry.Text,
-                Sex = rus
-
+                Sex = (SexType)picker.SelectedIndex
             };
 
             if(!body.Email.Contains("@")) //TODO: плохая проверка

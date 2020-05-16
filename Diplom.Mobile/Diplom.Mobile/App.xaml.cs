@@ -31,29 +31,30 @@ namespace Diplom.Mobile
                     {
                         Text = "qweqweqweqweqweqweqweqweqweqwe", Rating = 5, Date = DateTime.Parse("09.09.2009"), UserId = "rrrrr"
                     });
-                    db.SaveChanges();
                 }
-                if (!db.Product.Any())
+
+                if(!db.Product.Any())
                 {
                     db.Product.Add(new Product
                     {
                         Name = "SQL SQL SQL",
                         ShortDescription = "SQL SQL SQL",
                         LongDescription = "sdfsdfdsfasdfsdfsdf",
+
                         //Img = "http://192.168.1.12:5002/images/kon.JPG",
                         Type = MenuType.Food
-
                     });
                     db.Product.Add(new Product
                     {
                         Name = "SQL SQL SQL",
                         ShortDescription = "SQL SQL SQL",
                         LongDescription = "sdfsdfdsfasdfsdfsdf",
+
                         //Img = "http://192.168.1.12:5002/images/ping.jpg",
                         Type = MenuType.Food
                     });
-                    db.SaveChanges();
                 }
+                db.SaveChanges();
             }
 
             if(string.IsNullOrWhiteSpace(MySettings.Token))

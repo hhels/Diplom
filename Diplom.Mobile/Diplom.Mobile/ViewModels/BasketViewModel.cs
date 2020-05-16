@@ -1,47 +1,66 @@
-﻿using Diplom.Common.Models;
-using System.Windows.Input;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using Xamarin.Forms;
-using PropertyChanged;
-using Diplom.Mobile.Views;
-using Flurl.Http;
-using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Diplom.Common.Models;
+using Flurl.Http;
+using PropertyChanged;
+using Xamarin.Forms;
 
 namespace Diplom.Mobile.ViewModels
 {
     // подключенная  PropertyChanged.Fody и файлик FodyWeavers.xml
     [AddINotifyPropertyChangedInterface]
-    public  class  BasketViewModel
+    public class BasketViewModel
     {
-        
-
         public ObservableCollection<BasketList> BasketList { get; set; }
         public BasketList SelectedBasket { get; set; }
-        public string AllPrice { get; set; }
+        public string AllPrice => BasketList.Sum(x => x.OverallPrice).ToString();
 
         public ICommand QuantityPlusCommand { get; set; }
         public ICommand QuantityMinusCommand { get; set; }
+
+        public BasketViewModel()
+        {
+            var basket = RequestBuilder.Create()
+                                       .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                       .GetJsonAsync<BasketList[]>()
+                                       .GetAwaiter().GetResult(); //  https://192.168.1.12:5002/api/basket/basketGet
+
+            BasketList = new ObservableCollection<BasketList>(basket);
+            
+            QuantityPlusCommand = new Command<BasketList>(commandParameter =>
+            {
+                commandParameter.Quantity++;
+                if(commandParameter.Quantity > 10)
+                {
+                    commandParameter.Quantity = 10;
+                }
+            }, commandParameter => commandParameter != null);
+
+            QuantityMinusCommand = new Command<BasketList>(commandParameter =>
+            {
+                commandParameter.Quantity--;
+                if(commandParameter.Quantity < 1)
+                {
+                    commandParameter.Quantity = 1;
+                }
+            }, commandParameter => commandParameter != null);
+        }
+
         //public ICommand DeketeCommand { get; set; }
 
         //Удаление целой записи
-        public async Task deleteBasket(BasketList del)
+        public async Task DeleteBasket(BasketList del)
         {
-            var response = await RequestBuilder.Create()
-                                              .AppendPathSegments("api", "basket", "basketDell") // добавляет к ендпоинт
-                                              .PostJsonAsync(del);
-             var basket = await RequestBuilder.Create()
-                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
-                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketGet
-            
-            BasketList = new ObservableCollection<BasketList>(basket);
-            NumberPrice();
+            _ = await RequestBuilder.Create()
+                                    .AppendPathSegments("api", "basket", "basketDell") // добавляет к ендпоинт
+                                    .PostJsonAsync(del);
+            var basket = await RequestBuilder.Create()
+                                             .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
+                                             .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketGet
 
+            BasketList = new ObservableCollection<BasketList>(basket);
 
             //using (var db = new ApplicationContext())
             //{
@@ -57,19 +76,18 @@ namespace Diplom.Mobile.ViewModels
             //    db.SaveChangesAsync();
             //}
         }
+
         //добавление одного кол-ва
         public async Task AddQuantity(BasketList del)
         {
-            var response = await RequestBuilder.Create()
-                                              .AppendPathSegments("api", "basket", "basketOneAdd") // добавляет к ендпоинт
-                                              .PostJsonAsync(del);
+            _ = await RequestBuilder.Create()
+                                    .AppendPathSegments("api", "basket", "basketOneAdd") // добавляет к ендпоинт
+                                    .PostJsonAsync(del);
             var basket = await RequestBuilder.Create()
                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneAdd
-            
-            BasketList = new ObservableCollection<BasketList>(basket);
-            NumberPrice();
 
+            BasketList = new ObservableCollection<BasketList>(basket);
 
             //using (var db = new ApplicationContext())
             //{
@@ -99,19 +117,19 @@ namespace Diplom.Mobile.ViewModels
             //    }
             //}
         }
+
         //удаление одного кол-ва
         public async Task LowerQuantity(BasketList del)
         {
-            var response = await RequestBuilder.Create()
-                                              .AppendPathSegments("api", "basket", "basketOneDell") // добавляет к ендпоинт
-                                              .PostJsonAsync(del);
+            _ = await RequestBuilder.Create()
+                                               .AppendPathSegments("api", "basket", "basketOneDell") // добавляет к ендпоинт
+                                               .PostJsonAsync(del);
 
             var basket = await RequestBuilder.Create()
                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneDell
-            
+
             BasketList = new ObservableCollection<BasketList>(basket);
-            NumberPrice();
 
             //using (var db = new ApplicationContext())
             //{
@@ -141,48 +159,6 @@ namespace Diplom.Mobile.ViewModels
             //    }
 
             //}
-        }
-        public void NumberPrice()
-        {
-            AllPrice = BasketList.Sum(x => x.OverallPrice).ToString();
-        }
-        
-        public  BasketViewModel()
-        {
-             using  (var db = new ApplicationContext())
-            {
-                var basket =  RequestBuilder.Create()
-                                              .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
-                                              .GetJsonAsync<BasketList[]>().GetAwaiter().GetResult(); //  https://192.168.1.12:5002/api/basket/basketGet
-                
-                BasketList = new ObservableCollection<BasketList>(basket);
-                NumberPrice();
-            }
-            //_basketPage = new BasketPage();
-            // var AllPrice = BasketList.Sum(x => x.OverallPrice).ToString();
-
-            //DeketeCommand = new Command<BasketList>(commandParameter =>
-            //{
-            //    BasketList.Remove(commandParameter);
-            //});
-
-            QuantityPlusCommand = new Command<BasketList>(commandParameter =>
-            {
-                commandParameter.Quantity++;
-                if (commandParameter.Quantity > 10)
-                {
-                    commandParameter.Quantity = 10;
-                }
-            }, commandParameter => commandParameter != null);
-
-            QuantityMinusCommand = new Command<BasketList>(commandParameter =>
-            {
-                commandParameter.Quantity--;
-                if (commandParameter.Quantity < 1)
-                {
-                    commandParameter.Quantity = 1;
-                }
-            }, commandParameter => commandParameter != null);
         }
     }
 }

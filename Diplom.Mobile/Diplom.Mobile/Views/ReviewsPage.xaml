@@ -16,7 +16,7 @@
 
             <Label Text="Поставьте оценку заведению от 1 до 5" HorizontalOptions="Center"/>
             
-            <Picker x:Name="picker" Margin="100,0,100,0" MinimumWidthRequest="50" WidthRequest="51" >
+            <Picker x:Name="picker" Margin="100,0,100,0" MinimumWidthRequest="50" WidthRequest="51" SelectedIndex="3">
                 <Picker.Items>
                     <x:String>1</x:String>
                     <x:String>2</x:String>

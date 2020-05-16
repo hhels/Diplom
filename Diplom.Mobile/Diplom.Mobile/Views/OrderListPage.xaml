@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Diplom.Mobile"
              x:Class="Diplom.Mobile.Views.OrderListPage">
     <ContentPage.Resources>
-        <local:ConverterPaymentType x:Key="TypePaymentt"/>
+        <local:ConverterPaymentType x:Key="PaymentTypeConverter"/>
     </ContentPage.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -17,7 +17,7 @@
 
         <StackLayout Grid.Column="0" Grid.Row="0" Margin="20" >
             <StackLayout>
-                <ListView x:Name="basketList" 
+                <ListView
                     HasUnevenRows="True" 
                     ItemsSource="{Binding OrderList}"
                     ItemTapped="BasketList_ItemTapped">
@@ -37,12 +37,12 @@
                                         <!--Дата и время выполнения заказа-->
                                         <Label Text="{Binding LeadTime, StringFormat='Заказ будет готов к: {0}'}" FontSize="30" />
                                         <Label Text="{Binding TotalPrice, StringFormat='Стоимость заказа: {0} Руб.'}" FontSize="23"/>
-                                        <Label Text="{Binding TypePayment, Converter={StaticResource TypePaymentt}, StringFormat='Тип оплаты: {0}'}" FontSize="23"/>
+                                        <Label Text="{Binding TypePayment, Converter={StaticResource PaymentTypeConverter}, StringFormat='Тип оплаты: {0}'}" FontSize="23"/>
 
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                                            <Label Text="{Binding Status, Converter={StaticResource TypePaymentt}, StringFormat='Статус заказа: {0}'}" FontSize="23" VerticalOptions="End" HorizontalOptions="End" />
+                                            <Label Text="{Binding Status, Converter={StaticResource PaymentTypeConverter}, StringFormat='Статус заказа: {0}'}" FontSize="23" VerticalOptions="End" HorizontalOptions="End" />
                                         </StackLayout>
-                                        <Button Text="Подробнее"  HorizontalOptions="Fill" CommandParameter="{Binding OrderList}" Clicked="Button_Clicked"/>
+                                        <Button Text="Подробнее" HorizontalOptions="Fill" CommandParameter="{Binding OrderList}" Clicked="Button_Clicked"/>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>
@@ -51,6 +51,5 @@
                 </ListView>
             </StackLayout>
         </StackLayout>
-
     </Grid>
 </ContentPage>

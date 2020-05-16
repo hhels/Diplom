@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Diplom.Mobile.ViewModels
 {
@@ -21,30 +22,31 @@ namespace Diplom.Mobile.ViewModels
 
         public   NewsViewModel()
         {
-            using (var db = new ApplicationContext())
-            {
-                SkipStage = 1;
-                Skip = SkipStage * 5;
-                //получение записей 
-                var News =  RequestBuilder.Create()
-                                            .AppendPathSegments("api", "content", "contentTake") // добавляет к ендпоинт
-                                            .SetQueryParam("skip", Skip)
-                                            .GetJsonAsync<Content[]>().GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/content/contentTake
+            SkipStage = 1;
+            Skip = SkipStage * 5;
+            //получение записей 
+            var news =  RequestBuilder.Create()
+                                        .AppendPathSegments("api", "content", "contentTake") // добавляет к ендпоинт
+                                        .SetQueryParam("skip", Skip)
+                                        .GetJsonAsync<Content[]>()
+                                        .GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/content/contentTake
 
-                var sortList = News.OrderByDescending(x => x.ContentId).ToList();
-                ContentList = new ObservableCollection<Content>(sortList);
-                SkipStage++;
-            }
+            var sortList = news.OrderByDescending(x => x.ContentId).ToList();
+            ContentList = new ObservableCollection<Content>(sortList);
+            SkipStage++;
         }
-        public async void LoadMoreEmployerResult(Content itemTypeObject)
+        public async Task LoadMoreEmployerResult(Content itemTypeObject)
         {
             IsBusy = true;
             //получение записей 
-            var News = RequestBuilder.Create()
+            var news = await RequestBuilder.Create()
                                         .AppendPathSegments("api", "content", "contentTake") // добавляет к ендпоинт
                                         .SetQueryParam("skip", Skip)
-                                        .GetJsonAsync<Content[]>().GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/content/contentTake
-            ContentList.Add(News);
+                                        .GetJsonAsync<Content[]>(); //  http://192.168.1.12:5002/api/content/contentTake
+            foreach(var x in news)
+            {
+                ContentList.Add(x);
+            }
             IsBusy = false;
         }
     }

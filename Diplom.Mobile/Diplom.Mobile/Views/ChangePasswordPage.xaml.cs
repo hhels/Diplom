@@ -19,10 +19,11 @@ namespace Diplom.Mobile.Views
         private async void Button_Clicked(object sender, EventArgs e)
         {
             // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
                 return;
             }
+
             var password = passwordEntry.Text;
             var newPassword = passworAgaindEntry.Text;
             if(password == newPassword)
@@ -45,9 +46,8 @@ namespace Diplom.Mobile.Views
             var data = await response.Content.ReadAsStringAsync();
             if(response.IsSuccessStatusCode)
             {
-                var json = JsonConvert.DeserializeObject<AuthResponse>(data);
+                var json = JsonConvert.DeserializeObject<AuthResponse>(data); //TODO: ???
                 await DisplayAlert("ОК", "Пароль успешно обновлен", "cancel");
-                //await DisplayAlert("ОК", json.AccessToken, "cancel");
             }
             else
             {

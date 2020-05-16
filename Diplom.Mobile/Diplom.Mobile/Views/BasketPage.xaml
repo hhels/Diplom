@@ -47,9 +47,7 @@
                                                 <!--Command="{Binding QuantityPlusCommand}"-->
                                                 <!--<Stepper Minimum="0" Maximum="10" Increment="1" Value="{Binding Quantity}" ValueChanged="Stepper_ValueChanged" VerticalOptions="End" HorizontalOptions="Center"/>-->
                                                 <!--<Button Text="отчистить" Clicked="Button_Clicked"/>-->
-                                                
                                             </StackLayout>
-                                            
                                         </StackLayout>
                                     </StackLayout>
                                 </ViewCell.View>
@@ -65,7 +63,7 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="Общая цена заказа:" FontSize="23"/>
                 <Label x:Name="cena" Text="{Binding AllPrice}" FontSize="23"/>
-                <Label  Text="Руб." FontSize="23"/>
+                <Label Text="Руб." FontSize="23"/>
             </StackLayout>
             <Button Text="Оформить заказ" Clicked="Button_Clicked_3"/>
         </StackLayout>

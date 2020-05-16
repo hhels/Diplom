@@ -1,38 +1,39 @@
-﻿using Diplom.Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
+using Diplom.Common.Models;
 using Xamarin.Forms;
 
 namespace Diplom.Mobile
 {
-    class ConverterPaymentType : IValueConverter
+    internal class ConverterPaymentType : IValueConverter
     {
-
-        Dictionary<object, string> Statuss = new Dictionary<object, string>
-        {
-            [StatusType.Processing] = "обробатывается",
-            [StatusType.Completed] = "приготовлен",
-            [StatusType.Rejected] = "отклонен",
-            [StatusType.Accepted] = "принят"
-        };
-        Dictionary<object, string> Paymentt = new Dictionary<object, string>
+        private readonly Dictionary<object, string> _paymentTypes = new Dictionary<object, string>
         {
             [PaymentType.Cash] = "Наличными",
             [PaymentType.Card] = "Картой"
         };
 
+        private readonly Dictionary<object, string> _statusTypes = new Dictionary<object, string>
+        {
+            [StatusType.Processing] = "обрабатывается",
+            [StatusType.Completed] = "приготовлен",
+            [StatusType.Rejected] = "отклонён",
+            [StatusType.Accepted] = "принят"
+        };
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-           if(value is PaymentType)
+            if(value is PaymentType)
             {
-                return (Paymentt[value]);
+                return _paymentTypes[value];
             }
-            else if (value is StatusType)
+
+            if(value is StatusType)
             {
-                return (Statuss[value]);
+                return _statusTypes[value];
             }
+
             throw new NotImplementedException();
         }
 

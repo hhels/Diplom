@@ -9,7 +9,7 @@ namespace Diplom.Mobile
     {
         public DbSet<Product> Product { get; set; }
 
-        public DbSet<Review> Review { get; set; } 
+        public DbSet<Review> Review { get; set; }
 
         public DbSet<Basket> Basket { get; set; }
 

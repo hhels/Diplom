@@ -22,26 +22,26 @@ namespace Diplom.Mobile.Views
             BindingContext = this;
         }
 
-
         protected override async void OnAppearing()
         {
             picker.SelectedIndex = 0;
+
             // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            if(!CrossConnectivity.Current.IsConnected)
             {
                 InsertDataFromLocalDb();
                 base.OnAppearing();
                 return;
             }
 
-            var Menus = await RequestBuilder.Create()
-                                    .AppendPathSegments("api", "product", "productAllGet") // добавляет к ендпоинт
-                                    .GetAsync(); //  http://192.168.1.12:5002/api/menu/menuGet
+            var response = await RequestBuilder.Create()
+                                               .AppendPathSegments("api", "product", "productAllGet") // добавляет к ендпоинт
+                                               .GetAsync(); //  http://192.168.1.12:5002/api/menu/menuGet
 
-            var data = JsonConvert.DeserializeObject<Product[]>(await Menus.Content.ReadAsStringAsync());
+            var data = JsonConvert.DeserializeObject<Product[]>(await response.Content.ReadAsStringAsync());
 
             //если ошбка или пришла пустота берем данные из локальной БД
-            if (!Menus.IsSuccessStatusCode || !data.Any())
+            if(!response.IsSuccessStatusCode || !data.Any())
             {
                 InsertDataFromLocalDb();
                 base.OnAppearing();
@@ -49,15 +49,14 @@ namespace Diplom.Mobile.Views
             }
 
             //занесение в локальную БД новых данных
-            using (var db = new ApplicationContext())
+            using(var db = new ApplicationContext())
             {
-                var test = db.Product.ToList();
-                 db.Product.RemoveRange(db.Product);
+                db.Product.RemoveRange(db.Product);
                 await db.SaveChangesAsync();
-                var testtt = db.Product.ToList();
+
                 await db.Product.AddRangeAsync(data);
                 await db.SaveChangesAsync();
-                var testt = db.Product.ToList();
+
                 menuList.ItemsSource = db.Product.ToList();
                 InsertDataFromLocalDb();
             }
@@ -65,25 +64,14 @@ namespace Diplom.Mobile.Views
             //если все ок то данные из инета
             //menuList.ItemsSource = data;
 
-             void  InsertDataFromLocalDb()
+            void InsertDataFromLocalDb()
             {
-                using (var db = new ApplicationContext())
+                using(var db = new ApplicationContext())
                 {
-                    
-                    var selectedIndex = picker.SelectedIndex;
-                    var type = MenuType.Food;
-                    if (selectedIndex == 0)
-                    {
-                        type = MenuType.Food;
-                    }
-                    else if (selectedIndex == 1)
-                    {
-                        type = MenuType.Drink;
-                    }
-                    var test = db.Product.ToList();
-                     menuList.ItemsSource = db.Product.Where(x => x.Type == type).ToList();
+                    menuList.ItemsSource = db.Product.Where(x => x.Type == (MenuType) picker.SelectedIndex).ToList();
                 }
             }
+
             //var selectedIndex = picker.SelectedIndex;
 
             //var type = MenuType.Food;
@@ -102,26 +90,14 @@ namespace Diplom.Mobile.Views
             //                            .GetJsonAsync<Product[]>(); //  http://192.168.1.12:5002/api/menu/menuGet
         }
 
-        public  void Picker_SelectedIndexChanged(object sender, EventArgs e)
+        public void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (var db = new ApplicationContext())
+            using(var db = new ApplicationContext())
             {
-                
-                var selectedIndex = picker.SelectedIndex;
-
-                var type = MenuType.Food;
-                if (selectedIndex == 0)
-                {
-                    type = MenuType.Food;
-                }
-                else if (selectedIndex == 1)
-                {
-                    type = MenuType.Drink;
-                }
                 //берем данные из локальной БД
-                menuList.ItemsSource = db.Product.Where(x => x.Type == type).ToList();
-
+                menuList.ItemsSource = db.Product.Where(x => x.Type == (MenuType) picker.SelectedIndex).ToList();
             }
+
             //var Menus = await RequestBuilder.Create()
             //                           .AppendPathSegments("api", "product", "productAllGet") // добавляет к ендпоинт
             //                           .GetAsync(); //  http://192.168.1.12:5002/api/menu/menuGet

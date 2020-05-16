@@ -18,8 +18,8 @@ namespace Diplom.Mobile.Views
         protected override async void OnAppearing()
         {
             var userResponse = await RequestBuilder.Create()
-                                                    .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
-                                                    .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
+                                                   .AppendPathSegments("api", "account", "userGet") // добавляет к ендпоинт
+                                                   .GetJsonAsync<UserResponse>(); //  https://192.168.1.12:5002/api/account/userGet
 
             loginEntry.Placeholder = userResponse.Login;
             firstNameEntry.Placeholder = userResponse.FirstName;

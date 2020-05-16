@@ -2,7 +2,6 @@
 using System.Linq;
 using Diplom.Common.Entities;
 using Diplom.Mobile.ViewModels;
-using Flurl.Http;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +13,7 @@ namespace Diplom.Mobile.Views
         public Content[] News { get; set; }
 
         private readonly NewsViewModel _newsViewModel;
+
         public NewsPage()
         {
             InitializeComponent();
@@ -41,9 +41,9 @@ namespace Diplom.Mobile.Views
         private void NewsList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var itemTypeObject = e.Item as Content;
-            if (_newsViewModel.ContentList.Last() == itemTypeObject && _newsViewModel.ContentList.Count() != 1)
+            if(_newsViewModel.ContentList.Last() == itemTypeObject && _newsViewModel.ContentList.Count() != 1)
             {
-                if (_newsViewModel.IsBusy == false)
+                if(_newsViewModel.IsBusy == false)
                 {
                     _newsViewModel.LoadMoreEmployerResult(itemTypeObject);
                 }

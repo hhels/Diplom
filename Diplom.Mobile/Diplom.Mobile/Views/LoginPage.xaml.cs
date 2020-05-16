@@ -21,6 +21,12 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            // если нет подключение к интернету
+            if(!CrossConnectivity.Current.IsConnected)
+            {
+                return;
+            }
+            
             var login = loginEntry.Text;
             var password = passwordEntry.Text;
             var body = new AuthBody
@@ -28,16 +34,13 @@ namespace Diplom.Mobile.Views
                 Login = loginEntry.Text,
                 Password = passwordEntry.Text
             };
-            // если нет подключение к интернету
-            if (!CrossConnectivity.Current.IsConnected)
-            {
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+
+            if(string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
             {
                 await DisplayAlert("Внимание", "Заполнены не все поля", "ОК");
                 return;
             }
+
             var response = await RequestBuilder.Create()
                                                .AppendPathSegments("api", "account", "login") // добавляет к ендпоинт
                                                .PostJsonAsync(body); //  https://localhost:5001/api/account/login?login=1&password=1234567
