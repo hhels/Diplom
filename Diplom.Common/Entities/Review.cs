@@ -9,6 +9,7 @@ namespace Diplom.Common.Entities
         public int Rating { get; set; } // выставленный рейтинг заведению
         public DateTime Date { get; set; } // дата оставления отзыва
         public string UserId { get; set; } // ид пользователя
-        //public string FirstName { get; set; } // имя пользователя
+        
+        public virtual SiteUser User { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Diplom.Mobile.ViewModels
 {
     // подключенная  PropertyChanged.Fody и файлик FodyWeavers.xml
     [AddINotifyPropertyChangedInterface]
-    internal class OrderListDetailViewModel
+    public class OrderListDetailViewModel
     {
         public ObservableCollection<BasketList> BasketList { get; set; }
         public BasketList SelectedBasket { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Diplom.Common.Entities;
 using Diplom.Mobile.ViewModels;
 using Flurl.Http;
@@ -38,7 +39,7 @@ namespace Diplom.Mobile.Views
             var sortList = News.OrderByDescending(x => x.ContentId);
             newsList.ItemsSource = sortList;
         }
-        public async void Refresh(object sender, EventArgs e)
+        public void Refresh(object sender, EventArgs e)
         {
             newsList.IsRefreshing = true; //отображает иконку загрузки
             BindingContext = _newsViewModel; // здесь загружаете ваш контент снова у вас здесь может быть другой код.
@@ -50,13 +51,11 @@ namespace Diplom.Mobile.Views
             var itemTypeObject = e.Item as Content;
             if(_newsViewModel.ContentList.Last() == itemTypeObject && _newsViewModel.ContentList.Count() != 1 && _newsViewModel.ContentList.Count() != 2)
             {
-                if (_newsViewModel.IsBusy == true)
+                if (_newsViewModel.IsBusy)
                 {
-                   // await DisplayAlert("Ошибка", "Некоректный email", "cancel");
+                    // await DisplayAlert("Ошибка", "Некоректный email", "cancel");
                     await _newsViewModel.LoadMoreEmployerResult(itemTypeObject);
-                    return;
                 }
-                return;
             }
         }
     }

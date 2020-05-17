@@ -1,7 +1,7 @@
 ﻿using Diplom.Common.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Diplom.Server.Models
+namespace Diplom.Common.Entities
 {
     public class SiteUser : IdentityUser
     {

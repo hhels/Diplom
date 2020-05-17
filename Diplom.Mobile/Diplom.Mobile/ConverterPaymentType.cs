@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Diplom.Mobile
 {
-    internal class ConverterPaymentType : IValueConverter
+    public class ConverterPaymentType : IValueConverter
     {
         private readonly Dictionary<object, string> _paymentTypes = new Dictionary<object, string>
         {

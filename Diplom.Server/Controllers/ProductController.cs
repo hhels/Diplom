@@ -48,7 +48,7 @@ namespace Diplom.Server.Controllers
         [HttpGet("productAdditionGet")]
         public async Task<ActionResult> Addition(int menuId)
         {
-            var additions = await _db.AdditionMenus.Where(x => x.MenuId == menuId).ToArrayAsync();
+            var additions = await _db.AdditionMenus.Where(x => x.ProductId == menuId).ToArrayAsync();
             return Ok(additions);
         }
     }

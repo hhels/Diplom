@@ -6,6 +6,8 @@
         public string Grams { get; set; } // количество грамм в порции
         public string Calories { get; set; } //калории в порции
         public string Price { get; set; } // цена порции
-        public int MenuId { get; set; } // вид продукта
+        public int ProductId { get; set; } // вид продукта
+        
+        public virtual Product Product { get; set; }
     }
 }

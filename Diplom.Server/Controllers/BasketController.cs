@@ -73,7 +73,7 @@ namespace Diplom.Server.Controllers
             var result = from b in baskets
                          join aditionMenu in _db.AdditionMenus on b.AdditionMenuId equals
                                  aditionMenu.AdditionMenuId //название новая таблица поле из первой таблицы поле из новой таблицы
-                         join product in _db.Products on aditionMenu.MenuId equals product.ProductId
+                         join product in _db.Products on aditionMenu.ProductId equals product.ProductId
                          select new BasketList
                          {
                              Price = aditionMenu.Price,
@@ -100,7 +100,7 @@ namespace Diplom.Server.Controllers
             var result = from b in baskets
                          join aditionMenu in _db.AdditionMenus on b.AdditionMenuId equals
                                  aditionMenu.AdditionMenuId //название новая таблица поле из первой таблицы поле из новой таблицы
-                         join product in _db.Products on aditionMenu.MenuId equals product.ProductId
+                         join product in _db.Products on aditionMenu.ProductId equals product.ProductId
                          select new BasketList
                          {
                              Price = aditionMenu.Price,

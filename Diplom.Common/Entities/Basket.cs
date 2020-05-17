@@ -7,5 +7,8 @@
         public int AdditionMenuId { get; set; } // ид выбранного блюда
         public int Quantity { get; set; } // количество
         public int OrderId { get; set; } // ид заказа
+        
+        public virtual Order Order { get; set; }
+        public virtual SiteUser User { get; set; }
     }
 }

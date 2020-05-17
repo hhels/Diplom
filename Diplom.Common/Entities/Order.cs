@@ -13,5 +13,7 @@ namespace Diplom.Common.Entities
         public string Comment { get; set; } //комментарий пользователя 
         public PaymentType TypePayment { get; set; } // тип оплаты
         public StatusType Status { get; set; } // статус заказа
+        
+        public virtual SiteUser User { get; set; }
     }
 }
