@@ -34,7 +34,7 @@ namespace Diplom.Mobile.Views
             var data = JsonConvert.DeserializeObject<Review[]>(await reviews.Content.ReadAsStringAsync());
 
             //если ошбка или пришла пустота берем данные из локальной БД
-            if(!reviews.IsSuccessStatusCode || !data.Any())
+            if(!reviews.IsSuccessStatusCode || data is null)
             {
                 InsertDataFromLocalDb();
 
@@ -42,7 +42,6 @@ namespace Diplom.Mobile.Views
                 return;
             }
 
-            //TODO: проверять на копии
             //занесение в локальную БД новых данных
             using(var db = new ApplicationContext())
             {
@@ -90,6 +89,7 @@ namespace Diplom.Mobile.Views
             if(response.IsSuccessStatusCode)
             {
                 await DisplayAlert("опа", "добавилось", "ок");
+                OnAppearing();
             }
             else
             {

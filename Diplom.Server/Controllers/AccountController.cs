@@ -71,7 +71,9 @@ namespace Diplom.Server.Controllers
                 UserName = data.Login,
                 FirstName = data.FirstName,
                 LastName = data.LastName,
-                Year = data.Year
+                Year = data.Year,
+                PhoneNumber = data.PhoneNumber,
+                Sex = data.Sex
             };
 
             // создаём юзера

@@ -31,17 +31,22 @@ namespace Diplom.Server.Controllers
             return Ok(contents);
         }
 
-        [HttpPost("contentTake")]
+        [HttpGet("contentTake")]
         public async Task<IActionResult> Take(int skip)
         {
             const int take = 5;
             var contents = await _db.Contents.ToArrayAsync();
-            foreach(var content in contents)
+            if (!contents.Any())
+            {
+                return Ok();
+            }
+            var sortList = contents.OrderByDescending(x => x.Date).ToList(); ;
+            foreach (var content in sortList)
             {
                 content.Img = string.Format("http://192.168.1.12:5002/images/{0}", content.Img);
             }
 
-            return Ok(contents.Skip(skip).Take(take));
+            return Ok(sortList.Skip(skip).Take(take));
         }
     }
 }

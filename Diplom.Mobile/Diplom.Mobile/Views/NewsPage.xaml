@@ -12,7 +12,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
-            <Label Text="это новости тут можно посмотреть новинки" HorizontalOptions="Center" />
+            <Label Text="это новости тут можно посмотреть новинки и много всякого другого коней tq tq tq sss " HorizontalOptions="Center" />
             <Button Clicked="Button_Clicked" />
         </StackLayout>
 
@@ -20,7 +20,12 @@
             <StackLayout>
                 <ListView x:Name="newsList"
                           HasUnevenRows="True"
+                          CachingStrategy="RecycleElement"
                           ItemsSource="{Binding ContentList}"
+                          IsPullToRefreshEnabled="True"
+                          RefreshCommand="{Binding RefreshCommand}"
+                          IsRefreshing="{Binding IsRefreshing}"
+                          SelectionMode="None"
                           ItemAppearing="NewsList_ItemAppearing"
                           Margin="10,0,10,0">
                     <ListView.ItemTemplate>
