@@ -9,11 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Mobile", "Diplom.Mob
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Server", "Diplom.Server\Diplom.Server.csproj", "{8C4F7497-5D02-487E-9CBA-4355AF3911C3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{483AAE01-33CF-45DA-892E-C57729FAA396}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileUser", "MobileUser", "{483AAE01-33CF-45DA-892E-C57729FAA396}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Diplom.Common", "Diplom.Common\Diplom.Common.csproj", "{4DECB0DC-4B9F-4C75-A9C9-192D658B492D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplom.Common", "Diplom.Common\Diplom.Common.csproj", "{4DECB0DC-4B9F-4C75-A9C9-192D658B492D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject", "XUnitTestProject\XUnitTestProject.csproj", "{F4E37DBB-46C0-41A6-B658-08B8D2321EFD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileWorker", "MobileWorker", "{226E66F3-510D-4D82-8EA5-84C9412A5755}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplom.MobileWorker", "Diplom.MobileWorker\Diplom.MobileWorker\Diplom.MobileWorker.csproj", "{927EB190-7E59-4A1F-82D7-70A8FA97C34D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Diplom.MobileWorker.Android", "Diplom.MobileWorker\Diplom.MobileWorker.Android\Diplom.MobileWorker.Android.csproj", "{0B6A4F16-D5F3-4B89-9886-185803B303B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,19 +43,21 @@ Global
 		{4DECB0DC-4B9F-4C75-A9C9-192D658B492D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DECB0DC-4B9F-4C75-A9C9-192D658B492D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DECB0DC-4B9F-4C75-A9C9-192D658B492D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4E37DBB-46C0-41A6-B658-08B8D2321EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4E37DBB-46C0-41A6-B658-08B8D2321EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4E37DBB-46C0-41A6-B658-08B8D2321EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4E37DBB-46C0-41A6-B658-08B8D2321EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927EB190-7E59-4A1F-82D7-70A8FA97C34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927EB190-7E59-4A1F-82D7-70A8FA97C34D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927EB190-7E59-4A1F-82D7-70A8FA97C34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927EB190-7E59-4A1F-82D7-70A8FA97C34D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F35C998-BD7C-4595-95EE-AF3FDC91FF8F}
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0B6A4F16-D5F3-4B89-9886-185803B303B3} = {483AAE01-33CF-45DA-892E-C57729FAA396}
 		{0B3490C4-A82B-4048-8271-90AB81B07308} = {483AAE01-33CF-45DA-892E-C57729FAA396}
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {1F35C998-BD7C-4595-95EE-AF3FDC91FF8F}
+		{927EB190-7E59-4A1F-82D7-70A8FA97C34D} = {226E66F3-510D-4D82-8EA5-84C9412A5755}
+		{0B6A4F16-D5F3-4B89-9886-185803B303B3} = {226E66F3-510D-4D82-8EA5-84C9412A5755}
 	EndGlobalSection
 EndGlobal
