@@ -11,11 +11,17 @@ namespace Diplom.Mobile
 
         public DbSet<Review> Review { get; set; }
 
+        public DbSet<ReviewShow> ReviewShow { get; set; } //отображаемые отзывы
+
+        public DbSet<Content> Content { get; set; }
+
         public DbSet<Basket> Basket { get; set; }
 
         public DbSet<BasketList> BasketList { get; set; }
 
         public DbSet<Order> Order { get; set; }
+
+        public DbSet<OrderList> OrderList { get; set; }
 
         //Через конструктор объект этого класса получает в переменную _databasePath путь к базе данных
         private readonly string _databasePath;

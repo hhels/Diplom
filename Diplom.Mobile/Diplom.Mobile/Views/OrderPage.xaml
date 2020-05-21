@@ -2,7 +2,8 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.OrderPage">
+             x:Class="Diplom.Mobile.Views.OrderPage"
+              Title="Оформление заказа">
     <!--public int OrderId { get; set; }
         public string UserId { get; set; } // ид клиента
         public DateTime OrderTime { get; set; } // дата и время оформления 
@@ -14,18 +15,18 @@
 
 
     <StackLayout Margin="10">
-        <Label Text="Выберите дату приготовления" />
+        <Label Text="Выберите дату приготовления" Style="{StaticResource labelName}"/>
         <DatePicker x:Name="datePicker" DateSelected="DatePicker_DateSelected" Format="D" />
 
-        <Label Text="Выберите время приготовления с 8:00 до 18:00" />
+        <Label Text="Выберите время приготовления с 8:00 до 18:00" Style="{StaticResource labelName}" />
         <TimePicker x:Name="timePicker" Format="HH:mm" PropertyChanged="TimePicker_PropertyChanged" />
 
         <StackLayout Margin="10">
-            <Label Text="Введите коментарий к заказу" />
+            <Label Text="Введите коментарий к заказу" Style="{StaticResource labelName}" />
             <Editor x:Name="reviewEntry" BackgroundColor="#E5E3DE" HeightRequest="100" />
 
             <StackLayout Margin="10">
-                <Label Text="Выберите тип оплаты" />
+                <Label Text="Выберите тип оплаты" Style="{StaticResource labelName}" />
                 <Label />
                 <Picker x:Name="picker" MinimumWidthRequest="50" WidthRequest="51">
                     <Picker.Items>
@@ -35,7 +36,7 @@
                 </Picker>
 
                 <StackLayout Margin="10">
-                    <Button Text="Заказать" Clicked="Button_Clicked" />
+                    <Button Text="Заказать" Clicked="Button_Clicked" Margin="5" Style="{StaticResource ButtonShop}" />
                 </StackLayout>
             </StackLayout>
         </StackLayout>

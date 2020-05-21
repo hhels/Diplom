@@ -35,6 +35,7 @@ namespace Diplom.Mobile.Views
             if(del != null)
             {
                 await _basketViewModel.DeleteBasket(del);
+                basketList.ItemsSource = _basketViewModel.BasketList;
             }
             else
             {
@@ -102,7 +103,7 @@ namespace Diplom.Mobile.Views
             }
             else
             {
-                await DisplayAlert("Ошибочка", "объект не выбран", "OK");
+                await DisplayAlert("Ошибка", "объект не выбран", "OK");
             }
         }
 
@@ -112,7 +113,17 @@ namespace Diplom.Mobile.Views
             // если нет подключение к интернету
             if(!CrossConnectivity.Current.IsConnected)
             {
-                await DisplayAlert("Ошибочка", "Отсутствует подключение к интернету", "OK");
+                await DisplayAlert("Ошибка", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
+            else if (!_basketViewModel.Access)
+            {
+                await DisplayAlert("Ошибка", "Корзина пуста", "OK");
+                return;
+            }
+            else if (basketList.ItemsSource == null)
+            {
+                await DisplayAlert("Ошибка", "Корзина пуста", "OK");
                 return;
             }
 

@@ -11,10 +11,10 @@ namespace Diplom.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OrderDetailPage : ContentPage
     {
-        public Order OrderDetail { get; set; } //выбраный заказ
+        public OrderList OrderDetail { get; set; } //выбраный заказ
         public Order OrderGet { get; set; }
 
-        public OrderDetailPage(Order del)
+        public OrderDetailPage(OrderList del)
         {
             InitializeComponent();
             OrderDetail = del;

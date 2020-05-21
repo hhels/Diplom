@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Diplom.Common.Entities;
 using Diplom.Mobile.ViewModels;
 using Flurl.Http;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -33,12 +34,12 @@ namespace Diplom.Mobile.Views
             //newsList.ItemsSource = sortList;
         //}
 
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            //отсортировать по новизне добавления
-            var sortList = News.OrderByDescending(x => x.ContentId);
-            newsList.ItemsSource = sortList;
-        }
+        //private void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    //отсортировать по новизне добавления
+        //    var sortList = News.OrderByDescending(x => x.ContentId);
+        //    newsList.ItemsSource = sortList;
+        //}
         public void Refresh(object sender, EventArgs e)
         {
             newsList.IsRefreshing = true; //отображает иконку загрузки
@@ -53,7 +54,17 @@ namespace Diplom.Mobile.Views
             {
                 if (_newsViewModel.IsBusy)
                 {
-                    // await DisplayAlert("Ошибка", "Некоректный email", "cancel");
+                    if (!CrossConnectivity.Current.IsConnected)
+                    {
+                        // Показываем из локальной БД 
+                        using (var db = new ApplicationContext())
+                        {
+                             _newsViewModel.LoadMoreEmployerResultInLockal();
+                            if (_newsViewModel.Error) { await DisplayAlert("Ошибочка", "Нет записей", "OK"); }
+                        }
+                        return;
+                    }
+                    // Загружать из интернета
                     await _newsViewModel.LoadMoreEmployerResult(itemTypeObject);
                 }
             }

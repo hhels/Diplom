@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.ComponentModel.DataAnnotations;
 
 namespace Diplom.Mobile.Views
 {
@@ -38,7 +39,11 @@ namespace Diplom.Mobile.Views
                 await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
                 return;
             }
-
+            if (!IsValidEmail(emailEntry.Text))
+            {
+                await DisplayAlert("Ошибка", "Не верный Email", "cancel");
+                return;
+            }
             var body = new RegisterBody
             {
                 Login = loginEntry.Text,
@@ -101,6 +106,10 @@ namespace Diplom.Mobile.Views
             //{
             //    await DisplayAlert("a", MySettings.Role, "cancel");
             //}
+        }
+        public bool IsValidEmail(string source)
+        {
+            return new EmailAddressAttribute().IsValid(source);
         }
     }
 }

@@ -23,8 +23,12 @@
                     </Grid.RowDefinitions>
                     <Label Grid.Column="1"
                            Grid.Row="2"
-                           Text="AppName"
-                           Style="{DynamicResource SubtitleStyle}"/>
+                           Text="Кафе"
+                           Style="{StaticResource labelNameBold}" FontSize="27"/>
+                    <!--<Label Grid.Column="1"
+                           Grid.Row="2"
+                           Text="Кафе"
+                           Style="{DynamicResource SubtitleStyle}" />-->
                 </Grid>
             </ListView.Header>
             <ListView.ItemTemplate>
@@ -40,6 +44,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Выход" HorizontalOptions="End" Clicked="Button_Clicked"/>
+        <Button Text="Выход" HorizontalOptions="End" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}" FontAttributes="None" Margin="5" />
     </StackLayout>
 </ContentPage>

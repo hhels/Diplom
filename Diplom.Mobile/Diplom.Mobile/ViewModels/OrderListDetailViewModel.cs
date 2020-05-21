@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Diplom.Common.Entities;
@@ -16,10 +17,11 @@ namespace Diplom.Mobile.ViewModels
         public BasketList SelectedBasket { get; set; }
         public string AllPrice => BasketList.Sum(x => x.OverallPrice).ToString();
         public string Deleted { get; set; }
+        public string Update { get; set; }
 
-        public Order OrderDetail { get; set; }
+        public OrderList OrderDetail { get; set; }
 
-        public OrderListDetailViewModel(Order dell)
+        public OrderListDetailViewModel(OrderList dell)
         {
             OrderDetail = dell;
 
@@ -31,6 +33,7 @@ namespace Diplom.Mobile.ViewModels
                                        .GetResult(); //  https://192.168.1.12:5002/api/basket/basketOneGet
 
             BasketList = new ObservableCollection<BasketList>(basket);
+            //UpdatePrice().GetAwaiter().GetResult();
         }
 
         //уменьшение кол-ва
@@ -46,6 +49,9 @@ namespace Diplom.Mobile.ViewModels
                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneGet
 
             BasketList = new ObservableCollection<BasketList>(basket);
+
+            UpdatePrice();
+
         }
 
         //прибавление кол-ва
@@ -60,6 +66,8 @@ namespace Diplom.Mobile.ViewModels
                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneGet
 
             BasketList = new ObservableCollection<BasketList>(basket);
+
+            UpdatePrice();
         }
 
         //Удаление целой записи
@@ -78,6 +86,30 @@ namespace Diplom.Mobile.ViewModels
                                              .GetJsonAsync<BasketList[]>(); //  https://192.168.1.12:5002/api/basket/basketOneGet
 
             BasketList = new ObservableCollection<BasketList>(basket);
+            UpdatePrice();
+
+        }
+
+        public void UpdatePrice()
+        {
+            //var data = new Order
+            //{
+            //    OrderId = OrderDetail.OrderId,
+            //    TotalPrice = float.Parse(AllPrice),
+            //};
+            try
+            {
+                var response = RequestBuilder.Create()
+                                                   .AppendPathSegments("api", "order", "orderUpdatePrice") // добавляет к ендпоинт
+                                                   .SetQueryParam("orderId", OrderDetail.OrderId)
+                                                   .PostJsonAsync(null).GetAwaiter().GetResult();
+                var ok = response.Content.ReadAsStringAsync();
+                Update = ok.ToString();
+            }
+            catch (Exception ex)
+            {
+                var x = ex;
+            }
         }
     }
 }

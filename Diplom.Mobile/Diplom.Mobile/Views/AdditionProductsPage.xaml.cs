@@ -57,7 +57,7 @@ namespace Diplom.Mobile.Views
                 UserId = MySettings.UserId,
                 AdditionMenuId = selectedProduct.AdditionMenuId,
                 Quantity = 1,
-                OrderId = -1,
+                OrderId = null,
             };
             var response = await RequestBuilder.Create()
                                                .AppendPathSegments("api", "basket", "basketAdd") // добавляет к ендпоинт

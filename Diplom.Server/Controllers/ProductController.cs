@@ -44,6 +44,26 @@ namespace Diplom.Server.Controllers
             return Ok(products);
         }
 
+        // Динамическое получение записей меню
+        [HttpGet("productTake")]
+        public async Task<ActionResult> TakeProduct(int skip, MenuType type)
+        {
+            const int take = 5;
+            var products = await _db.Products.Where(x => x.Type == type).ToArrayAsync();
+            if (!products.Any())
+            {
+                return Ok();
+            }
+
+            var sortList = products.OrderBy(x => x.Name).ToList(); ;
+            foreach (var content in sortList)
+            {
+                content.Img = string.Format("http://192.168.1.12:5002/images/{0}", content.Img);
+            }
+
+            return Ok(sortList.Skip(skip).Take(take));
+        }
+
         //получение расширенных данных выбраной записи
         [HttpGet("productAdditionGet")]
         public async Task<ActionResult> Addition(int menuId)

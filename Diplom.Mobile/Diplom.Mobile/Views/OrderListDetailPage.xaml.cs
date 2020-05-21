@@ -3,6 +3,7 @@ using System.Linq;
 using Diplom.Common.Entities;
 using Diplom.Common.Models;
 using Diplom.Mobile.ViewModels;
+using Plugin.Connectivity;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,10 +12,10 @@ namespace Diplom.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OrderListDetailPage : ContentPage
     {
-        public Order OrderDetail { get; set; }
+        public OrderList OrderDetail { get; set; }
         private readonly OrderListDetailViewModel _basketViewModel;
 
-        public OrderListDetailPage(Order dell)
+        public OrderListDetailPage(OrderList dell)
         {
             InitializeComponent();
             OrderDetail = dell;
@@ -26,8 +27,14 @@ namespace Diplom.Mobile.Views
         //удаление продукта
         public async void OnDelete(object sender, EventArgs e)
         {
+            // Если нет подключения к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
             //проверяем готов ли заказа
-            if(OrderDetail.Status == StatusType.Completed)
+            if (OrderDetail.Status == StatusType.Completed)
             {
                 await DisplayAlert("Внимание", "Ваш заказ уже готов", "OK");
                 return;
@@ -45,6 +52,7 @@ namespace Diplom.Mobile.Views
 
             await _basketViewModel.DeleteFromBasket(del);
             basketList.ItemsSource = _basketViewModel.BasketList;
+
             if(string.IsNullOrEmpty(_basketViewModel.Deleted))
             {
                 return;
@@ -57,8 +65,14 @@ namespace Diplom.Mobile.Views
         //прибавление количества порций
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
+            // Если нет подключения к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
             //проверяем готов ли заказа
-            if(OrderDetail.Status == StatusType.Completed)
+            if (OrderDetail.Status == StatusType.Completed)
             {
                 await DisplayAlert("Внимание", "Ваш заказ уже готов", "OK");
                 return;
@@ -84,8 +98,14 @@ namespace Diplom.Mobile.Views
         // уменьшение количества порций
         private async void Button_Clicked_2(object sender, EventArgs e)
         {
+            // Если нет подключения к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
             //проверяем готов ли заказа
-            if(OrderDetail.Status == StatusType.Completed)
+            if (OrderDetail.Status == StatusType.Completed)
             {
                 await DisplayAlert("Внимание", "Ваш заказ уже готов", "OK");
                 return;

@@ -19,6 +19,7 @@ namespace Diplom.Server.Controllers
             _db = context;
         }
 
+        // Получение всех записей
         [HttpGet("contentGet")]
         public async Task<IActionResult> Get()
         {
@@ -31,6 +32,7 @@ namespace Diplom.Server.Controllers
             return Ok(contents);
         }
 
+        // Динамическое получение записей
         [HttpGet("contentTake")]
         public async Task<IActionResult> Take(int skip)
         {

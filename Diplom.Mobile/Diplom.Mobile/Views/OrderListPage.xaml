@@ -21,7 +21,7 @@
                 <ListView
                     HasUnevenRows="True"
                     ItemsSource="{Binding OrderList}"
-                    ItemTapped="BasketList_ItemTapped">
+                    >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -37,20 +37,20 @@
                                     <StackLayout Orientation="Vertical">
                                         <!--Дата и время выполнения заказа-->
                                         <Label Text="{Binding LeadTime, StringFormat='Заказ будет готов к: {0}'}"
-                                               FontSize="30" />
+                                               FontSize="30" Style="{StaticResource labelNameBold}" />
                                         <Label Text="{Binding TotalPrice, StringFormat='Стоимость заказа: {0} Руб.'}"
-                                               FontSize="23" />
+                                               FontSize="23" Style="{StaticResource labelTextDescription}" />
                                         <Label
                                             Text="{Binding TypePayment, Converter={StaticResource PaymentTypeConverter}, StringFormat='Тип оплаты: {0}'}"
-                                            FontSize="23" />
+                                            FontSize="23" Style="{StaticResource labelTextDescription}" />
 
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                        <StackLayout Orientation="Horizontal" >
                                             <Label
                                                 Text="{Binding Status, Converter={StaticResource PaymentTypeConverter}, StringFormat='Статус заказа: {0}'}"
-                                                FontSize="23" VerticalOptions="End" HorizontalOptions="End" />
+                                                FontSize="23" Style="{StaticResource labelTextDescription}" />
                                         </StackLayout>
                                         <Button Text="Подробнее" HorizontalOptions="Fill"
-                                                CommandParameter="{Binding OrderList}" Clicked="Button_Clicked" />
+                                                CommandParameter="{Binding OrderList}" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}"/>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

@@ -105,7 +105,7 @@ namespace Diplom.Mobile.Views
             var maxAllowedTime = new TimeSpan(18, 00, 00);
             var minAllowedTime = new TimeSpan(08, 00, 00);
 
-            if(datePicker.Date == DateTime.Now)
+            if(datePicker.Date == DateTime.Now.Date)
             {
                 if(selectedTime > currentTime && selectedTime < maxAllowedTime && selectedTime > minAllowedTime)
                 {
@@ -143,6 +143,7 @@ namespace Diplom.Mobile.Views
             //public StatusType Status { get; set; } // статус заказа-->
 
             //DisplayAlert("время", $"{datePicker.Date + timePicker.Time}", "OK");
+            
 
             var data = new Order
             {
@@ -154,23 +155,19 @@ namespace Diplom.Mobile.Views
                 TypePayment = (PaymentType)picker.SelectedIndex,
                 Status = StatusType.Processing,
             };
-            using(var db = new ApplicationContext())
-            {
-                await db.Order.AddRangeAsync(data);
-                await db.SaveChangesAsync();
-            }
+            
 
             var response = await RequestBuilder.Create()
                                                .AppendPathSegments("api", "order", "orderAdd") // добавляет к ендпоинт
                                                .PostJsonAsync(data);
             if(response.IsSuccessStatusCode)
             {
-                await DisplayAlert("время", "Заказ успешно оформлен", "OK");
+                await DisplayAlert("ОК", "Заказ успешно оформлен", "OK");
                 await Navigation.PushAsync(new OrderListPage());
             }
             else
             {
-                await DisplayAlert("время", "Что то пошло не так при оформлении заказа", "OK");
+                await DisplayAlert("Ошибка", "Что то пошло не так при оформлении заказа", "OK");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Diplom.Common.Models;
 using Flurl.Http;
 using Newtonsoft.Json;
@@ -47,6 +48,22 @@ namespace Diplom.Mobile.Views
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(loginEntry.Text) ||
+              string.IsNullOrWhiteSpace(emailEntry.Text) ||
+              string.IsNullOrWhiteSpace(firstNameEntry.Text) ||
+              string.IsNullOrWhiteSpace(lastNameEntry.Text) ||
+              string.IsNullOrWhiteSpace(yearsEntry.Text) ||
+              string.IsNullOrWhiteSpace(telefonEntry.Text))
+            {
+                await DisplayAlert("Ошибка", "Заполнены не все поля", "cancel");
+                return;
+            }
+
+            if (!IsValidEmail(emailEntry.Text))
+            {
+                await DisplayAlert("Ошибка", "Не верный Email", "cancel");
+                return;
+            }
             var body = new UserResponse
             {
                 Login = loginEntry.Text,
@@ -85,7 +102,17 @@ namespace Diplom.Mobile.Views
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
+            // если нет подключение к интернету
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("ошибка", "Отсутствует подключение к интернету", "cancel");
+                return;
+            }
             await Navigation.PushAsync(new ChangePasswordPage());
+        }
+        public bool IsValidEmail(string source)
+        {
+            return new EmailAddressAttribute().IsValid(source);
         }
     }
 }

@@ -21,19 +21,46 @@ namespace Diplom.Mobile
             {
                 // Создаем бд, если она отсутствует
                 db.Database.EnsureCreated();
-                if(!db.Review.Any())
+                if(!db.ReviewShow.Any())
                 {
-                    db.Review.Add(new Review
+                    db.ReviewShow.Add(new ReviewShow
                     {
-                        Text = "пывапьыждвьапждфвьапдфвпждапь", Rating = 4, Date = DateTime.Parse("11.11.2001"), UserId = "sssss"
+                         Text = "пывапьыждвьапждфвьапдфвпждапь", Rating = 4, Date = DateTime.Parse("11.11.2001"), FirstName = "sssss"
                     });
-                    db.Review.Add(new Review
+                    db.ReviewShow.Add(new ReviewShow
                     {
-                        Text = "qweqweqweqweqweqweqweqweqweqwe", Rating = 5, Date = DateTime.Parse("09.09.2009"), UserId = "rrrrr"
+                        Text = "qweqweqweqweqweqweqweqweqweqwe", Rating = 5, Date = DateTime.Parse("09.09.2009"), FirstName = "rrrrr"
                     });
                 }
 
-                if(!db.Product.Any())
+                //try
+                //{
+                //    db.OrderList.Add(new OrderList
+                //    {
+                //        OrderTime = DateTime.Parse("09.09.2009"),
+                //        LeadTime = DateTime.Parse("10.10.2010"),
+                //        TotalPrice = 2256,
+                //        Comment = "sdfdfhdfh dsfgsfgr dfg dfg",
+                //        TypePayment = PaymentType.Cash,
+                //        Status = StatusType.Processing,
+                //    });
+                //    db.OrderList.Add(new OrderList
+                //    {
+                //        OrderTime = DateTime.Parse("08.08.2008"),
+                //        LeadTime = DateTime.Parse("08.08.2008"),
+                //        TotalPrice = 2256,
+                //        Comment = "sdfdsfsdffs sdffg",
+                //        TypePayment = PaymentType.Cash,
+                //        Status = StatusType.Processing,
+                //    });
+                //}
+                //catch (Exception ex)
+                //{
+                //    var x = ex;
+                //}
+
+
+                if (!db.Product.Any())
                 {
                     db.Product.Add(new Product
                     {

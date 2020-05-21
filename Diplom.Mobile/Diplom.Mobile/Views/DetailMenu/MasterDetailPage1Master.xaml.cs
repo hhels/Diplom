@@ -20,7 +20,7 @@ namespace Diplom.Mobile.Views.DetailMenu
         private void Button_Clicked(object sender, System.EventArgs e)
         {
             MySettings.Clear();
-            Navigation.PushAsync(new LoginPage());
+            Navigation.PushModalAsync(new LoginPage());
         }
     }
 }

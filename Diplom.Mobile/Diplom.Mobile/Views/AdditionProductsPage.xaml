@@ -2,7 +2,8 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.AdditionProductsPage">
+             x:Class="Diplom.Mobile.Views.AdditionProductsPage"
+              Title="Описание продукта">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -13,13 +14,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
-            <Image x:Name="image1" WidthRequest="300" HeightRequest="200" HorizontalOptions="Center" />
+            <Image x:Name="image1"  HeightRequest="190"   HorizontalOptions="Center" />
         </StackLayout>
 
         <ScrollView Grid.Column="0" Grid.Row="1">
             <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1">
-                <Label x:Name="nameProd" FontSize="34" />
-                <Label x:Name="LongDescription" FontSize="16" />
+                <Label x:Name="nameProd" FontSize="34" Style="{StaticResource labelNameBold}" />
+                <Label x:Name="LongDescription" FontSize="16"  Style="{StaticResource labelTextDescription}"/>
             </StackLayout>
         </ScrollView>
 
@@ -36,9 +37,9 @@
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                                        <Label Text="{Binding Price, StringFormat=' {0} Рублей'}" FontSize="30" />
-                                        <Label Text="{Binding Grams, StringFormat=' {0} Грамм'}" FontSize="24" />
-                                        <Label Text="{Binding Calories, StringFormat=' {0} Ккал.'}" FontSize="24" />
+                                        <Label Text="{Binding Price, StringFormat=' {0} Рублей'}" FontSize="30" Style="{StaticResource labelName}" />
+                                        <Label Text="{Binding Grams, StringFormat=' {0} Грамм'}" FontSize="24" Style="{StaticResource labelName}" />
+                                        <Label Text="{Binding Calories, StringFormat=' {0} Ккал.'}" FontSize="24" Style="{StaticResource labelName}" />
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

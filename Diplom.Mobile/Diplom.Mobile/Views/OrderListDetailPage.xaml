@@ -2,7 +2,8 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.OrderListDetailPage">
+             x:Class="Diplom.Mobile.Views.OrderListDetailPage"
+              Title="Корзина заказа">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -33,9 +34,9 @@
                                     <StackLayout Orientation="Horizontal">
                                         <Image Source="{Binding Img}" WidthRequest="90" HeightRequest="110" />
                                         <StackLayout Orientation="Vertical">
-                                            <Label Text="{Binding Name}" FontSize="30" />
+                                            <Label Text="{Binding Name}" FontSize="30" Style="{StaticResource labelNameBold}"/>
                                             <Label Text="{Binding Price, StringFormat='Цена за порцию: {0} Руб.'}"
-                                                   FontSize="23" />
+                                                   FontSize="23" Style="{StaticResource labelTextDescription}" />
 
                                             <!--<Label Text="{Binding ShortDescription}" FontSize="17" />-->
                                             <!--<Button Text="Удалить" />-->
@@ -43,11 +44,11 @@
                                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                                                 <Button Text="-" Command="{Binding QuantityMinusCommand}"
                                                         CommandParameter="{Binding BasketList}"
-                                                        Clicked="Button_Clicked_2" />
+                                                        Clicked="Button_Clicked_2" FontAttributes="Bold"/>
                                                 <Label Text="{Binding Quantity}" FontSize="30" VerticalOptions="End"
-                                                       HorizontalOptions="Center" />
+                                                       HorizontalOptions="Center" Style="{StaticResource labelNameBold}"/>
                                                 <Button Text="+" CommandParameter="{Binding BasketList}"
-                                                        Clicked="Button_Clicked_1" />
+                                                        Clicked="Button_Clicked_1" FontAttributes="Bold" />
                                                 <!--Command="{Binding QuantityPlusCommand}"-->
                                                 <!--<Stepper Minimum="0" Maximum="10" Increment="1" Value="{Binding Quantity}" ValueChanged="Stepper_ValueChanged" VerticalOptions="End" HorizontalOptions="Center"/>-->
                                                 <!--<Button Text="отчистить" Clicked="Button_Clicked"/>-->
@@ -64,7 +65,7 @@
 
         <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Text="{Binding AllPrice, StringFormat='Общая цена заказа: {0} руб.'}" FontSize="23" />
+                <Label Text="{Binding AllPrice, StringFormat='Общая цена заказа: {0} руб.'}" FontSize="23" Style="{StaticResource labelTextDescription}" />
             </StackLayout>
         </StackLayout>
     </Grid>

@@ -5,30 +5,30 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Diplom.Mobile.Views.RegistrationPage">
+             x:Class="Diplom.Mobile.Views.RegistrationPage"
+              Title="Регистрация">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="7*" />
+            <RowDefinition Height="9*" />
         </Grid.RowDefinitions>
 
         <StackLayout Spacing="8" Orientation="Horizontal" Grid.Column="0" Grid.Row="0"
                      HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-            <Button Text="Вход" />
-            <Button Text="Регистрация" />
+            <Label Text="Заполните поля для регистрации нового аккаунта" Style="{StaticResource labelTextDescription}"/>
         </StackLayout>
         <ScrollView Grid.Column="0" Grid.Row="1" Margin="0,20,0,0">
             <StackLayout Grid.Column="0" Grid.Row="1" Margin="20">
-                <Entry x:Name="firstNameEntry" Placeholder="Имя" />
-                <Entry x:Name="lastNameEntry" Placeholder="Фамилия" />
-                <Entry x:Name="emailEntry" Placeholder="Email" />
-                <Entry x:Name="telefonEntry" Placeholder="Телефон" />
-                <Entry x:Name="yearsEntry" Placeholder="Возраст" />
-                <Entry x:Name="loginEntry" Placeholder="Login" />
-                <Entry x:Name="passwordEntry" Placeholder="Password" IsPassword="True" MaxLength="25" />
+                <Entry x:Name="firstNameEntry" Placeholder="Имя" MaxLength="25" />
+                <Entry x:Name="lastNameEntry" Placeholder="Фамилия" MaxLength="25" />
+                <Entry x:Name="emailEntry" Placeholder="Email" MaxLength="30" />
+                <Entry x:Name="telefonEntry" Placeholder="Телефон" MaxLength="11" />
+                <Entry x:Name="yearsEntry" Placeholder="Возраст" MaxLength="3" />
+                <Entry x:Name="loginEntry" Placeholder="Логин" MaxLength="25" />
+                <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="True" MaxLength="30" />
 
                 <Picker x:Name="picker" MinimumWidthRequest="50" WidthRequest="51">
                     <Picker.Items>
@@ -37,7 +37,7 @@
                     </Picker.Items>
                 </Picker>
                 <!--FontSize="Large"-->
-                <Button Text="Зарегистрироваться" Clicked="Button_Clicked" />
+                <Button Text="Зарегистрироваться" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}" />
             </StackLayout>
         </ScrollView>
     </Grid>

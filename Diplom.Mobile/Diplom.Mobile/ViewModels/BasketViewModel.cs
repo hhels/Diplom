@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Diplom.Common.Models;
 using Flurl.Http;
+using Plugin.Connectivity;
 using PropertyChanged;
 using Xamarin.Forms;
 
@@ -15,20 +16,38 @@ namespace Diplom.Mobile.ViewModels
     {
         public ObservableCollection<BasketList> BasketList { get; set; }
         public BasketList SelectedBasket { get; set; }
-        public string AllPrice => BasketList.Sum(x => x.OverallPrice).ToString();
+        public bool Access { get; set; }
+        public int AllPrice => BasketList.Sum(x => x.OverallPrice);
 
         public ICommand QuantityPlusCommand { get; set; }
         public ICommand QuantityMinusCommand { get; set; }
 
         public BasketViewModel()
         {
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                BasketList = new ObservableCollection<BasketList>();
+                return;
+            }
+            Access = false;
             var basket = RequestBuilder.Create()
                                        .AppendPathSegments("api", "basket", "basketGet") // добавляет к ендпоинт
                                        .GetJsonAsync<BasketList[]>()
                                        .GetAwaiter().GetResult(); //  https://192.168.1.12:5002/api/basket/basketGet
+            //if(!basket.Any())
+            //{
+            //    Access = false;
+            //    return;
+            //}
 
+            Access = true;
             BasketList = new ObservableCollection<BasketList>(basket);
-            
+            if (AllPrice == 0)
+            {
+                Access = false;
+                return;
+            }
+
             QuantityPlusCommand = new Command<BasketList>(commandParameter =>
             {
                 commandParameter.Quantity++;

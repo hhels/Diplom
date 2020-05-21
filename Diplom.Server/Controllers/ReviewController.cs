@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Diplom.Common.Entities;
+using Diplom.Common.Models;
 using Diplom.Server.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -37,13 +38,47 @@ namespace Diplom.Server.Controllers
         [HttpGet("reviewGet")]
         public async Task<IActionResult> Get()
         {
-            var reviews = await _db.Reviews.ToArrayAsync();
+            var reviews = await _db.Reviews.Include(x => x.User).Select(x =>
+            new ReviewShow()
+            {
+                //ReviewId = x.ReviewId,
+                Text = x.Text,
+                Rating = x.Rating,
+                Date = x.Date,
+                FirstName = x.User.FirstName
+                }).ToArrayAsync();
+
             if (!reviews.Any())
             {
                 return Ok();
             }
             return Ok(reviews);
         }
+        // Динамическое получение записей
+        [HttpGet("reviewTake")]
+        public async Task<IActionResult> Take(int skip)
+        {
+            const int take = 5;
+            var reviews = await _db.Reviews.Include(x => x.User).Select(x =>
+            new ReviewShow()
+            {
+                //ReviewId = x.ReviewId,
+                Text = x.Text,
+                Rating = x.Rating,
+                Date = x.Date,
+                FirstName = x.User.FirstName
+            }).ToArrayAsync();
+
+            if (!reviews.Any())
+            {
+                return Ok();
+            }
+            var sortList = reviews.OrderByDescending(x => x.Date).ToList();
+
+            return Ok(sortList.Skip(skip).Take(take));
+        }
+
+
         ////получить отзывы пользователей
         //[HttpGet("reviewGet")]
         //public async Task<IActionResult> Get()

@@ -29,7 +29,7 @@ namespace Diplom.Server.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
 
             //проверяет есть ли уже эта запись в корзине
-            var existedUser = _db.Baskets.Any(x => x.UserId == userId && x.OrderId == -1 && x.AdditionMenuId == data.AdditionMenuId);
+            var existedUser = _db.Baskets.Any(x => x.UserId == userId && x.OrderId == null && x.AdditionMenuId == data.AdditionMenuId);
             if(existedUser)
             {
                 return BadRequest("Запись уже добавлена в корзину");
@@ -69,7 +69,7 @@ namespace Diplom.Server.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
 
             //все записи пользователя которые должны отобразаться в корзине
-            var baskets = await _db.Baskets.Where(x => x.UserId == userId && x.OrderId == -1).ToArrayAsync();
+            var baskets = await _db.Baskets.Where(x => x.UserId == userId && x.OrderId == null).ToArrayAsync();
             var result = from b in baskets
                          join aditionMenu in _db.AdditionMenus on b.AdditionMenuId equals
                                  aditionMenu.AdditionMenuId //название новая таблица поле из первой таблицы поле из новой таблицы
