@@ -14,6 +14,9 @@ namespace MobileWorker.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            ServicePointManager.ServerCertificateValidationCallback =
+                    (message, certificate, chain, sslPolicyErrors) => true;
+            
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

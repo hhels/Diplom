@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Diplom.Mobile.Views.DetailMenu.MasterDetailPage1"
-             xmlns:views="clr-namespace:Diplom.Mobile.Views;assembly=Diplom.Mobile"
-             xmlns:user="clr-namespace:Diplom.Mobile.Views.DetailMenu;assembly=Diplom.Mobile"
+             x:Class="MobileWorker.Views.DetailMenu.MasterDetailPage1"
+             xmlns:views="clr-namespace:MobileWorker.Views;assembly=MobileWorker"
+             xmlns:user="clr-namespace:MobileWorker.Views.DetailMenu;assembly=MobileWorker"
              NavigationPage.HasNavigationBar="False">
   <MasterDetailPage.Master>
     <user:MasterDetailPage1Master x:Name="MasterPage" />

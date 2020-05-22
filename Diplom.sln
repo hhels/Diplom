@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileWorker.Android", "Mob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileWorker", "MobileWorker\MobileWorker\MobileWorker.csproj", "{D2086ECB-2C64-4521-B8FE-0EBA31D12042}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MobileWorker", "MobileWorker", "{16CB4246-4AD7-4B76-8A4D-DF0B9057DD28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0B6A4F16-D5F3-4B89-9886-185803B303B3} = {483AAE01-33CF-45DA-892E-C57729FAA396}
 		{0B3490C4-A82B-4048-8271-90AB81B07308} = {483AAE01-33CF-45DA-892E-C57729FAA396}
+		{D6895283-B456-4553-B5A8-284847738C18} = {16CB4246-4AD7-4B76-8A4D-DF0B9057DD28}
+		{D2086ECB-2C64-4521-B8FE-0EBA31D12042} = {16CB4246-4AD7-4B76-8A4D-DF0B9057DD28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F35C998-BD7C-4595-95EE-AF3FDC91FF8F}
