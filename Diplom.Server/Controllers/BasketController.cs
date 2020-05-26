@@ -110,6 +110,7 @@ namespace Diplom.Server.Controllers
                              Quantity = b.Quantity,
                              BasketId = b.BasketId,
                              OverallPrice = b.Quantity * Convert.ToInt32(aditionMenu.Price),
+                             Grams = aditionMenu.Grams,
                          };
             return Ok(result);
         }

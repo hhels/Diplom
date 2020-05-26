@@ -56,7 +56,7 @@ namespace Diplom.Mobile.Views
                 Sex = (SexType)picker.SelectedIndex
             };
 
-            if(!body.Email.Contains("@")) //TODO: плохая проверка
+            if(!body.Email.Contains("@"))
             {
                 await DisplayAlert("Ошибка", "Некоректный email", "cancel");
                 return;

@@ -8,6 +8,7 @@ namespace MobileWorker
 
         internal static IFlurlRequest Create()
         {
+
             if(_client is null)
             {
                 _client = new FlurlClient

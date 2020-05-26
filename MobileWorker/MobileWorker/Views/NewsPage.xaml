@@ -9,16 +9,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
+        <!--<StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
             <Label Text="В новостной ленте вы можите увидеть все, что происходило в заведении за последнее время." HorizontalTextAlignment="Center" HorizontalOptions="Center" TextColor="#A4A4A4" />
-            <!--<Label Text="это новости тут можно" HorizontalOptions="Center" Style="{StaticResource labeleStyle}"/>-->
-            <!--<Button Clicked="Button_Clicked" />-->
-        </StackLayout>
+            --><!--<Label Text="это новости тут можно" HorizontalOptions="Center" Style="{StaticResource labeleStyle}"/>-->
+            <!--<Button Clicked="Button_Clicked" />--><!--
+        </StackLayout>-->
 
-        <StackLayout Grid.Column="0" Grid.Row="1">
+        <StackLayout Grid.Column="0" Grid.Row="0">
             <StackLayout>
                 <ListView x:Name="newsList"
                           HasUnevenRows="True"
@@ -27,12 +27,22 @@
                           IsPullToRefreshEnabled="True"
                           RefreshCommand="{Binding RefreshCommand}"
                           IsRefreshing="{Binding IsRefreshing}"
-                          SelectionMode="None"
+                          
                           ItemAppearing="NewsList_ItemAppearing"
+                          ItemTapped="NewsList_ItemTapped"
                           Margin="10,0,10,0">
+                    <!--SelectionMode="None"-->
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <!--<MenuItem Clicked="OnMore"
+                                          CommandParameter="{Binding .}"
+                                          Text="More" />-->
+                                    <MenuItem Clicked="OnDelete"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Vertical">
                                         <Image Source="{Binding Img}" Aspect="AspectFit" HeightRequest="200" />
@@ -48,6 +58,10 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
+        </StackLayout>
+
+        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="1">
+            <Button Text="Добавить новость oo" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}" Margin="5" />
         </StackLayout>
     </Grid>
 </ContentPage>

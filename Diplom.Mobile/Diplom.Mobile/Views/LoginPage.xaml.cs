@@ -66,11 +66,11 @@ namespace Diplom.Mobile.Views
             }
             else if(MySettings.Role == RoleNames.Worker)
             {
-                await DisplayAlert("a", MySettings.Role, "cancel");
+                await Navigation.PushAsync(new MasterDetailPage1());
             }
             else if(MySettings.Role == RoleNames.Director)
             {
-                await DisplayAlert("a", MySettings.Role, "cancel");
+                await Navigation.PushAsync(new MasterDetailPage1());
             }
         }
 

@@ -64,39 +64,6 @@ namespace MobileWorker.ViewModels
             }
             
             SkipStage++;
-
-            //// Команда обновления списка
-            //RefreshCommand = new Command<Product>(commandParameter =>
-            //{
-            //    IsBusy = true;
-            //    IsRefreshing = true;
-            //    SkipStage = 0;
-            //    Skip = SkipStage * 5;
-            //    if ((int)type == -1)
-            //    {
-            //        type = MenuType.Food;
-            //    }
-
-            //    // Если нет интернета
-            //    if (!CrossConnectivity.Current.IsConnected)
-            //    {
-            //        //показываем из локальной БД 
-            //        using (var db = new ApplicationContext())
-            //        {
-            //            LoadMoreEmployerResultInLockal(type);
-            //        }
-            //        return;
-            //    }
-            //    var products = RequestBuilder.Create()
-            //                             .AppendPathSegments("api", "product", "productTake") // добавляет к ендпоинт
-            //                             .SetQueryParam("skip", Skip)
-            //                             .SetQueryParam("type", (int)type)
-            //                             .GetJsonAsync<Product[]>()
-            //                             .GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/product/productTake
-
-            //    ProductList = new ObservableCollection<Product>(products);
-            //    IsRefreshing = false;
-            //});
         }
         // Выбор данных при смене типа продукта
         public async void Products(MenuType type)
@@ -213,6 +180,29 @@ namespace MobileWorker.ViewModels
                 IsRefreshing = false;
             }
         }
+
+        //Удаление целой записи
+        public async Task DeleteBasket(Product del, MenuType type)
+        {
+            if ((int)type == -1)
+            {
+                type = MenuType.Food;
+            }
+            _ = await RequestBuilder.Create()
+                                    .AppendPathSegments("api", "product", "productDell") // добавляет к ендпоинт
+                                    .PostJsonAsync(del);
+
+            //получение записей 
+            var product = RequestBuilder.Create()
+                                     .AppendPathSegments("api", "product", "productTake") // добавляет к ендпоинт
+                                     .SetQueryParam("skip", Skip)
+                                     .SetQueryParam("type", (int)type)
+                                     .GetJsonAsync<Product[]>()
+                                     .GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/product/productTake
+
+            ProductList = new ObservableCollection<Product>(product);
+        }
+
         public async Task SaveDb(Product[] data)
         {
             //заносим в локальную БД

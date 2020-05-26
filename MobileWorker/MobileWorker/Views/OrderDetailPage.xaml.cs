@@ -12,7 +12,7 @@ namespace MobileWorker.Views
     public partial class OrderDetailPage : ContentPage
     {
         public OrderList OrderDetail { get; set; } //выбраный заказ
-        public Order OrderGet { get; set; }
+        public OrderDetailWorker OrderGet { get; set; }
 
         public OrderDetailPage(OrderList del)
         {
@@ -30,14 +30,22 @@ namespace MobileWorker.Views
             }
 
             var orderGet = await RequestBuilder.Create()
-                                               .AppendPathSegments("api", "order", "orderOneGet") // добавляет к ендпоинт
+                                               .AppendPathSegments("api", "order", "orderWorkerOneGet") // добавляет к ендпоинт
                                                .SetQueryParam("orderOne", OrderDetail.OrderId)
-                                               .GetJsonAsync<Order>(); //  http://192.168.1.12:5002/api/order/orderOneGet
+                                               .GetJsonAsync<OrderDetailWorker>(); //  http://192.168.1.12:5002/api/order/orderWorkerOneGet
             OrderGet = orderGet;
             timePicker.Time = new TimeSpan(OrderGet.LeadTime.Hour, OrderGet.LeadTime.Minute, 0);
             datePicker.Date = OrderGet.LeadTime;
             reviewEntry.Text = OrderGet.Comment;
             picker.SelectedIndex = (int)OrderGet.TypePayment;
+
+            prise.Text = OrderDetail.TotalPrice.ToString();
+            email.Text = orderGet.Email;
+
+            telefone.Text = orderGet.PhoneNumber;
+
+            pickerStatus.SelectedIndex = (int)OrderGet.Status;
+            
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -49,78 +57,22 @@ namespace MobileWorker.Views
                 return;
             }
 
-            //проверяем готов ли заказа
-            if(OrderGet.Status == StatusType.Completed)
-            {
-                await DisplayAlert("Внимание", "Ваш заказ уже готов", "OK");
-                return;
-            }
-
-            if(datePicker.Date.DayOfWeek != DayOfWeek.Sunday)
-            {
-                await DisplayAlert("дата", "хорошая дата", "OK");
-            }
-            else
-            {
-                await DisplayAlert("дата", "Неверная дата", "OK");
-                datePicker.Date = DateTime.Now;
-                return;
-            }
-
-            // DisplayAlert("время", $"{timePicker.Time} выбрано", "OK");
-            var selectedTime = timePicker.Time; // выбранное время
-            var date1 = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 0); //текущее время
-
-            //DisplayAlert("время", $"{date1} текушее время", "OK");
-            var maxTime = new TimeSpan(18, 00, 00);
-            var minTime = new TimeSpan(08, 00, 00);
-
-            if(datePicker.Date == DateTime.Now.Date)
-            {
-                if(selectedTime > date1 && selectedTime < maxTime && selectedTime > minTime)
-                {
-                    await DisplayAlert("время", "выбранное время находится в нужном диапазоне", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("Внимание", "Не верное время", "OK");
-                    timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
-                    return;
-                }
-            }
-            else
-            {
-                if(selectedTime < maxTime && selectedTime > minTime)
-                {
-                    await DisplayAlert("время", "выбранное время находится в нужном диапазоне", "OK");
-                }
-                else
-                {
-                    await DisplayAlert("Внимание", "Не верное время", "OK");
-                    timePicker.Time = new TimeSpan(DateTime.Now.AddHours(1).Hour, DateTime.Now.Minute, 0);
-                    return;
-                }
-            }
-
-            var data = new Order
-            {
-                OrderId = OrderGet.OrderId,
-                LeadTime = datePicker.Date + timePicker.Time,
-                Comment = reviewEntry.Text,
-                TypePayment = (PaymentType)picker.SelectedIndex,
-                Status = StatusType.Processing,
-            };
+           
+            var orderId = OrderDetail.OrderId;
+            var status = (StatusType)pickerStatus.SelectedIndex;
 
             var response = await RequestBuilder.Create()
-                                               .AppendPathSegments("api", "order", "orderUpdate") // добавляет к ендпоинт
-                                               .PostJsonAsync(data);
+                                               .AppendPathSegments("api", "order", "orderUpdateStatus") // добавляет к ендпоинт
+                                               .SetQueryParam("orderId", orderId)
+                                               .SetQueryParam("status", status)
+                                               .PostJsonAsync(null);
             if(response.IsSuccessStatusCode)
             {
-                await DisplayAlert("Заказ", "Данные успешно обновлены", "OK");
+                await DisplayAlert("Статус заказа", "Статус успешно обновлен", "OK");
             }
             else
             {
-                await DisplayAlert("время", "Что то пошло не так при обновлении заказа", "OK");
+                await DisplayAlert("Статус заказа", "Что то пошло не так при обновлении статуса", "OK");
             }
         }
 

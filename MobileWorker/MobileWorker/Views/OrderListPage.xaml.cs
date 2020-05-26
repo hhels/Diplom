@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Diplom.Common.Models;
 using MobileWorker.ViewModels;
 using Plugin.Connectivity;
@@ -17,55 +18,36 @@ namespace MobileWorker.Views
             InitializeComponent();
             _orderListViewModel = new OrderListViewModel();
             BindingContext = _orderListViewModel;
+            if (_orderListViewModel.Error)
+            {
+                DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
+            }
         }
 
-        public async void OnDelete(object sender, EventArgs e)
+        // прокрутка и подгрузка списка
+        private async void NewsList_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            // Если нет подключения к интернету
-            if (!CrossConnectivity.Current.IsConnected)
+            var itemTypeObject = e.Item as OrderList;
+            if (_orderListViewModel.OrderList.Last() == itemTypeObject && _orderListViewModel.OrderList.Count() != 1 && _orderListViewModel.OrderList.Count() != 2)
             {
-                await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
-                return;
-            }
-            var mi = (MenuItem) sender;
-            var del = mi.CommandParameter as OrderList;
-            if (del.Status == StatusType.Completed)
-            {
-                await DisplayAlert("Внимание", "Ваш заказ уже готов", "OK");
-                return;
-            }
-            await DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
-            if(del != null)
-            {
-                await _orderListViewModel.DeleteOrder(del);
-            }
-            else
-            {
-                await DisplayAlert("Ошибочка", "объект не выбран", "OK");
+                if (_orderListViewModel.IsBusy)
+                {
+                    if (!CrossConnectivity.Current.IsConnected)
+                    {
+                        // Показываем из локальной БД 
+                        using (var db = new ApplicationContext())
+                        {
+                            // _orderListViewModel.LoadMoreEmployerResultInLockal();
+                            await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
+                        }
+                        return;
+                    }
+                    // Загружать из интернета
+                    await _orderListViewModel.LoadMoreEmployerResult(itemTypeObject);
+                }
             }
         }
 
-        //private async void BasketList_ItemTapped(object sender, ItemTappedEventArgs e)
-        //{
-        //    // Если нет подключения к интернету
-        //    if (!CrossConnectivity.Current.IsConnected)
-        //    {
-        //        await DisplayAlert("Внимание", "Отсутствует подключение к интернету", "OK");
-        //        return;
-        //    }
-        //    var mi = (MenuItem) sender;
-        //    await DisplayAlert("Delete Context Action", $"{mi}", "OK");
-        //    var del = mi.CommandParameter as OrderList;
-        //    await DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
-        //    if(del != null)
-        //    {
-        //        await _orderListViewModel.DeleteOrder(del);
-        //    }
-        //    else
-        //    {
-        //        await DisplayAlert("Ошибочка", "объект не выбран", "OK");
-        //    }
-        //}
 
         private async void Button_Clicked(object sender, EventArgs e)
         {

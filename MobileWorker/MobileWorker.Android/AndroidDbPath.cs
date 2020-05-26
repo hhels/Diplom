@@ -1,4 +1,7 @@
 ﻿using MobileWorker.Droid;
+using System;
+using System.IO;
+using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AndroidDbPath))]
 

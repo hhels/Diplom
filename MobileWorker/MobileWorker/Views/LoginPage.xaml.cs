@@ -17,6 +17,8 @@ namespace MobileWorker.Views
         public LoginPage()
         {
             InitializeComponent();
+            loginEntry.Text = "";
+            passwordEntry.Text = "";
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -46,14 +48,19 @@ namespace MobileWorker.Views
                                                .PostJsonAsync(body); //  https://localhost:5001/api/account/login?login=1&password=1234567
 
             var result = await response.Content.ReadAsStringAsync();
-
-            if(!response.IsSuccessStatusCode)
+            
+            if (!response.IsSuccessStatusCode)
             {
                 await DisplayAlert("ошибка", result, "cancel");
                 return;
             }
 
             var data = JsonConvert.DeserializeObject<AuthResponse>(result);
+            if (data.Role == RoleNames.User)
+            {
+                await DisplayAlert("Внимание", "У вас нет доступа к данным функциям", "ОК");
+                return;
+            }
             MySettings.Token = data.AccessToken;
             MySettings.UserName = data.UserName;
             MySettings.Email = data.Email;
@@ -62,20 +69,22 @@ namespace MobileWorker.Views
 
             if(MySettings.Role == RoleNames.User)
             {
-                await Navigation.PushAsync(new MasterDetailPage1());
+                await DisplayAlert("Внимание", "У вас нет доступа к данным функциям", "ОК");
+                MySettings.Clear();
             }
             else if(MySettings.Role == RoleNames.Worker)
             {
-                await DisplayAlert("a", MySettings.Role, "cancel");
+                await Navigation.PushAsync(new MasterDetailPage1());
             }
             else if(MySettings.Role == RoleNames.Director)
             {
-                await DisplayAlert("a", MySettings.Role, "cancel");
+                await Navigation.PushAsync(new MasterDetailPage1());
             }
         }
 
-        private async void Button_Clicked_1(object sender, EventArgs e)
+        private async  void Button_Clicked_1(object sender, EventArgs e)
         {
+             //new NavigationPage(new MasterDetailPage1());
             await Navigation.PushAsync(new RegistrationPage());
         }
 

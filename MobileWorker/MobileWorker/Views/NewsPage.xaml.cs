@@ -22,22 +22,6 @@ namespace MobileWorker.Views
             BindingContext = _newsViewModel;
         }
 
-        //protected override async void OnAppearing()
-        //{
-            //News = await RequestBuilder.Create()
-            //                                .AppendPathSegments("api", "content", "contentGet") // добавляет к ендпоинт
-            //                                .GetJsonAsync<Content[]>(); //  http://192.168.1.12:5002/api/content/contentGet
-
-            //var sortList = News.OrderByDescending(x => x.ContentId).ToList();
-            //newsList.ItemsSource = sortList;
-        //}
-
-        //private void Button_Clicked(object sender, EventArgs e)
-        //{
-        //    //отсортировать по новизне добавления
-        //    var sortList = News.OrderByDescending(x => x.ContentId);
-        //    newsList.ItemsSource = sortList;
-        //}
         public void Refresh(object sender, EventArgs e)
         {
             newsList.IsRefreshing = true; //отображает иконку загрузки
@@ -66,6 +50,46 @@ namespace MobileWorker.Views
                     await _newsViewModel.LoadMoreEmployerResult(itemTypeObject);
                 }
             }
+        }
+
+        // удаление записи
+        public async void OnDelete(object sender, EventArgs e)
+        {
+            // Если нет интернета
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Ошибка", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
+            var mi = (MenuItem)sender;
+            var del = mi.CommandParameter as Content;
+            await DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+            if (del != null)
+            {
+                await _newsViewModel.DeleteBasket(del);
+                newsList.ItemsSource = _newsViewModel.ContentList;
+            }
+            else
+            {
+                await DisplayAlert("Ошибочка", "объект не выбран", "OK");
+            }
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            // Если нет интернета
+            if (!CrossConnectivity.Current.IsConnected)
+            {
+                await DisplayAlert("Ошибка", "Отсутствует подключение к интернету", "OK");
+                return;
+            }
+            await Navigation.PushAsync(new NewsDetailPage());
+        }
+
+        private async void NewsList_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var selectedContent = e.Item as Content;
+            await Navigation.PushAsync(new NewsUpdatePage(selectedContent));
         }
     }
 }

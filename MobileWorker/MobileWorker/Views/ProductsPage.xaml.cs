@@ -123,6 +123,23 @@ namespace MobileWorker.Views
             }
         }
 
+        // удаление записи
+        public async void OnDelete(object sender, EventArgs e)
+        {
+            var mi = (MenuItem)sender;
+            var del = mi.CommandParameter as Product;
+            await DisplayAlert("Delete Context Action", mi.CommandParameter + " delete context action", "OK");
+            if (del != null)
+            {
+                await _productsViewModel.DeleteBasket(del, (MenuType)picker.SelectedIndex);
+                menuList.ItemsSource = _productsViewModel.ProductList;
+            }
+            else
+            {
+                await DisplayAlert("Ошибочка", "объект не выбран", "OK");
+            }
+        }
+
         public void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
             _productsViewModel.Products((MenuType)picker.SelectedIndex);
@@ -136,7 +153,12 @@ namespace MobileWorker.Views
         private async void MenuList_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var selectedProduct = e.Item as Product;
-            await Navigation.PushAsync(new AdditionProductsPage(selectedProduct));
+            await Navigation.PushAsync(new ProductUpdatePage(selectedProduct));
+        }
+
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ProductAddPage());
         }
     }
 }

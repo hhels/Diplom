@@ -13,16 +13,16 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="7*" />
+            <RowDefinition Height="6*" />
         </Grid.RowDefinitions>
 
-        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20">
+        <StackLayout Grid.Column="0" Grid.Row="1" Margin="20" >
             <Entry x:Name="loginEntry" Placeholder="Логин" />
             <Entry x:Name="passwordEntry" Placeholder="Пароль" IsPassword="True" />
 
             <Button Text="Войти" Clicked="Button_Clicked" Margin="40, 10" Style="{StaticResource ButtonShop}" />
-            <Label Text="Нет аккаунта? Зарегистрируйтесь!" HorizontalOptions="Center" Style="{StaticResource labelTextDescription}" />
-            <Button Text="Регистрация" Clicked="Button_Clicked_1" Margin="40, 10" Style="{StaticResource ButtonShop}" />
+            <!--<Label Text="Нет аккаунта? Зарегистрируйтесь!" HorizontalOptions="Center" Style="{StaticResource labelTextDescription}" />
+            <Button Text="Регистрация" Clicked="Button_Clicked_1" Margin="40, 10" Style="{StaticResource ButtonShop}" />-->
             <!--<Button Text="жмак" Clicked="Button_Clicked_2" Margin="40, 10"/>-->
         </StackLayout>
     </Grid>

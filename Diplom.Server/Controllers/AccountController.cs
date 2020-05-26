@@ -190,5 +190,85 @@ namespace Diplom.Server.Controllers
 
             return Ok(response);
         }
+
+        // регистрация работников
+        [HttpPost("registerWork")]
+        [Authorize]
+        public async Task<IActionResult> RegisterWork([FromBody] RegisterBody data, int rol)
+        {
+            var existedUser = await _userManager.FindByNameAsync(data.Login);
+            if (existedUser != null)
+            {
+                return BadRequest("Пользователь с таким логином уже существует");
+            }
+
+            var user = new SiteUser
+            {
+                Email = data.Email,
+                UserName = data.Login,
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                Year = data.Year,
+                PhoneNumber = data.PhoneNumber,
+                Sex = data.Sex
+            };
+
+            // создаём юзера
+            var result = await _userManager.CreateAsync(user, data.Password);
+
+            if(rol == 0)
+            {
+                await _userManager.AddToRoleAsync(user, RoleNames.Director);
+            }
+            if (rol == 1)
+            {
+                await _userManager.AddToRoleAsync(user, RoleNames.Worker);
+            }
+            if (rol == -1)
+            {
+                return BadRequest("Не указана роль регестрируемого пользователя");
+            }
+            if (!result.Succeeded)
+            {
+                return BadRequest("Произошла ошибка во время создания пользователя");
+            }
+
+            return Ok();
+        }
+
+        //получение списка работников
+        [HttpGet("workerGet")]
+        [Authorize]
+        public async Task<IActionResult> GetworkerList()
+        {
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier); //найти id пользователя по токену
+            var list = await _userManager.GetUsersInRoleAsync(RoleNames.Worker);
+            if (list is null)
+            {
+                return BadRequest("Пользователи не найдены");
+            }
+
+            var data = list.Select(x => new WorkerList
+            {
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Year = x.Year.ToString(),
+                PhoneNumber = x.PhoneNumber,
+                Email = x.Email,
+            });
+            return Ok(data);
+        }
+        // удаление работника
+        [HttpPost("workerDell")]
+        [Authorize]
+        public async Task<IActionResult> DeleteFromSiteUser(WorkerList del)
+        {
+            var userData = await _userManager.FindByNameAsync(del.UserName);// найти пользователя по логину
+            await _userManager.DeleteAsync(userData); // удалить пользователя            
+
+            return Ok();
+        }
+
     }
 }

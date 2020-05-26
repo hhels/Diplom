@@ -55,27 +55,20 @@ namespace MobileWorker.Views
                 PhoneNumber = telefonEntry.Text,
                 Sex = (SexType)picker.SelectedIndex
             };
-
-            if(!body.Email.Contains("@")) //TODO: плохая проверка
-            {
-                await DisplayAlert("Ошибка", "Некоректный email", "cancel");
-                return;
-            }
-
-            if(body.Year < 16 || body.Year > 150)
+            if (body.Year < 16 || body.Year > 150)
             {
                 await DisplayAlert("Ошибка", "Некоректный возраст", "cancel");
                 return;
             }
-
-            if(body.Password.Length <= 6)
+            if (body.Password.Length <= 6)
             {
                 await DisplayAlert("Ошибка", "Длина пароля должна быть больше 6", "cancel");
                 return;
             }
 
             var response = await RequestBuilder.Create()
-                                               .AppendPathSegments("api", "account", "register") // добавляет к ендпоинт
+                                               .AppendPathSegments("api", "account", "registerWork") // добавляет к ендпоинт
+                                               .SetQueryParam("rol", pickerRol.SelectedIndex)
                                                .PostJsonAsync(body); //  https://localhost:5001/api/account/login?login=1&password=1234567
 
             if(!response.IsSuccessStatusCode)
@@ -84,28 +77,7 @@ namespace MobileWorker.Views
                 await DisplayAlert("a", error, "cancel");
                 return;
             }
-
-            //сохранение данных пользователя
-            var data = JsonConvert.DeserializeObject<AuthResponse>(await response.Content.ReadAsStringAsync());
-            MySettings.Token = data.AccessToken;
-            MySettings.UserName = data.UserName;
-            MySettings.Email = data.Email;
-            MySettings.UserId = data.UserId;
-            MySettings.Role = data.Role;
-
-            if(MySettings.Role == RoleNames.User)
-            {
-                await Navigation.PushAsync(new MasterDetailPage1());
-            }
-
-            //else if (MySettings.Role == "worker")
-            //{
-            //    await DisplayAlert("a", MySettings.Role, "cancel");
-            //}
-            //else if (MySettings.Role == "director")
-            //{
-            //    await DisplayAlert("a", MySettings.Role, "cancel");
-            //}
+            await DisplayAlert("ОК", "Работник успешно зарегестрирован", "ОК");
         }
         public bool IsValidEmail(string source)
         {

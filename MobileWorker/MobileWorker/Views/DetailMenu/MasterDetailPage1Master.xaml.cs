@@ -17,10 +17,12 @@ namespace MobileWorker.Views.DetailMenu
             ListView = MenuItemsListView;
         }
 
-        private void Button_Clicked(object sender, System.EventArgs e)
+        private  void Button_Clicked(object sender, System.EventArgs e)
         {
             MySettings.Clear();
-            Navigation.PushModalAsync(new LoginPage());
+            //new NavigationPage(new LoginPage());
+            //Navigation.PushModalAsync(new LoginPage());
+            Navigation.PopToRootAsync();
         }
     }
 }

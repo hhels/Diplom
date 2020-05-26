@@ -16,7 +16,7 @@ namespace Diplom.Server
         private const string
                 Key = "mysupersecret_secretkey!123"; // ключ для шифрации хранит ключ, который будет применяться для создания токена
 
-        private const int LifetimeInMinutes = 360; // время жизни токена - 360 минут (6 часов)
+        private const int LifetimeInMinutes = 1440; // время жизни токена - 360 минут (6 часов)
 
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {

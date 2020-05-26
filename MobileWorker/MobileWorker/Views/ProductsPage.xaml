@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height=" Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height=" Auto" />
         </Grid.RowDefinitions>
 
         <StackLayout Spacing="8" Grid.Column="0" Grid.Row="0">
@@ -38,6 +39,14 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <!--<MenuItem Clicked="OnMore"
+                                          CommandParameter="{Binding .}"
+                                          Text="More" />-->
+                                    <MenuItem Clicked="OnDelete"
+                                              CommandParameter="{Binding .}"
+                                              Text="Delete" IsDestructive="True" />
+                                </ViewCell.ContextActions>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Horizontal">
                                         <Image Source="{Binding Img}" WidthRequest="90" HeightRequest="110" />
@@ -52,6 +61,10 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
+        </StackLayout>
+
+        <StackLayout Spacing="8" Grid.Column="0" Grid.Row="2">
+            <Button Text="Добавить продукт" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}" Margin="5"/>
         </StackLayout>
     </Grid>
 </ContentPage>

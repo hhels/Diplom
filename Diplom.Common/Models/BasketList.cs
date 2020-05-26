@@ -15,5 +15,7 @@
 
         public int OverallPrice { get; set; } // цена с учетом количества
         public int AllPrice { get; set; } // общая цена покупки
+
+        public string Grams { get; set; } // кол-во грамм в порции
     }
 }

@@ -31,7 +31,7 @@
                 <Entry x:Name="lastNameEntry" MaxLength="30" />
 
                 <Label Text="Ваш возраст" Margin="0, 5, 0, 0" Style="{StaticResource labelName}" />
-                <Entry x:Name="yearsEntry" MaxLength="3" />
+                <Entry x:Name="yearsEntry" MaxLength="3" Keyboard="Numeric"/>
 
                 <Label Text="Ваш пол" Margin="0, 5, 0, 0" Style="{StaticResource labelName}" />
                 <Picker x:Name="picker" MinimumWidthRequest="50" WidthRequest="51">
@@ -42,10 +42,10 @@
                 </Picker>
 
                 <Label Text="Ваш Email" Margin="0, 5, 0, 0" Style="{StaticResource labelName}" />
-                <Entry x:Name="emailEntry" MaxLength="35" />
+                <Entry x:Name="emailEntry" MaxLength="35" Keyboard="Email" />
 
                 <Label Text="Ваш телефон" Margin="0, 5, 0, 0" Style="{StaticResource labelName}" />
-                <Entry x:Name="telefonEntry" Placeholder="Телефон" MaxLength="11" />
+                <Entry x:Name="telefonEntry" Placeholder="Телефон" MaxLength="11" Keyboard="Telephone"/>
 
                 <Button Text="Изменить данные" Clicked="Button_Clicked" Style="{StaticResource ButtonShop}" Margin="5,10,5,0" />
                 <Button Text="Изменить пароль" Clicked="Button_Clicked_1" Style="{StaticResource ButtonShop}" Margin="5"/>

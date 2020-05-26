@@ -24,7 +24,7 @@
                     <Label Grid.Column="1"
                            Grid.Row="2"
                            Text="Кафе"
-                           Style="{StaticResource labelNameBold}" FontSize="27"/>
+                           Style="{StaticResource labelNameBold}" TextColor="White" FontSize="27"/>
                     <!--<Label Grid.Column="1"
                            Grid.Row="2"
                            Text="Кафе"

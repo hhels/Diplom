@@ -155,6 +155,7 @@ namespace Diplom.Server.Controllers
 
             return Ok();
         }
+
         [HttpPost("orderUpdatePrice")]
         [Authorize]
         public async Task<IActionResult> UpdateOrderPrice(int orderId)
@@ -182,6 +183,69 @@ namespace Diplom.Server.Controllers
             var TotalPrice = result.Sum(xx => xx.OverallPrice);
 
             order.TotalPrice = TotalPrice;
+
+            await _db.SaveChangesAsync(); // сохранить изменения
+
+            return Ok();
+        }
+
+        //Получить список заказов для работников
+        [HttpGet("orderWorkerGet")]
+        [Authorize]
+        public async Task<IActionResult> GetWorkerOrders(int skip)
+        {
+            const int take = 5;
+            var time = DateTime.Now;
+
+            //все заказы 
+            var order = _db.Orders.Where(x => x.LeadTime >= time).Select(x =>
+            new OrderList()
+            {
+                OrderListId = x.OrderId,
+                OrderId = x.OrderId,
+                OrderTime = x.OrderTime,
+                LeadTime = x.LeadTime,
+                TotalPrice = x.TotalPrice,
+                Comment = x.Comment,
+                TypePayment = x.TypePayment,
+                Status = x.Status,
+            });
+            if (!order.Any())
+            {
+                return Ok();
+            }
+            var sortList = order.OrderBy(x => x.LeadTime).ToList();
+            return Ok(sortList.Skip(skip).Take(take));
+        }
+
+        // получение одного заказа для работника
+        [HttpGet("orderWorkerOneGet")]
+        public IActionResult WorkerGet(int orderOne)
+        {
+            var order = _db.Orders.FirstOrDefault(x => x.OrderId == orderOne);
+            var user = _db.Users.FirstOrDefault(x => x.Id == order.UserId);
+
+            var orderr = new OrderDetailWorker()
+            {
+                OrderTime = order.OrderTime,
+                LeadTime = order.LeadTime,
+                TotalPrice = order.TotalPrice,
+                Comment = order.Comment,
+                TypePayment = order.TypePayment,
+                Status = order.Status,
+
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+            };
+            return Ok(orderr);
+        }
+        // обновление статуса заказа
+        [HttpPost("orderUpdateStatus")]
+        [Authorize]
+        public async Task<IActionResult> UpdateStatusOrder(int orderId, StatusType status)
+        {
+            var order = _db.Orders.FirstOrDefault(x => x.OrderId == orderId);
+            order.Status = status;
 
             await _db.SaveChangesAsync(); // сохранить изменения
 

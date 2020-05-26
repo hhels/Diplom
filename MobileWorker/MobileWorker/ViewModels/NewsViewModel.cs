@@ -155,5 +155,21 @@ namespace MobileWorker.ViewModels
                 IsRefreshing = false;
             }
         }
+
+        //Удаление целой записи
+        public async Task DeleteBasket(Content del)
+        {
+            _ = await RequestBuilder.Create()
+                                    .AppendPathSegments("api", "content", "contentDell") // добавляет к ендпоинт
+                                    .PostJsonAsync(del);
+
+            var newss = RequestBuilder.Create()
+                                        .AppendPathSegments("api", "content", "contentTake") // добавляет к ендпоинт
+                                        .SetQueryParam("skip", Skip)
+                                        .GetJsonAsync<Content[]>()
+                                        .GetAwaiter().GetResult(); //  http://192.168.1.12:5002/api/content/contentTake
+
+            ContentList = new ObservableCollection<Content>(newss);
+        }
     }
 }
